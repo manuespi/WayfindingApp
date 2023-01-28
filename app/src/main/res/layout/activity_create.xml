@@ -4,14 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Create">
+    tools:context=".CreateActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <Button
         android:id="@+id/mainMenu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menú principal"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="1800px"
+        android:layout_marginLeft="100px"
+        android:text="Menú principal" />
+
+    <Button
+        android:id="@+id/show_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1800px"
+        android:layout_marginLeft="700px"
+        android:text="Ver todo" />
+
+    <Button
+        android:id="@+id/newRoom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500px"
+        android:layout_centerHorizontal="true"
+        android:text="Nueva sala" />
+
+    <Button
+        android:id="@+id/top_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150px"
+        android:layout_marginLeft="420px"
+        android:text="Frente" />
+
+    <Button
+        android:id="@+id/right_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="850px"
+        android:layout_marginLeft="700px"
+        android:text="Derecha" />
+
+    <Button
+        android:id="@+id/left_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="850px"
+        android:layout_marginLeft="90px"
+        android:text="Izquierda" />
+
+    <Button
+        android:id="@+id/bottom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1500px"
+        android:layout_marginLeft="420px"
+        android:text="Detrás" />
 
 </RelativeLayout>

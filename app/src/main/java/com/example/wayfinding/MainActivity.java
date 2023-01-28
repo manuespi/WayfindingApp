@@ -1,15 +1,11 @@
 package com.example.wayfinding;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private Button create_button, view_button, exit_button;
@@ -45,18 +41,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivityCreate(){
-        Intent intent = new Intent(this, Create.class);
+        Intent intent = new Intent(this, CreateActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openActivityView(){
-        Intent intent = new Intent(this, View.class);
+        Intent intent = new Intent(this, ViewActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openActivityExit(){
        /* Intent intent = new Intent(this, Exit.class);
         startActivity(intent);*/
-        finish();
+        System.exit(0);
     }
 }
