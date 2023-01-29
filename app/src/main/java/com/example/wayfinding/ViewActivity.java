@@ -16,13 +16,13 @@ private Button mainMenu_button;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        TextView incomingData;// = (TextView) findViewById(R.id.etIncomingData);
+        TextView incomingData = findViewById(R.id.map);
 
         Intent incomingIntent = getIntent();
         String mapString = incomingIntent.getStringExtra("map");
 
         Log.d("Showing map", mapString);
-        //incomingData.setText(mapString);
+        incomingData.setText(mapString);
 
         mainMenu_button = (Button) findViewById(R.id.mainMenu_button);
         mainMenu_button.setOnClickListener(new android.view.View.OnClickListener() {

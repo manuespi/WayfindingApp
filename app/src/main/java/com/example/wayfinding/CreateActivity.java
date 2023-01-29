@@ -48,7 +48,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!map.isEmpty()) {
                     Log.d("Left pressed", "Room: " + nRoom);
-                    map.get(nRoom).addDoor(3);
+                    map.get(nRoom).addElement("door", 3, 0, true, true, true, true);
                 }
             }
         });
@@ -58,7 +58,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!map.isEmpty()) {
                     Log.d("Right pressed", "Room: " + nRoom);
-                    map.get(nRoom).addDoor(1);
+                    map.get(nRoom).addElement("door", 1, 0, false, true, true, true);
                 }
             }
         });
@@ -68,7 +68,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!map.isEmpty()) {
                     Log.d("Top pressed", "Room: " + nRoom);
-                    map.get(nRoom).addDoor(0);
+                    map.get(nRoom).addElement("elevator", 0, 5, true, true, true, true);
                 }
             }
         });
@@ -78,7 +78,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!map.isEmpty()) {
                     Log.d("Bottom pressed", "Room: " + nRoom);
-                    map.get(nRoom).addDoor(2);
+                    map.get(nRoom).addElement("stairs", 2, 0, true, false, true, true);
                 }
             }
         });

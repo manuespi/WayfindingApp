@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1800px"
         android:layout_marginLeft="100px"
-        android:text="Menú principal" />
+        android:text="Main menu" />
 
     <Button
         android:id="@+id/show_button"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1800px"
         android:layout_marginLeft="700px"
-        android:text="Ver todo" />
+        android:text="View all" />
 
     <Button
         android:id="@+id/newRoom_button"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="500px"
         android:layout_centerHorizontal="true"
-        android:text="Nueva sala" />
+        android:text="New room" />
 
     <Button
         android:id="@+id/top_button"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150px"
         android:layout_marginLeft="420px"
-        android:text="Frente" />
+        android:text="Top" />
 
     <Button
         android:id="@+id/right_button"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="850px"
         android:layout_marginLeft="700px"
-        android:text="Derecha" />
+        android:text="Right" />
 
     <Button
         android:id="@+id/left_button"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="850px"
         android:layout_marginLeft="90px"
-        android:text="Izquierda" />
+        android:text="Left" />
 
     <Button
         android:id="@+id/bottom_button"
@@ -65,6 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1500px"
         android:layout_marginLeft="420px"
-        android:text="Detrás" />
+        android:text="Bottom" />
 
 </RelativeLayout>

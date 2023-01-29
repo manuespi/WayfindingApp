@@ -10,7 +10,7 @@
         android:id="@+id/create_button"
         android:layout_width="450px"
         android:layout_height="wrap_content"
-        android:text="Añadir"
+        android:text="Create map"
         android:layout_above="@+id/view_button"
         android:layout_centerHorizontal="true"/>
 
@@ -18,7 +18,7 @@
         android:id="@+id/view_button"
         android:layout_width="450px"
         android:layout_height="wrap_content"
-        android:text="Ver mapa"
+        android:text="View map"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
@@ -26,7 +26,7 @@
         android:id="@+id/exit_button"
         android:layout_width="450px"
         android:layout_height="wrap_content"
-        android:text="Salir"
+        android:text="Exit"
         android:layout_below="@+id/view_button"
         android:layout_centerHorizontal="true"/>
 

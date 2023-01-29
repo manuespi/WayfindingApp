@@ -5,53 +5,67 @@ import java.util.List;
 
 public class Room {
     private int id;
-    private int nDoors;
-    List<Door> room;
+    private int nElements;
+    private List<Element> room;
+    private boolean up, down;   //If user can go up and/or down trough this room
+
 
     Room(){
-        room = new ArrayList<Door>();
-        nDoors = 0;
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
     }
 
     Room(int id){
-        room = new ArrayList<Door>();
-        nDoors = 0;
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
         this.id = id;
+        this.up = true;
+        this.down = true;
     }
 
-    Room(int id, int nDoors){
-        room = new ArrayList<Door>();
+    Room(int id, boolean up, boolean down){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
         this.id = id;
-        this.nDoors = nDoors;
+        this.up = up;
+        this.down = down;
     }
 
-    Room(int id, int nDoors, List<Door> room){
-        this.room = new ArrayList<Door>(); //?¿
+    Room(int id, int nElements, List<Element> room){
+        this.room = new ArrayList<Element>();
         this.id = id;
-        this.nDoors = nDoors;
+        this.nElements = nElements;
         this.room = room;
     }
 
-    public void addDoor(int orientation){
-        switch (orientation) {
-            case 0: room.add(new Door(nDoors, 0)); break;
-            case 1: room.add(new Door(nDoors, 1)); break;
-            case 2: room.add(new Door(nDoors, 2)); break;
-            case 3: room.add(new Door(nDoors, 3)); break;
-            default:
+    Room(int id, int nElements, List<Element> room, boolean up, boolean down){
+        this.room = new ArrayList<Element>();
+        this.id = id;
+        this.nElements = nElements;
+        this.room = room;
+        this.up = up;
+        this.down = down;
+    }
+
+    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair, boolean up, boolean down){
+        switch (type) {
+            case "door": room.add(new Door(nElements, orientation, type, open)); break;
+            case "elevator": room.add(new Elevator(nElements, orientation, type, open, wheelchair, capacity)); break;
+            case "stairs": room.add(new Stairs(nElements, orientation, type, open, wheelchair, up, down)); break;
+            default: break;
         }
 
-        nDoors++;
+        nElements++;
     }
 
     public String toString(){
-        String roomString = "Sala: "+ String.valueOf(this.id) + " Vacía\n";
+        String roomString = "Room: "+ String.valueOf(this.id) + " Empty\n";
 
         if(!room.isEmpty()) {
             roomString = "Room ID: " + String.valueOf(this.id) + "\n";
-            roomString += "Door number: " + String.valueOf(this.nDoors) + "\n";
+            roomString += "Element number: " + String.valueOf(this.nElements) + "\n";
 
-            for (int i = 0; i < nDoors; ++i) {
+            for (int i = 0; i < nElements; ++i) {
                 roomString += room.get(i).toString();
             }
         }
@@ -69,19 +83,19 @@ public class Room {
 
 
     public int getnDoors() {
-        return nDoors;
+        return nElements;
     }
 
-    public void setnDoors(int nDoors) {
-        this.nDoors = nDoors;
+    public void setnDoors(int nElements) {
+        this.nElements = nElements;
     }
 
 
-    public List<Door> getRoom() {
+    public List<Element> getRoom() {
         return room;
     }
 
-    public void setRoom(List<Door> room) {
+    public void setRoom(List<Element> room) {
         this.room = room;
     }
 }
