@@ -7,7 +7,6 @@ public class Room {
     private int id;
     private int nElements;
     private List<Element> room;
-    private boolean up, down;   //If user can go up and/or down trough this room
 
 
     Room(){
@@ -19,16 +18,12 @@ public class Room {
         this.room = new ArrayList<Element>();
         this.nElements = 0;
         this.id = id;
-        this.up = true;
-        this.down = true;
     }
 
     Room(int id, boolean up, boolean down){
         this.room = new ArrayList<Element>();
         this.nElements = 0;
         this.id = id;
-        this.up = up;
-        this.down = down;
     }
 
     Room(int id, int nElements, List<Element> room){
@@ -38,20 +33,11 @@ public class Room {
         this.room = room;
     }
 
-    Room(int id, int nElements, List<Element> room, boolean up, boolean down){
-        this.room = new ArrayList<Element>();
-        this.id = id;
-        this.nElements = nElements;
-        this.room = room;
-        this.up = up;
-        this.down = down;
-    }
-
-    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair, boolean up, boolean down){
+    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;
             case "elevator": room.add(new Elevator(nElements, orientation, type, open, wheelchair, capacity)); break;
-            case "stairs": room.add(new Stairs(nElements, orientation, type, open, wheelchair, up, down)); break;
+            case "stairs": room.add(new Stairs(nElements, orientation, type, open, wheelchair)); break;
             default: break;
         }
 
@@ -82,11 +68,11 @@ public class Room {
     }
 
 
-    public int getnDoors() {
+    public int nElements() {
         return nElements;
     }
 
-    public void setnDoors(int nElements) {
+    public void nElements(int nElements) {
         this.nElements = nElements;
     }
 
@@ -97,5 +83,9 @@ public class Room {
 
     public void setRoom(List<Element> room) {
         this.room = room;
+    }
+
+    public Element get(int pos){
+        return room.get(pos);
     }
 }
