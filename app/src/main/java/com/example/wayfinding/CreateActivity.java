@@ -77,7 +77,12 @@ public class CreateActivity extends AppCompatActivity {
 
     private void addElementToRoom(){
         if(!map.isEmpty()) {
-            map.get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
+            if(element == "empty"){
+                Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                map.get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
+            }
         }
     }
 
