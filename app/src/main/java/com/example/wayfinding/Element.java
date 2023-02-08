@@ -1,23 +1,26 @@
 package com.example.wayfinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Element {
     private int id;
     private int orientation; // 0 North, 1 East, 2 South, 3 West
     private String type;    // door, elevator, stairs
     private boolean open;
-    private Integer[] connects; //id of Rooms it connects
+    private List<Integer> connects; //id of Rooms it connects
 
     Element(){
         this.type = "door";
         this.open = true;
-        this.connects = new Integer[]{null, null};
+        this.connects = new ArrayList<Integer>();
     }
 
     Element(int id){
         this.id = id;
         this.type = "door";
         this.open = true;
-        this.connects = new Integer[]{null, null};
+        this.connects = new ArrayList<Integer>();
     }
 
     Element(int id, int orientation, String type, boolean open){
@@ -25,10 +28,10 @@ public class Element {
         this.orientation = orientation;
         this.type = type;
         this.open = open;
-        this.connects = new Integer[]{null, null};
+        this.connects = new ArrayList<Integer>();
     }
 
-    Element(int id, int orientation, String type, boolean open, Integer[] connects){
+    Element(int id, int orientation, String type, boolean open, List<Integer> connects){
         this.id = id;
         this.orientation = orientation;
         this.type = type;
@@ -41,7 +44,7 @@ public class Element {
 
         ret = type + ": " + String.valueOf(this.id) + "\n";
         ret += "Orientation: " + this.getOrientationString() + "\n";
-        ret += "Connects: " + this.connects[0] + " and " + this.connects[1] + "\n";
+        //ret += "Connects: " + this.connects[0] + " and " + this.connects[1] + "\n";
 
 
         return ret;
@@ -93,11 +96,11 @@ public class Element {
         this.open = open;
     }
 
-    public Integer[] getConnects() {
+    public List<Integer> getConnects() {
         return connects;
     }
 
-    public void setConnects(Integer[] connects) {
+    public void setConnects(List<Integer> connects) {
         this.connects = connects;
     }
 }

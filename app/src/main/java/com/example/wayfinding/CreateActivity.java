@@ -1,8 +1,10 @@
 package com.example.wayfinding;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,7 @@ public class CreateActivity extends AppCompatActivity {
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
     private EditText capacityInput;
     private TextView roomElementsView, roomsView, currentRoom;
+    private AlertDialog.Builder roomConnectionAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class CreateActivity extends AppCompatActivity {
         nRoom = 0;
         map.add(new Room(nRoom));
         orientation = 0;
+        roomConnectionAlert = new AlertDialog.Builder(this);
 
         orientationList.add("North");
         orientationList.add("East");
@@ -133,8 +137,26 @@ public class CreateActivity extends AppCompatActivity {
         if(createLayout.findViewById(6) != null) {
             createLayout.removeView(capacityInput);
         }
-        //add the elements and room list
     }
+
+    /*private void roomConnectionAlert() {
+        String elements = "";
+        List<Integer> connects = new ArrayList<Integer>();
+        connects.add(nRoom);
+        connects.add(nRoom + 1);
+
+        for(int i = 0; i < map.get(nRoom).nElements(); i++){
+            elements += i + " " + map.get(nRoom).get(i).getType();
+        }
+
+        roomConnectionAlert.setTitle("I go through:");
+        roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                map.get(nRoom).get(which).setConnects(connects);
+            }
+        });
+    }*/
 
     @SuppressLint("ResourceType")
     private void setInterface(){
