@@ -9,6 +9,7 @@ public class Element {
     private String type;    // door, elevator, stairs
     private boolean open;
     private List<Integer> connects; //id of Rooms it connects
+    private int x, y; //position in the room
 
     Element(){
         this.type = "door";
@@ -44,7 +45,7 @@ public class Element {
 
         ret = type + ": " + String.valueOf(this.id) + "\n";
         ret += "Orientation: " + this.getOrientationString() + "\n";
-        //ret += "Connects: " + this.connects[0] + " and " + this.connects[1] + "\n";
+        //ret += getConnectsString() + "\n";
 
 
         return ret;
@@ -62,6 +63,16 @@ public class Element {
         }
 
         return orientationString;
+    }
+
+    private String getConnectsString() {
+        String conString = "";
+
+        for(int i = 0; i < this.connects.size(); ++i){
+            conString += this.connects.get(i) + ", ";
+        }
+
+        return conString;
     }
 
     public int getId() {

@@ -7,6 +7,8 @@ public class Room {
     private int id;
     private int nElements;
     private List<Element> room;
+    private int width; //x
+    private int height; //y
 
 
     Room(){

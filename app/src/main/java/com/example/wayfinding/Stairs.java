@@ -1,5 +1,7 @@
 package com.example.wayfinding;
 
+import java.util.List;
+
 public class Stairs extends Element{
     private boolean wheelchair;
 
@@ -22,7 +24,7 @@ public class Stairs extends Element{
         this.wheelchair = wheelchair;
     }
 
-    public Stairs(int id, int orientation, String type, boolean open, Integer[] connects, boolean wheelchair) {
+    public Stairs(int id, int orientation, String type, boolean open, List<Integer> connects, boolean wheelchair) {
         super(id, orientation, type, open, connects);
         this.wheelchair = wheelchair;
     }

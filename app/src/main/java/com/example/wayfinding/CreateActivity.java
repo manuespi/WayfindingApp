@@ -27,13 +27,13 @@ import java.util.List;
 public class CreateActivity extends AppCompatActivity {
     private List<Room> map;
     private int nRoom;
-    private RelativeLayout createLayout, defaultLayout;
+    private RelativeLayout createLayout;
     private String element;
     private ArrayList<String> orientationList;
     private int orientation, capacity;
     private boolean open, wheelchair;
     private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
-            elevatorButton, openButton, closeButton, wheelchairButton, upButton, downButton,
+            elevatorButton, openButton, closeButton,
             addElementButton, newElementButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
@@ -139,29 +139,24 @@ public class CreateActivity extends AppCompatActivity {
         }
     }
 
-    /*private void roomConnectionAlert() {
-        String elements = "";
+    private void roomConnectionAlert() {
+        /*String[] elements = new String[map.get(nRoom).nElements()];
         List<Integer> connects = new ArrayList<Integer>();
         connects.add(nRoom);
-        connects.add(nRoom + 1);
+        connects.add(nRoom + 1); //esto no tiene sentido
 
         for(int i = 0; i < map.get(nRoom).nElements(); i++){
-            elements += i + " " + map.get(nRoom).get(i).getType();
+            elements[i] = i + " " + map.get(nRoom).get(i).getType();
         }
 
-        roomConnectionAlert.setTitle("I go through:");
-        roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                map.get(nRoom).get(which).setConnects(connects);
-            }
-        });
-    }*/
+        Log.d("roomConnectionAlert", elements.toString());*/
+
+        roomConnectionAlert.create().show();
+    }
 
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
-        defaultLayout = createLayout;
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
         showButton = findViewById(R.id.show_button);
@@ -281,6 +276,16 @@ public class CreateActivity extends AppCompatActivity {
         capacityInputParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         capacityInputParams.setMargins(20, 550, 20, 20);
         capacityInput.setLayoutParams(capacityInputParams);
+//// AlertDialog Builder
+        roomConnectionAlert.setTitle("Now I`m going through:");
+        String[] elements = {"1", "2", "3"};
+        roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                //map.get(nRoom).get(which).setConnects(connects);
+                Log.d("Alert", "Item " + which + "selected.");
+            }
+        });
 ////
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,6 +387,8 @@ public class CreateActivity extends AppCompatActivity {
         newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                roomConnectionAlert();
+
                 nRoom++;
                 map.add(new Room(nRoom));
 
