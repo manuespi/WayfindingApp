@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+
     public void openActivityExit(){
        /* Intent intent = new Intent(this, Exit.class);
         startActivity(intent);*/

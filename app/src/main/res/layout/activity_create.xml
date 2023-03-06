@@ -1,93 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/createLayout"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CreateActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <RelativeLayout
+        android:layout_weight="0.6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/mainMenu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="100px"
-        android:layout_marginBottom="20px"
-        android:text="Main menu" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/show_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="100px"
-        android:layout_marginBottom="20px"
-        android:text="View all" />
+    <RelativeLayout
+        android:layout_weight="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/newElement_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80px"
-        android:text="New element" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
-    <Button
-        android:id="@+id/addElement_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="200px"
-        android:layout_marginLeft="200px"
-        android:text="Add elem" />
+        <Button
+            android:id="@+id/mainMenu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="100px"
+            android:layout_marginBottom="20px"
+            android:text="Main menu" />
 
-    <Button
-        android:id="@+id/newRoom_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="200px"
-        android:layout_marginRight="200px"
-        android:text="New room" />
+        <Button
+            android:id="@+id/show_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="100px"
+            android:layout_marginBottom="20px"
+            android:text="View all" />
 
-    <TextView
-        android:id="@+id/roomElements"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Room elements"
-        android:layout_marginBottom="360px"
-        android:layout_alignLeft="@+id/addElement_button"
-        android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/newElement_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80px"
+            android:text="New element" />
 
-    <TextView
-        android:id="@+id/rooms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rooms"
-        android:layout_marginBottom="360px"
-        android:layout_marginRight="120px"
-        android:layout_alignLeft="@+id/newRoom_button"
-        android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/addElement_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="200px"
+            android:layout_marginLeft="200px"
+            android:text="Add elem" />
 
-    <TextView
-        android:id="@+id/currentRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current room"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="130px"
-        android:layout_marginLeft="40px"/>
+        <Button
+            android:id="@+id/newRoom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="200px"
+            android:layout_marginRight="200px"
+            android:text="New room" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/roomElements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room elements"
+            android:layout_marginBottom="360px"
+            android:layout_alignLeft="@+id/addElement_button"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/rooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rooms"
+            android:layout_marginBottom="360px"
+            android:layout_marginRight="120px"
+            android:layout_alignLeft="@+id/newRoom_button"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/currentRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current room"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="130px"
+            android:layout_marginLeft="40px"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
