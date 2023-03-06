@@ -29,8 +29,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:id="@+id/roomWidth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50px"
+            android:gravity="center_horizontal"
             android:hint="y" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -40,9 +45,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="40dp"
+            android:id="@+id/roomLength"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="x" />
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80px"
+            android:hint="x"
+            android:onClick="setRoomLength()" />
 
     </RelativeLayout>
 

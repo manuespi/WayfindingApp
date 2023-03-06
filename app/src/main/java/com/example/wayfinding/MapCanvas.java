@@ -21,7 +21,7 @@ public class MapCanvas extends View {
     Paint paintR, paintD;
     Path path;
     Rect rect;
-
+    int roomLength = 900, roomWidth = 600;
 
     public MapCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +49,7 @@ public class MapCanvas extends View {
 
 
         //rectange stuff
-        rect = new Rect(150,200,900,600);
+        rect = new Rect(150,200, roomLength, roomWidth);
     }
 
 //    public MapCanvas(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -93,4 +93,13 @@ public class MapCanvas extends View {
         return true;
 
     }
+
+    void setRoomLength(int x){
+        roomLength = x;
+    }
+
+    void setRoomWidth(int y){
+        roomLength = y;
+    }
+
 }
