@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ import java.util.List;
 public class CreateActivity extends AppCompatActivity {
     private List<Room> map;
     private int nRoom;
-    private RelativeLayout createLayout;
+    private LinearLayout createLayout;
     private String element;
     private ArrayList<String> orientationList;
     private int orientation, capacity;
