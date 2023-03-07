@@ -21,6 +21,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
@@ -42,6 +50,7 @@ public class CreateActivity extends AppCompatActivity {
     private EditText capacityInput;
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,7 @@ public class CreateActivity extends AppCompatActivity {
         indoorMap.addRoom();
         orientation = 0;
         roomConnectionAlert = new AlertDialog.Builder(this);
+        gson = new Gson();
 
         orientationList.add("North");
         orientationList.add("East");
@@ -407,6 +417,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
                 else {
+                    pruebasJson();
                     String mapString = "";
                     for (int i = 0; i < indoorMap.getMap().size(); ++i) {
                         mapString += indoorMap.getMap().get(i).toString() + "\n";
@@ -425,6 +436,45 @@ public class CreateActivity extends AppCompatActivity {
                 openActivityMain();
             }
         });
+    }
+
+    public void pruebasJson(){
+        this.indoorMap.setName("prueba3");
+        String path = "/data/data/com.example.wayfinding/files/";
+        File file1 = new File(path +
+                this.indoorMap.getName() + ".json");
+        if(file1.exists()) {
+            Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
+            Toast.makeText(CreateActivity.this,
+                    this.indoorMap.getName() + ".json already exists", Toast.LENGTH_SHORT).show();
+            try {
+                String json = "";
+                FileReader reader = new FileReader(file1);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    json += line;
+                }
+
+                this.indoorMap = gson.fromJson(json, IndoorMap.class);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+
+            try {
+                String json = gson.toJson(this.indoorMap);
+                File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
+                FileWriter writer = new FileWriter(file);
+                writer.write(json);
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /*@Override
