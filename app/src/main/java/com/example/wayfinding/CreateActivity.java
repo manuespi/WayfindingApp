@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import mapComponents.IndoorMap;
+import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
-    private List<Room> map;
+    private IndoorMap indoorMap;
     private int nRoom;
     private LinearLayout createLayout;
     private String element;
@@ -59,10 +60,10 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
-        map = new ArrayList<Room>();
+        indoorMap = new IndoorMap();
         orientationList = new ArrayList<>();
         nRoom = 0;
-        map.add(new Room(nRoom));
+        indoorMap.addRoom();
         orientation = 0;
         roomConnectionAlert = new AlertDialog.Builder(this);
 
@@ -81,21 +82,21 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void addElementToRoom(){
-        if(!map.isEmpty()) {
+        if(!indoorMap.getMap().isEmpty()) {
             if(element == "empty"){
                 Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
             }
             else {
-                map.get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
+                indoorMap.getMap().get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
             }
         }
     }
 
     private void refreshRoomElementsView(){
-        int nElem = map.get(nRoom).nElements();
+        int nElem = indoorMap.getMap().get(nRoom).nElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            elementsText += map.get(nRoom).get(i).getType() + ": " + map.get(nRoom).get(i).getOrientationString();
+            elementsText += indoorMap.getMap().get(nRoom).get(i).getType() + ": " + indoorMap.getMap().get(nRoom).get(i).getOrientationString();
 
             if(i < nElem - 1) elementsText += "\n";
         }
@@ -105,7 +106,7 @@ public class CreateActivity extends AppCompatActivity {
     private void refreshRoomsView(){
         String roomsText = "";
         for(int i = 0; i <= nRoom; i++){
-            roomsText += "Room " + i + ": " + map.get(i).nElements() + " elements";
+            roomsText += "Room " + i + ": " + indoorMap.getMap().get(i).nElements() + " elements";
 
             if(i < nRoom) roomsText += "\n";
         }
@@ -191,7 +192,7 @@ public class CreateActivity extends AppCompatActivity {
         doorButton.setId(1);
         doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        doorButtonParams.setMargins(20, 300, 20, 20);
+        //doorButtonParams.setMargins(20, 300, 20, 20);
         doorButton.setLayoutParams(doorButtonParams);
 
         RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
@@ -201,7 +202,7 @@ public class CreateActivity extends AppCompatActivity {
         stairsButton.setId(2);
         stairsButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         stairsButtonParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        stairsButtonParams.setMargins(20, 300, 20, 20);
+        //stairsButtonParams.setMargins(20, 300, 20, 20);
         stairsButton.setLayoutParams(stairsButtonParams);
 
         RelativeLayout.LayoutParams elevatorButtonParams = new RelativeLayout.LayoutParams(
@@ -211,7 +212,7 @@ public class CreateActivity extends AppCompatActivity {
         elevatorButton.setId(3);
         elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        elevatorButtonParams.setMargins(20, 300, 20, 20);
+        //elevatorButtonParams.setMargins(20, 300, 20, 20);
         elevatorButton.setLayoutParams(elevatorButtonParams);
 ////Spinner
         orientationSpinner = new Spinner(this);
@@ -391,7 +392,7 @@ public class CreateActivity extends AppCompatActivity {
                 roomConnectionAlert();
 
                 nRoom++;
-                map.add(new Room(nRoom));
+                indoorMap.addRoom();
 
                 refreshRoomElementsView();
                 refreshRoomsView();
@@ -404,11 +405,11 @@ public class CreateActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(map.isEmpty()) Log.d("Map" , "Empty");
+                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
                 else {
                     String mapString = "";
-                    for (int i = 0; i < map.size(); ++i) {
-                        mapString += map.get(i).toString() + "\n";
+                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
+                        mapString += indoorMap.getMap().get(i).toString() + "\n";
                     }
                     Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
                     intent.putExtra("map", mapString);

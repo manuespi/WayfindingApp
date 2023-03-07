@@ -1,4 +1,4 @@
-package com.example.wayfinding;
+package mapComponents;
 
 import java.util.List;
 

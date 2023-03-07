@@ -1,4 +1,4 @@
-package com.example.wayfinding;
+package mapComponents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,12 @@ public class Room {
     private int height; //y
 
 
-    Room(){
+    public Room(){
         this.room = new ArrayList<Element>();
         this.nElements = 0;
     }
 
-    Room(int id){
+    public Room(int id){
         this.room = new ArrayList<Element>();
         this.nElements = 0;
         this.id = id;
