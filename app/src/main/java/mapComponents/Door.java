@@ -3,9 +3,7 @@ package mapComponents;
 import java.util.List;
 
 public class Door extends Element{
-    public Door() {
-        super();
-    }
+    public Door() {}
 
     public Door(int id) {
         super(id);

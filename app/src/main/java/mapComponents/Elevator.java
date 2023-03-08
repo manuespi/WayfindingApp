@@ -6,11 +6,7 @@ public class Elevator extends Element{
     private boolean wheelchair;
     private int capacity;
 
-    Elevator(){
-        super();
-        this.wheelchair = true;
-        this.capacity = 6;
-    }
+    public Elevator(){}
 
     public Elevator(boolean wheelchair, int capacity) {
         this.wheelchair = wheelchair;
@@ -44,7 +40,7 @@ public class Elevator extends Element{
         return elevatorString;
     }
 
-    public boolean Wheelchair() {
+    public boolean isWheelchair() {
         return wheelchair;
     }
 

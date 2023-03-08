@@ -5,10 +5,18 @@ import java.util.List;
 
 public class IndoorMap {
     private ArrayList<Room> map;
+    private int nRoom;
     private String name;
 
     public IndoorMap(){
         map = new ArrayList<Room>();
+        nRoom = 0;
+    }
+
+    public IndoorMap(String name){
+        this.name = name;
+        map = new ArrayList<Room>();
+        nRoom = 0;
     }
 
     public void addElementToRoom(int id, String type,  int orientation, int capacity, boolean open, boolean wheelchair){
@@ -16,11 +24,12 @@ public class IndoorMap {
     }
 
     public void addRoom(){
-        this.map.add(this.map.size(), new Room(this.map.size() - 1));
+        this.map.add(nRoom, new Room(nRoom));
+        nRoom++;
     }
 
-    public IndoorMap(String name){
-        this.name = name;
+    public Room getRoom(int pos){
+        return this.map.get(pos);
     }
 
     public ArrayList<Room> getMap() {
@@ -29,6 +38,14 @@ public class IndoorMap {
 
     public void setMap(ArrayList<Room> map) {
         this.map = map;
+    }
+
+    public int getnRoom() {
+        return nRoom;
+    }
+
+    public void setnRoom(int nRoom) {
+        this.nRoom = nRoom;
     }
 
     public String getName() {

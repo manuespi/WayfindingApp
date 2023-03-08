@@ -46,6 +46,10 @@ public class Room {
         nElements++;
     }
 
+    public Element getElement(int pos){
+        return this.room.get(pos);
+    }
+
     public String toString(){
         String roomString = "Room: "+ String.valueOf(this.id) + " Empty\n";
 
@@ -69,15 +73,13 @@ public class Room {
         this.id = id;
     }
 
-
-    public int nElements() {
+    public int getnElements() {
         return nElements;
     }
 
-    public void nElements(int nElements) {
+    public void setnElements(int nElements) {
         this.nElements = nElements;
     }
-
 
     public List<Element> getRoom() {
         return room;
@@ -87,7 +89,19 @@ public class Room {
         this.room = room;
     }
 
-    public Element get(int pos){
-        return room.get(pos);
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

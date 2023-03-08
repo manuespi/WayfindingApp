@@ -21,14 +21,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
@@ -97,16 +103,16 @@ public class CreateActivity extends AppCompatActivity {
                 Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
             }
             else {
-                indoorMap.getMap().get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
+                indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
             }
         }
     }
 
     private void refreshRoomElementsView(){
-        int nElem = indoorMap.getMap().get(nRoom).nElements();
+        int nElem = indoorMap.getRoom(nRoom).getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            elementsText += indoorMap.getMap().get(nRoom).get(i).getType() + ": " + indoorMap.getMap().get(nRoom).get(i).getOrientationString();
+            elementsText += indoorMap.getRoom(nRoom).getElement(i).getType() + ": " + indoorMap.getRoom(nRoom).getElement(i).orientationString();
 
             if(i < nElem - 1) elementsText += "\n";
         }
@@ -116,7 +122,7 @@ public class CreateActivity extends AppCompatActivity {
     private void refreshRoomsView(){
         String roomsText = "";
         for(int i = 0; i <= nRoom; i++){
-            roomsText += "Room " + i + ": " + indoorMap.getMap().get(i).nElements() + " elements";
+            roomsText += "Room " + i + ": " + indoorMap.getRoom(i).getnElements() + " elements";
 
             if(i < nRoom) roomsText += "\n";
         }
@@ -152,17 +158,6 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void roomConnectionAlert() {
-        /*String[] elements = new String[map.get(nRoom).nElements()];
-        List<Integer> connects = new ArrayList<Integer>();
-        connects.add(nRoom);
-        connects.add(nRoom + 1); //esto no tiene sentido
-
-        for(int i = 0; i < map.get(nRoom).nElements(); i++){
-            elements[i] = i + " " + map.get(nRoom).get(i).getType();
-        }
-
-        Log.d("roomConnectionAlert", elements.toString());*/
-
         roomConnectionAlert.create().show();
     }
 
@@ -399,7 +394,7 @@ public class CreateActivity extends AppCompatActivity {
         newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roomConnectionAlert();
+                //roomConnectionAlert();
 
                 nRoom++;
                 indoorMap.addRoom();
@@ -417,10 +412,12 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
                 else {
-                    pruebasJson();
+                    //pruebasGson();
+                    //pruebasTxt();
+                    pruebasJackson();
                     String mapString = "";
                     for (int i = 0; i < indoorMap.getMap().size(); ++i) {
-                        mapString += indoorMap.getMap().get(i).toString() + "\n";
+                        mapString += indoorMap.getRoom(i).toString() + "\n";
                     }
                     Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
                     intent.putExtra("map", mapString);
@@ -438,11 +435,94 @@ public class CreateActivity extends AppCompatActivity {
         });
     }
 
-    public void pruebasJson(){
-        this.indoorMap.setName("prueba3");
+    public void pruebasJackson(){
+        this.indoorMap.setName("prueba2");
+        String path = "/data/data/com.example.wayfinding/files/";
+        File file = new File(path +
+                this.indoorMap.getName() + ".json");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if(file.exists()) {
+            Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
+            Toast.makeText(CreateActivity.this,
+                    this.indoorMap.getName() + ".json already exists", Toast.LENGTH_SHORT).show();
+            try {
+                String json = "";
+                FileReader reader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    json += line;
+                }
+
+                this.indoorMap = objectMapper.readValue(json, IndoorMap.class);
+                nRoom = this.indoorMap.getMap().size() - 1;
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+            try {
+                String json = objectMapper.writeValueAsString(this.indoorMap);
+                FileWriter writer = new FileWriter(file);
+                writer.write(json);
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void pruebasTxt(){
+        this.indoorMap.setName("prueba1");
+        String path = "/data/data/com.example.wayfinding/files/";
+        File file1 = new File(path +
+                this.indoorMap.getName() + ".txt");
+        if(file1.exists()) {
+            Log.d("pruebasTxt", this.indoorMap.getName() + ".txt already exists");
+            Toast.makeText(CreateActivity.this,
+                    this.indoorMap.getName() + ".txt already exists", Toast.LENGTH_SHORT).show();
+            try {
+                FileOutputStream fout = new FileOutputStream(file1);
+
+                ObjectOutputStream out = new ObjectOutputStream(fout);
+
+                out.writeObject(this.indoorMap);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        else{
+            try {
+                FileInputStream fin = new FileInputStream(file1);
+
+                ObjectInputStream in = new ObjectInputStream(fin);
+
+                this.indoorMap = (IndoorMap) in.readObject();
+                in.close();
+            }
+
+            catch (IOException ex) {
+                System.out.println("IOException ");
+            }
+
+            catch (ClassNotFoundException ex) {
+                System.out.println("ClassNotFoundException");
+            }
+        }
+    }
+
+    public void pruebasGson(){
+        this.indoorMap.setName("prueba1");
         String path = "/data/data/com.example.wayfinding/files/";
         File file1 = new File(path +
                 this.indoorMap.getName() + ".json");
+
         if(file1.exists()) {
             Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
             Toast.makeText(CreateActivity.this,
@@ -457,6 +537,7 @@ public class CreateActivity extends AppCompatActivity {
                 }
 
                 this.indoorMap = gson.fromJson(json, IndoorMap.class);
+                nRoom = this.indoorMap.getMap().size() - 1;
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
@@ -467,8 +548,7 @@ public class CreateActivity extends AppCompatActivity {
 
             try {
                 String json = gson.toJson(this.indoorMap);
-                File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
-                FileWriter writer = new FileWriter(file);
+                FileWriter writer = new FileWriter(file1);
                 writer.write(json);
                 writer.close();
             } catch (IOException e) {
