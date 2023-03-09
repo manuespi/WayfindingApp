@@ -15,35 +15,29 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import mapComponents.IndoorMap;
-import mapComponents.Room;
+import com.example.wayfinding.mapComponents.IndoorMap;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
     private int nRoom;
-    private LinearLayout createLayout;
+    //private LinearLayout createLayout;
+    private RelativeLayout createLayout;
     private String element;
     private ArrayList<String> orientationList;
     private int orientation, capacity;
@@ -436,7 +430,7 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     public void pruebasJackson(){
-        this.indoorMap.setName("prueba2");
+        this.indoorMap.setName("prueba1");
         String path = "/data/data/com.example.wayfinding/files/";
         File file = new File(path +
                 this.indoorMap.getName() + ".json");
@@ -476,7 +470,7 @@ public class CreateActivity extends AppCompatActivity {
         }
     }
 
-    public void pruebasTxt(){
+    /*public void pruebasTxt(){
         this.indoorMap.setName("prueba1");
         String path = "/data/data/com.example.wayfinding/files/";
         File file1 = new File(path +
@@ -555,7 +549,7 @@ public class CreateActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         }
-    }
+    }*/
 
     /*@Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {

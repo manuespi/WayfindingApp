@@ -1,10 +1,7 @@
-package mapComponents;
+package com.example.wayfinding.mapComponents;
 
 import android.util.Log;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class Stairs extends Element {

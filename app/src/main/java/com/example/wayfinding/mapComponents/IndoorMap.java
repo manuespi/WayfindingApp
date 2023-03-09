@@ -1,7 +1,6 @@
-package mapComponents;
+package com.example.wayfinding.mapComponents;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IndoorMap {
     private ArrayList<Room> map;
