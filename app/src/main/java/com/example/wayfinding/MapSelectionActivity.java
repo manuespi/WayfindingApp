@@ -73,8 +73,8 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.map_name_popup, null);
 
-                Button saveButton = popupView.findViewById(R.id.name_edit_button);
-                EditText nameEditText = popupView.findViewById(R.id.name_edit_text);
+                Button saveButton = popupView.findViewById(R.id.mapName_edit_button);
+                EditText nameEditText = popupView.findViewById(R.id.mapName_edit_text);
 
                 AlertDialog dialog = new AlertDialog.Builder(MapSelectionActivity.this)
                         .setView(popupView)
@@ -102,12 +102,11 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         finish();
     }
 
-    public void openActivityRoomSelection(String name, String map){
-        /*Intent intent = new Intent(this, RoomSelectionActivity.class);
-        intent.putExtra("name", name);
+    public void openActivityRoomSelection(String map){
+        Intent intent = new Intent(this, RoomSelectionActivity.class);
         intent.putExtra("map", map);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 
     private void openActivityMain(){
@@ -117,8 +116,8 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     }
 
     @Override
-    public void deleteMap(int position) { //preguntar confirmacion y borrar el fichero correspondiente
-        Log.d("MapSelectoinActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
+    public void deleteMap(int position) { //TODO preguntar confirmacion y borrar el fichero correspondiente
+        Log.d("MapSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
         File f = jsonFileList.get(position);
         jsonFileList.remove(position);
         f.delete();
@@ -127,8 +126,8 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     }
 
     @Override
-    public void editMap(int position) { //preguntar confirmacion y borrar el fichero correspondiente
-        Log.d("MapSelectoinActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
+    public void editMap(int position) {
+        Log.d("MapSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
         String name = jsonFileList.get(position).getName().replace(".json", "");
         String map = "";
         try {
@@ -144,6 +143,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        openActivityRoomSelection(name, map); //PROBAR MAP
+        Log.d("editMap", map);
+        openActivityRoomSelection(map);
     }
 }

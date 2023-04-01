@@ -59,22 +59,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set the map name"
+        android:text="Set the room name"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
 
     <EditText
-        android:id="@+id/mapName_edit_text"
+        android:id="@+id/roomName_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="8dp"
-        android:hint="Map name"
+        android:hint="Room name"
         android:inputType="text"/>
 
     <Button
-        android:id="@+id/mapName_edit_button"
+        android:id="@+id/roomName_edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

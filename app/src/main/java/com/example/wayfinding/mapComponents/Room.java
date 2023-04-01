@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Room {
     private int id;
+    private String name;
     private int nElements;
     private List<Element> room;
     private int width; //x
@@ -20,6 +21,13 @@ public class Room {
         this.room = new ArrayList<Element>();
         this.nElements = 0;
         this.id = id;
+    }
+
+    public Room(int id, String name){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
+        this.id = id;
+        this.name = name;
     }
 
     Room(int id, boolean up, boolean down){
@@ -71,6 +79,14 @@ public class Room {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getnElements() {

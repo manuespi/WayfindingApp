@@ -23,7 +23,7 @@ public class IndoorMap {
     }
 
     public void addRoom(){
-        this.map.add(nRoom, new Room(nRoom));
+        this.map.add(nRoom, new Room(nRoom, Integer.toString(nRoom))); //TODO meterle el nombre cuando proceda
         nRoom++;
     }
 

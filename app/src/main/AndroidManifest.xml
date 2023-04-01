@@ -16,6 +16,9 @@
             android:name=".MapSelectionActivity"
             android:exported="false" />
         <activity
+            android:name=".RoomSelectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateActivity"
             android:exported="false">
             <meta-data

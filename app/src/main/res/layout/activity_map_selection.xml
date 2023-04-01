@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Lista de mapas"
+        android:text="Map list"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -40,7 +40,7 @@
         android:layout_marginStart="110dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:text="New Map"
+        android:text="New map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/MapList_textView"
         app:layout_constraintTop_toTopOf="parent" />
