@@ -19,10 +19,13 @@ private Button mainMenu_button;
         TextView incomingData = findViewById(R.id.map);
 
         Intent incomingIntent = getIntent();
-        String mapString = incomingIntent.getStringExtra("map");
+        if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+            String mapString = incomingIntent.getStringExtra("map");
 
-        Log.d("Showing map", mapString);
-        incomingData.setText(mapString);
+            Log.d("Showing map", mapString);
+            incomingData.setText(mapString);
+        }
+        else incomingData.setText("No map available");
 
         mainMenu_button = (Button) findViewById(R.id.mainMenu_button);
         mainMenu_button.setOnClickListener(new android.view.View.OnClickListener() {

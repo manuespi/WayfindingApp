@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mapList_cardView"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     app:cardBackgroundColor="#E8E5E5"
@@ -28,12 +28,20 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/editMap_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="142dp"
+            android:text="Edit"
+            app:icon="@android:drawable/ic_menu_edit" />
+
+        <Button
             android:id="@+id/deleteMap_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="0dp"
             android:text="Delete"
             app:icon="@android:drawable/ic_menu_delete" />
     </RelativeLayout>

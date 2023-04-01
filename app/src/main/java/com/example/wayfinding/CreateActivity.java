@@ -69,20 +69,49 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
-        indoorMap = new IndoorMap();
         orientationList = new ArrayList<>();
-        nRoom = 0;
-        indoorMap.addRoom();
-        orientation = 0;
-        roomConnectionAlert = new AlertDialog.Builder(this);
-        gson = new Gson();
-
         orientationList.add("North");
         orientationList.add("East");
         orientationList.add("South");
         orientationList.add("West");
+        orientation = 0;
+        roomConnectionAlert = new AlertDialog.Builder(this);
+        gson = new Gson();
+
+        Intent incomingIntent = getIntent();
+        if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+            String mapString = incomingIntent.getStringExtra("map");
+            String nameString = incomingIntent.getStringExtra("name");
+
+            receiveMap(mapString, nameString);
+            Log.d("CreateActivity", "Map " +nameString+ " received");
+        }
+        else if(incomingIntent != null && incomingIntent.hasExtra("name")){
+            Log.d("CreateActivity", "New map");
+            String nameString = incomingIntent.getStringExtra("name");
+            indoorMap = new IndoorMap();
+            indoorMap.setName(nameString);
+            nRoom = 0;
+            indoorMap.addRoom();
+        }
+        else{
+            Log.e("CreateActivity", "A problem ");
+        }
 
         setDefaultValues();
+    }
+
+    private void receiveMap(String map, String name){
+        this.indoorMap.setName(name);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Log.d("CreateActivity", this.indoorMap.getName() + "receiving map");
+        try {
+            this.indoorMap = objectMapper.readValue(map, IndoorMap.class);
+            nRoom = this.indoorMap.getMap().size() - 1;
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void openActivityMain(){
@@ -430,10 +459,12 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     public void pruebasJackson(){
-        this.indoorMap.setName("prueba1");
-        String path = "/data/data/com.example.wayfinding/files/";
+        //this.indoorMap.setName("prueba2");
+        /*String path = "/data/data/com.example.wayfinding/files/";
         File file = new File(path +
-                this.indoorMap.getName() + ".json");
+                this.indoorMap.getName() + ".json");*/
+        File file = new File(
+                this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
 
         if(file.exists()) {

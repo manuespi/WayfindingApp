@@ -21,7 +21,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
 
         private MapFileListAdapter adapter;
         private TextView mapItemView;
-        private Button deleteMapButton;
+        private Button deleteMapButton, editMapButton;
 
         //Añadir los botones supongo
 
@@ -34,6 +34,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             this.mapItemView = itemView.findViewById(R.id.mapFile_name);
             this.adapter = adapter;
             this.deleteMapButton = itemView.findViewById(R.id.deleteMap_button);
+            this.editMapButton = itemView.findViewById(R.id.editMap_button);
             itemView.setOnClickListener(this);
         }
 
@@ -44,7 +45,8 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void deleteMap(int position);
+        void editMap(int position);
     }
 
     private OnItemClickListener listener;
@@ -70,12 +72,22 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
 
     @Override
     public void onBindViewHolder(MapFileViewHolder holder, int position) {
-        holder.mapItemView.setText(this.fileList.get(position).getName());
+        String fileName = this.fileList.get(position).getName();
+        fileName = fileName.replace(".json", "");
+        holder.mapItemView.setText(fileName);
         holder.deleteMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onItemClick(holder.getBindingAdapterPosition());
+                    listener.deleteMap(holder.getBindingAdapterPosition());
+                }
+            }
+        });
+        holder.editMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.editMap(holder.getBindingAdapterPosition());
                 }
             }
         });
