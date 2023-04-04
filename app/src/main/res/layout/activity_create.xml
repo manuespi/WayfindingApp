@@ -15,12 +15,11 @@
 
 
         <com.example.wayfinding.MapCanvas
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/mapCanvas"
             android:name=".MapCanvas"
-            android:exported="false"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:exported="false" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -34,9 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="false"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50px"
+            android:layout_marginLeft="50dp"
             android:gravity="center_horizontal"
-            android:hint="y" />
+            android:hint="y"
+            android:minWidth="48dp"
+            android:minHeight="48dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -51,9 +52,12 @@
             android:layout_alignWithParentIfMissing="false"
             android:layout_alignParentEnd="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80px"
+            android:layout_marginTop="80dp"
             android:hint="x"
-            android:onClick="setRoomLength()" />
+            android:minWidth="48dp"
+            android:minHeight="48dp" />
+<!--            android:onClick="setRoomLength()" -->
+
 
     </RelativeLayout>
 

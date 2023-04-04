@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MapCanvas extends View {
     Path path;
     Rect rect;
     int roomLength = 900, roomWidth = 600;
+    int viewWidth, viewHeight;
 
     public MapCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -48,8 +50,17 @@ public class MapCanvas extends View {
         paintD.setStrokeWidth(20f);
 
 
-        //rectange stuff
-        rect = new Rect(150,200, roomLength, roomWidth);
+        int viewWidth = 850;
+        int viewHeight = 850;
+
+
+
+
+        rect = new Rect((viewWidth- roomLength)/2, (viewHeight - roomWidth)/2, roomLength, roomWidth);
+
+
+
+
     }
 
 //    public MapCanvas(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -102,4 +113,11 @@ public class MapCanvas extends View {
         roomLength = y;
     }
 
+    @Override
+    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
+        super.onSizeChanged(xNew, yNew, xOld, yOld);
+
+        viewWidth = xNew;
+        viewHeight = yNew;
+    }
 }
