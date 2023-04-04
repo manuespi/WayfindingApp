@@ -21,7 +21,6 @@ public class MapCanvas extends View {
 
     Paint paintR, paintD;
     Path path;
-    Rect rect;
     int roomLength = 900, roomWidth = 600;
     int viewWidth, viewHeight;
 
@@ -50,14 +49,6 @@ public class MapCanvas extends View {
         paintD.setStrokeWidth(20f);
 
 
-        int viewWidth = 850;
-        int viewHeight = 850;
-
-
-
-
-        rect = new Rect((viewWidth- roomLength)/2, (viewHeight - roomWidth)/2, roomLength, roomWidth);
-
 
 
 
@@ -75,7 +66,6 @@ public class MapCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRect(rect, paintR);
         canvas.drawPath(path,paintD);
     }
 
