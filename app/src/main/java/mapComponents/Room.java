@@ -1,5 +1,7 @@
 package mapComponents;
 
+import android.text.Editable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class Room {
     private int nElements;
     private List<Element> room;
     private int width; //x
-    private int height; //y
+    private int length; //y
 
 
     public Room(){
@@ -35,6 +37,10 @@ public class Room {
         this.room = room;
     }
 
+    public void setParameters(int x, int y){
+        this.length= y;
+        this.width = x;
+    }
     public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;

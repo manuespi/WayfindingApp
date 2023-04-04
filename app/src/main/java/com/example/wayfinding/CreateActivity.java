@@ -36,10 +36,12 @@ public class CreateActivity extends AppCompatActivity {
     private boolean open, wheelchair;
     private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton;
+            addElementButton, newElementButton, resizeRoom;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
-    private EditText capacityInput;
+    private EditText capacityInput, roomXInput, roomYInput;
+    private int roomXInt;
+    private int roomYInt;
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
 
@@ -52,6 +54,7 @@ public class CreateActivity extends AppCompatActivity {
         setInterface();
     }
 
+
     private void setDefaultValues(){
         element = "empty";
         capacity = 6;
@@ -60,6 +63,10 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
+        roomXInt = 100;
+        roomXInt = 200;
+        roomXInput = (EditText) findViewById(R.id.roomX);
+        roomYInput = (EditText) findViewById(R.id.roomY);
         indoorMap = new IndoorMap();
         orientationList = new ArrayList<>();
         nRoom = 0;
@@ -159,6 +166,8 @@ public class CreateActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
+
+        resizeRoom = findViewById(R.id.prueba);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
         showButton = findViewById(R.id.show_button);
@@ -393,6 +402,8 @@ public class CreateActivity extends AppCompatActivity {
 
                 nRoom++;
                 indoorMap.addRoom();
+                indoorMap.getMap().get(nRoom).setParameters(roomXInt, roomYInt);
+
 
                 refreshRoomElementsView();
                 refreshRoomsView();
@@ -423,6 +434,18 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openActivityMain();
+            }
+        });
+
+        resizeRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roomXInt = Integer.parseInt(roomXInput.getText().toString());
+                roomYInt = Integer.parseInt(roomYInput.getText().toString());
+                findViewById(R.id.roomView).getLayoutParams().width = roomXInt;
+                findViewById(R.id.roomView).getLayoutParams().height = roomYInt;
+
+                System.out.print("x: " + roomXInt + "y: " + roomYInt);
             }
         });
     }
