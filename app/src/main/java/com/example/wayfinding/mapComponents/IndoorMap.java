@@ -27,6 +27,16 @@ public class IndoorMap {
         nRoom++;
     }
 
+    public int getId(){
+        int ret = -1;
+
+        for(int i = 0; i < this.map.size(); ++i)
+            if(map.get(i).getId() > ret) ret = map.get(i).getId();
+
+        if(ret == -1) return 0;
+        else return ret + 1;
+    }
+
     public Room getRoom(int pos){
         return this.map.get(pos);
     }

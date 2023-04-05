@@ -1,8 +1,9 @@
 package com.example.wayfinding.mapComponents;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Door extends Element{
+public class Door extends Element implements Serializable {
     public Door() {}
 
     public Door(int id) {

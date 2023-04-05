@@ -1,9 +1,10 @@
 package com.example.wayfinding.mapComponents;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room implements Serializable {
     private int id;
     private String name;
     private int nElements;

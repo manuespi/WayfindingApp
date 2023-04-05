@@ -1,8 +1,9 @@
 package com.example.wayfinding.mapComponents;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Elevator extends Element{
+public class Elevator extends Element implements Serializable {
     private boolean wheelchair;
     private int capacity;
 

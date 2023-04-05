@@ -79,7 +79,7 @@ public class CreateActivity extends AppCompatActivity {
         gson = new Gson();
 
         Intent incomingIntent = getIntent();
-        if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+        if(incomingIntent != null && incomingIntent.hasExtra("map")) {//TODO habría que ver si se está creando o editando¿?
             String mapString = incomingIntent.getStringExtra("map");
             String nameString = incomingIntent.getStringExtra("name");
 

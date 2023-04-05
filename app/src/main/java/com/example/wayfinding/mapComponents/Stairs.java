@@ -2,9 +2,10 @@ package com.example.wayfinding.mapComponents;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Stairs extends Element {
+public class Stairs extends Element implements Serializable {
     private boolean wheelchair;
 
     public Stairs(){}

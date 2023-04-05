@@ -95,7 +95,8 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
                         Log.d("RoomSelectionActivity", "Se crea la habitación " + name);
-                        //openActivityCreate(name);
+                        int id = indoorMap.getId();
+                        openActivityEditRoom(name, id);
                     }
                 });
 
@@ -110,19 +111,19 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
     }
 
-    public void openActivityCreate(String name){//TODO hacer una actividad de room creation común
-        Intent intent = new Intent(this, CreateActivity.class);
+    public void openActivityEditRoom(String name, int id){//TODO hacer una actividad de room creation común
+        Intent intent = new Intent(this, EditRoomActivity.class);
         intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
+        intent.putExtra("id", id);
         startActivity(intent);
         finish();
     }
 
-    public void openActivityRoomSelection(String name, String map){
-        /*Intent intent = new Intent(this, RoomSelectionActivity.class);
-        intent.putExtra("name", name);
-        intent.putExtra("map", map);
+    public void openActivityEditRoom(Room room){//TODO hacer una actividad de room creation común
+        Intent intent = new Intent(this, EditRoomActivity.class);
+        intent.putExtra("room", room);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 
     private void openActivityMain(){
@@ -142,6 +143,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     @Override
     public void editRoom(int position) {
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
+        openActivityEditRoom(roomList.get(position));
         //TODO crear el editor de rooms común
     }
 }
