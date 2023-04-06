@@ -96,7 +96,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                         dialog.dismiss();
                         Log.d("RoomSelectionActivity", "Se crea la habitación " + name);
                         int id = indoorMap.getId();
-                        openActivityEditRoom(name, id);
+                        openActivityCreate(name, id);
                     }
                 });
 
@@ -111,17 +111,19 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
     }
 
-    public void openActivityEditRoom(String name, int id){//TODO hacer una actividad de room creation común
-        Intent intent = new Intent(this, EditRoomActivity.class);
+    public void openActivityCreate(String name, int id){//TODO modificar createActivity pa recibir todo bn
+        Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
         intent.putExtra("id", id);
+        intent.putExtra("map", this.indoorMap);
         startActivity(intent);
         finish();
     }
 
-    public void openActivityEditRoom(Room room){//TODO hacer una actividad de room creation común
-        Intent intent = new Intent(this, EditRoomActivity.class);
+    public void openActivityCreate(Room room){//TODO modificar createActivity pa recibir todo bn
+        Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("room", room);
+        intent.putExtra("map", this.indoorMap);
         startActivity(intent);
         finish();
     }
@@ -143,7 +145,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     @Override
     public void editRoom(int position) {
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
-        openActivityEditRoom(roomList.get(position));
+        openActivityCreate(roomList.get(position));
         //TODO crear el editor de rooms común
     }
 }

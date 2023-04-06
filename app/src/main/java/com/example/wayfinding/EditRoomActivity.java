@@ -15,7 +15,8 @@ public class EditRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_room);
+        //setContentView(R.layout.activity_edit_room);
+        setContentView(R.layout.activity_create);
 
         initializeAttributes();
     }
@@ -32,6 +33,9 @@ public class EditRoomActivity extends AppCompatActivity {
             String name = incomingIntent.getStringExtra("name");
             int id = incomingIntent.getIntExtra("id", 0);
             pruebatv.setText("crear room " + id + ": " + name);
+            this.room = new Room();
+            this.room.setName(name);
+            this.room.setId(id);
         }
     }
 }

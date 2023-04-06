@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wayfinding.mapComponents.Room;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -36,6 +37,7 @@ import com.example.wayfinding.mapComponents.IndoorMap;
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
     private int nRoom;
+    private Room room;
     //private LinearLayout createLayout;
     private RelativeLayout createLayout;
     private String element;
@@ -79,23 +81,19 @@ public class CreateActivity extends AppCompatActivity {
         gson = new Gson();
 
         Intent incomingIntent = getIntent();
-        if(incomingIntent != null && incomingIntent.hasExtra("map")) {//TODO habría que ver si se está creando o editando¿?
-            String mapString = incomingIntent.getStringExtra("map");
-            String nameString = incomingIntent.getStringExtra("name");
+        TextView pruebatv = findViewById(R.id.editRoom_prueba);
 
-            receiveMap(mapString, nameString);
-            Log.d("CreateActivity", "Map " +nameString+ " received");
-        }
-        else if(incomingIntent != null && incomingIntent.hasExtra("name")){
-            Log.d("CreateActivity", "New map");
-            String nameString = incomingIntent.getStringExtra("name");
-            indoorMap = new IndoorMap();
-            indoorMap.setName(nameString);
-            nRoom = 0;
-            indoorMap.addRoom();
+        if(incomingIntent != null && incomingIntent.hasExtra("room")) {
+            this.room = (Room) incomingIntent.getSerializableExtra("room");
+            pruebatv.setText("room recogida: " + this.room.getId());
         }
         else{
-            Log.e("CreateActivity", "A problem ");
+            String name = incomingIntent.getStringExtra("name");
+            int id = incomingIntent.getIntExtra("id", 0);
+            pruebatv.setText("crear room " + id + ": " + name);
+            this.room = new Room();
+            this.room.setName(name);
+            this.room.setId(id);
         }
 
         setDefaultValues();
