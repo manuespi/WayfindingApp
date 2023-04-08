@@ -1,5 +1,6 @@
 package com.example.wayfinding.mapComponents;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Stairs.class, name = "stairs"),
         @JsonSubTypes.Type(value = Elevator.class, name = "elevator"),
 })
-public class Element {
+public class Element implements Serializable {
     private int id;
     private int orientation; // 0 North, 1 East, 2 South, 3 West
     private String type;    // door, elevator, stairs

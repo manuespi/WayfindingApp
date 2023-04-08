@@ -86,7 +86,8 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
                         String name = nameEditText.getText().toString();
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        openActivityCreate(name);
+                        //openActivityCreate(name);
+                        openActivityEmptyRoomSelection(name);
                     }
                 });
 
@@ -98,6 +99,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     public void openActivityCreate(String name){
         Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
+        intent.putExtra("new", true);
         startActivity(intent);
         finish();
     }
@@ -105,6 +107,14 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     public void openActivityRoomSelection(String map){
         Intent intent = new Intent(this, RoomSelectionActivity.class);
         intent.putExtra("map", map);
+        startActivity(intent);
+        finish();
+    }
+
+    public void openActivityEmptyRoomSelection(String name){
+        Intent intent = new Intent(this, RoomSelectionActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("new", true);
         startActivity(intent);
         finish();
     }
@@ -127,8 +137,8 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
 
     @Override
     public void editMap(int position) {
-        Log.d("MapSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
         String name = jsonFileList.get(position).getName().replace(".json", "");
+        Log.d("MapSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position + ", " + name);
         String map = "";
         try {
             FileReader reader = new FileReader(jsonFileList.get(position));

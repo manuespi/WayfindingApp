@@ -90,7 +90,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="100px"
             android:layout_marginBottom="20px"
-            android:text="View all" />
+            android:text="Save" />
 
         <Button
             android:id="@+id/newElement_button"
@@ -119,6 +119,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="200px"
             android:layout_marginRight="200px"
+            android:enabled="false"
             android:text="New room" />
 
         <TextView
@@ -137,6 +138,7 @@
             android:text="Rooms"
             android:layout_marginBottom="360px"
             android:layout_marginRight="120px"
+            android:enabled="false"
             android:layout_alignLeft="@+id/newRoom_button"
             android:layout_alignParentBottom="true"/>
 

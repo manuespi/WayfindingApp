@@ -28,7 +28,12 @@ public class IndoorMap implements Serializable {
         nRoom++;
     }
 
-    public int getId(){
+    public void addRoom(Room r){
+        this.map.add(nRoom, r);
+        nRoom++;
+    }
+
+    public int NextId(){
         int ret = -1;
 
         for(int i = 0; i < this.map.size(); ++i)

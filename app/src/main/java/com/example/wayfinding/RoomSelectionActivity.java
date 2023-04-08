@@ -34,6 +34,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     private ArrayList<Room> roomList;
     private IndoorMap indoorMap;
     private Button newRoomButton, mainMenuButton, saveButton;
+    private boolean newMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     private void setRoomList(){
         Intent incomingIntent = getIntent();
         if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+            this.newMap = false;
             String mapString = incomingIntent.getStringExtra("map");
             ObjectMapper objectMapper = new ObjectMapper();
             try {
@@ -55,6 +57,11 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
+        }
+        else if(incomingIntent != null && incomingIntent.hasExtra("new")) {Log.d("RSA", "Pilla el extra new");
+            this.newMap = true;
+            this.roomList = new ArrayList<Room>();
+            this.indoorMap = new IndoorMap(incomingIntent.getStringExtra("name"));
         }
     }
 
@@ -95,8 +102,8 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
                         Log.d("RoomSelectionActivity", "Se crea la habitación " + name);
-                        int id = indoorMap.getId();
-                        openActivityCreate(name, id);
+
+                        openActivityCreate(name, indoorMap.NextId());
                     }
                 });
 
@@ -116,6 +123,8 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
         intent.putExtra("id", id);
         intent.putExtra("map", this.indoorMap);
+        if(this.newMap) intent.putExtra("new", true);
+
         startActivity(intent);
         finish();
     }

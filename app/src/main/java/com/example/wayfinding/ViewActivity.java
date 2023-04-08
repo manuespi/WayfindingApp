@@ -25,7 +25,7 @@ private Button mainMenu_button;
             Log.d("Showing map", mapString);
             incomingData.setText(mapString);
         }
-        else incomingData.setText("No map available");
+        else incomingData.setText("Not available yet");
 
         mainMenu_button = (Button) findViewById(R.id.mainMenu_button);
         mainMenu_button.setOnClickListener(new android.view.View.OnClickListener() {

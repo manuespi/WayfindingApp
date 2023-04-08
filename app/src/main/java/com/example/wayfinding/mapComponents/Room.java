@@ -44,7 +44,7 @@ public class Room implements Serializable {
         this.room = room;
     }
 
-    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
+    public void addElement(String type, int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;
             case "elevator": room.add(new Elevator(nElements, orientation, type, open, wheelchair, capacity)); break;
@@ -64,6 +64,7 @@ public class Room implements Serializable {
 
         if(!room.isEmpty()) {
             roomString = "Room ID: " + String.valueOf(this.id) + "\n";
+            roomString = "Room name: " + this.name + "\n";
             roomString += "Element number: " + String.valueOf(this.nElements) + "\n";
 
             for (int i = 0; i < nElements; ++i) {

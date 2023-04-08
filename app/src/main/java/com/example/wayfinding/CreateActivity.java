@@ -53,6 +53,7 @@ public class CreateActivity extends AppCompatActivity {
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
     private Gson gson;
+    private boolean editingRoom, newMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class CreateActivity extends AppCompatActivity {
 
         initializeAttributes();
         setInterface();
+        refreshRoomElementsView();
     }
 
     private void setDefaultValues(){
@@ -79,21 +81,34 @@ public class CreateActivity extends AppCompatActivity {
         orientation = 0;
         roomConnectionAlert = new AlertDialog.Builder(this);
         gson = new Gson();
+        this.indoorMap = new IndoorMap();
+        roomElementsView = findViewById(R.id.roomElements);
 
         Intent incomingIntent = getIntent();
-        TextView pruebatv = findViewById(R.id.editRoom_prueba);
 
         if(incomingIntent != null && incomingIntent.hasExtra("room")) {
             this.room = (Room) incomingIntent.getSerializableExtra("room");
-            pruebatv.setText("room recogida: " + this.room.getId());
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
+            this.editingRoom = true;
+            this.newMap = false;
         }
-        else{
+        else if(incomingIntent != null && incomingIntent.hasExtra("id")){
             String name = incomingIntent.getStringExtra("name");
             int id = incomingIntent.getIntExtra("id", 0);
-            pruebatv.setText("crear room " + id + ": " + name);
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
             this.room = new Room();
             this.room.setName(name);
             this.room.setId(id);
+            this.editingRoom = false;
+
+            if(incomingIntent.hasExtra("new"))
+                this.newMap = true;
+            else this.newMap = false;
+        }
+        else{
+            Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
+            this.editingRoom = false;
+            this.newMap = false;
         }
 
         setDefaultValues();
@@ -119,21 +134,23 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void addElementToRoom(){
-        if(!indoorMap.getMap().isEmpty()) {
             if(element == "empty"){
                 Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
             }
             else {
-                indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
+                //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
+                this.room.addElement(element, orientation, capacity, open, wheelchair);
             }
-        }
     }
 
     private void refreshRoomElementsView(){
-        int nElem = indoorMap.getRoom(nRoom).getnElements();
+        //int nElem = indoorMap.getRoom(nRoom).getnElements();
+        Log.d("refresh", room.toString());
+        int nElem = this.room.getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            elementsText += indoorMap.getRoom(nRoom).getElement(i).getType() + ": " + indoorMap.getRoom(nRoom).getElement(i).orientationString();
+            //elementsText += indoorMap.getRoom(nRoom).getElement(i).getType() + ": " + indoorMap.getRoom(nRoom).getElement(i).orientationString();
+            elementsText += this.room.getElement(i).getType() + ": " + this.room.getElement(i).orientationString();Log.d("refresh", "Entra");
 
             if(i < nElem - 1) elementsText += "\n";
         }
@@ -192,10 +209,10 @@ public class CreateActivity extends AppCompatActivity {
         addElementButton = findViewById(R.id.addElement_button);
         newElementButton = findViewById(R.id.newElement_button);
 
-        roomElementsView = findViewById(R.id.roomElements);
+        //roomElementsView = findViewById(R.id.roomElements);
         roomElementsView.setText("Room empty");
         roomsView = findViewById(R.id.rooms);
-        roomsView.setText("Room 0: 0 elements");
+        //roomsView.setText("Room 0: 0 elements");
         currentRoom = findViewById(R.id.currentRoom);
         refreshCurrentRoom();
 
@@ -405,7 +422,7 @@ public class CreateActivity extends AppCompatActivity {
                 if(parametersOk) {
                     addElementToRoom();
                     refreshRoomElementsView();
-                    refreshRoomsView();
+                    //refreshRoomsView();
                     setDefaultValues();
                     setDefaultLayout();
                 }
@@ -421,7 +438,7 @@ public class CreateActivity extends AppCompatActivity {
                 indoorMap.addRoom();
 
                 refreshRoomElementsView();
-                refreshRoomsView();
+                //refreshRoomsView();
                 refreshCurrentRoom();
                 setDefaultValues();
                 setDefaultLayout();
@@ -431,20 +448,30 @@ public class CreateActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
-                else {
-                    //pruebasGson();
-                    //pruebasTxt();
-                    pruebasJackson();
-                    String mapString = "";
-                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
-                        mapString += indoorMap.getRoom(i).toString() + "\n";
-                    }
-                    Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
-                    intent.putExtra("map", mapString);
-                    startActivity(intent);
-                    finish();
+                if(editingRoom){
+                    ArrayList<Room> auxMap = indoorMap.getMap();
+
+                    for(int i = 0; i < auxMap.size(); ++i)
+                        if(auxMap.get(i).getId() == room.getId())
+                            auxMap.set(i, room);
+
+                    indoorMap.setMap(auxMap);
                 }
+                else{
+                    indoorMap.addRoom(room);
+                }
+
+                SaveMap();
+
+                String mapString = "";
+                for (int i = 0; i < indoorMap.getMap().size(); ++i) {
+                    mapString += indoorMap.getRoom(i).toString() + "\n";
+                }
+
+                Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
+                intent.putExtra("map", mapString);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -456,16 +483,37 @@ public class CreateActivity extends AppCompatActivity {
         });
     }
 
-    public void pruebasJackson(){
-        //this.indoorMap.setName("prueba2");
-        /*String path = "/data/data/com.example.wayfinding/files/";
-        File file = new File(path +
-                this.indoorMap.getName() + ".json");*/
-        File file = new File(
-                this.getFilesDir(), this.indoorMap.getName() + ".json");
+    public void SaveMap(){
+        File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
+        
+        if(newMap){Log.d("SaveMap", "NEW MAP");
+            if(file.exists())
+                file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
 
-        if(file.exists()) {
+            try {
+                String json = objectMapper.writeValueAsString(this.indoorMap);
+                FileWriter writer = new FileWriter(file);
+                writer.write(json);
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{Log.d("SaveMap", "EDITING MAP");
+            if(editingRoom){Log.d("SaveMap", "EDITING ROOM");
+                try {
+                    String json = objectMapper.writeValueAsString(this.indoorMap);
+                    FileWriter writer = new FileWriter(file);
+                    writer.write(json);
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+///////////////////////////////////////////////////////////////////////////////////////
+        /*if(file.exists()) {
             Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
             Toast.makeText(CreateActivity.this,
                     this.indoorMap.getName() + ".json already exists", Toast.LENGTH_SHORT).show();
@@ -496,93 +544,6 @@ public class CreateActivity extends AppCompatActivity {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
     }
-
-    /*public void pruebasTxt(){
-        this.indoorMap.setName("prueba1");
-        String path = "/data/data/com.example.wayfinding/files/";
-        File file1 = new File(path +
-                this.indoorMap.getName() + ".txt");
-        if(file1.exists()) {
-            Log.d("pruebasTxt", this.indoorMap.getName() + ".txt already exists");
-            Toast.makeText(CreateActivity.this,
-                    this.indoorMap.getName() + ".txt already exists", Toast.LENGTH_SHORT).show();
-            try {
-                FileOutputStream fout = new FileOutputStream(file1);
-
-                ObjectOutputStream out = new ObjectOutputStream(fout);
-
-                out.writeObject(this.indoorMap);
-                out.flush();
-                out.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-        else{
-            try {
-                FileInputStream fin = new FileInputStream(file1);
-
-                ObjectInputStream in = new ObjectInputStream(fin);
-
-                this.indoorMap = (IndoorMap) in.readObject();
-                in.close();
-            }
-
-            catch (IOException ex) {
-                System.out.println("IOException ");
-            }
-
-            catch (ClassNotFoundException ex) {
-                System.out.println("ClassNotFoundException");
-            }
-        }
-    }
-
-    public void pruebasGson(){
-        this.indoorMap.setName("prueba1");
-        String path = "/data/data/com.example.wayfinding/files/";
-        File file1 = new File(path +
-                this.indoorMap.getName() + ".json");
-
-        if(file1.exists()) {
-            Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
-            Toast.makeText(CreateActivity.this,
-                    this.indoorMap.getName() + ".json already exists", Toast.LENGTH_SHORT).show();
-            try {
-                String json = "";
-                FileReader reader = new FileReader(file1);
-                BufferedReader bufferedReader = new BufferedReader(reader);
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    json += line;
-                }
-
-                this.indoorMap = gson.fromJson(json, IndoorMap.class);
-                nRoom = this.indoorMap.getMap().size() - 1;
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else{
-
-            try {
-                String json = gson.toJson(this.indoorMap);
-                FileWriter writer = new FileWriter(file1);
-                writer.write(json);
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }*/
-
-    /*@Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("mapa", ArrayList<>(map);
-    }*/
 }
