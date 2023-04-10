@@ -36,7 +36,7 @@ public class CreateActivity extends AppCompatActivity {
     private boolean open, wheelchair;
     private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton, resizeRoom;
+            addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
     private EditText capacityInput, roomXInput, roomYInput;
@@ -48,10 +48,27 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create);
 
-        initializeAttributes();
-        setInterface();
+        setContentView(R.layout.basic_room_inputs);
+        roomXInput = (EditText) findViewById(R.id.roomXWidth);
+        roomYInput = (EditText) findViewById(R.id.roomYLength);
+
+        //peta aqui
+//        roomXInt = Integer.parseInt(roomXInput.getText().toString());
+//        roomYInt = Integer.parseInt(roomYInput.getText().toString());
+        nextButton = findViewById(R.id.next);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_create);
+
+                initializeAttributes();
+                setInterface();
+            }
+        });
+
+
     }
 
 
@@ -63,10 +80,6 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
-        roomXInt = 100;
-        roomXInt = 200;
-        roomXInput = (EditText) findViewById(R.id.roomX);
-        roomYInput = (EditText) findViewById(R.id.roomY);
         indoorMap = new IndoorMap();
         orientationList = new ArrayList<>();
         nRoom = 0;
@@ -446,6 +459,11 @@ public class CreateActivity extends AppCompatActivity {
                 findViewById(R.id.roomView).getLayoutParams().height = roomYInt;
 
                 System.out.print("x: " + roomXInt + "y: " + roomYInt);
+
+
+                //New idea: Antes de crear esta vista, pedir las dimensiones y el nombre del room
+                //Una vez tengamos estos inputs, creamos el dibujo del Room como NEW TextView (no forma parte del xml)
+                //Si se le da a resize, borra este textView y crea uno nuevo.
             }
         });
     }

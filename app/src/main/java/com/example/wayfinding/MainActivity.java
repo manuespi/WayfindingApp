@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     public void openActivityCreate(){
         Intent intent = new Intent(this, CreateActivity.class);
         startActivity(intent);
