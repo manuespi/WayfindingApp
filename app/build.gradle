@@ -6,6 +6,11 @@ android {
     namespace 'com.example.wayfinding'
     compileSdk 32
 
+    //probando
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.wayfinding"
         minSdk 21

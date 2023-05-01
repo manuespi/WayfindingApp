@@ -3,4 +3,5 @@
     <string name="y">y</string>
     <string name="x">x</string>
     <string name="room">ROOM</string>
+    <string name="introduce_room_name">introduce room name</string>
 </resources>

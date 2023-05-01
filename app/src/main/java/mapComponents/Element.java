@@ -43,7 +43,7 @@ public class Element {
     public String toString(){
         String ret;
 
-        ret = type + ": " + String.valueOf(this.id) + "\n";
+        ret = type + ": " + this.id + "\n";
         ret += "Orientation: " + this.getOrientationString() + "\n";
         //ret += getConnectsString() + "\n";
 

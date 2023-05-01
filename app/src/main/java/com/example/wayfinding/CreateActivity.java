@@ -1,7 +1,6 @@
 package com.example.wayfinding;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import static java.lang.Integer.parseInt;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -21,10 +20,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import com.example.wayfinding.databinding.ActivityCreateBinding;
+import com.example.wayfinding.databinding.BasicRoomInputsBinding;
+
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
-import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
@@ -42,27 +47,53 @@ public class CreateActivity extends AppCompatActivity {
     private EditText capacityInput, roomXInput, roomYInput;
     private int roomXInt;
     private int roomYInt;
+    private Integer roomWidth;
+    private Integer roomLength;
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
+    private String roomName;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.basic_room_inputs);
-        roomXInput = (EditText) findViewById(R.id.roomXWidth);
-        roomYInput = (EditText) findViewById(R.id.roomYLength);
 
-        //peta aqui
-//        roomXInt = Integer.parseInt(roomXInput.getText().toString());
-//        roomYInt = Integer.parseInt(roomYInput.getText().toString());
+//        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+//        roomName = basicRoomInputsBinding.getRoomName() != null ? basicRoomInputsBinding.getRoomName().toString() : "";
+//        roomWidth = basicRoomInputsBinding.getRoomWidth() != null ? basicRoomInputsBinding.getRoomWidth() : 0;
+//        roomLength = basicRoomInputsBinding.getRoomLength() != null ? basicRoomInputsBinding.getRoomLength() : 0;
+
+//        roomName = basicRoomInputsBinding.getRoomName().toString();
+//        roomWidth = basicRoomInputsBinding.getRoomWidth();
+//        roomLength = basicRoomInputsBinding.getRoomLength();
+
+
+
+
+//        activityCreateBinding.setRoomName(roomName);
+//        activityCreateBinding.setRoomWidth(((Integer) roomWidth));
+//        activityCreateBinding.setRoomLength(((Integer) roomLength));
+
+
+
         nextButton = findViewById(R.id.next);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_create);
+                //setContentView(R.layout.activity_create);
+                ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
 
+
+//                activityCreateBinding.setRoomName("Salon");
+//                activityCreateBinding.setRoomWidth(400);
+//                activityCreateBinding.setRoomLength(500);
+
+
+                TextView roomTextView = activityCreateBinding.roomView;
+                roomTextView.setText("hola");
                 initializeAttributes();
                 setInterface();
             }
@@ -389,7 +420,7 @@ public class CreateActivity extends AppCompatActivity {
                 if(createLayout.findViewById(6) != null) {
                     try
                     {
-                        capacity = Integer.parseInt(capacityInput.getText().toString());
+                        capacity = parseInt(capacityInput.getText().toString());
                     }
                     catch (NumberFormatException nfe)
                     {
@@ -453,12 +484,12 @@ public class CreateActivity extends AppCompatActivity {
         resizeRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                roomXInt = Integer.parseInt(roomXInput.getText().toString());
-                roomYInt = Integer.parseInt(roomYInput.getText().toString());
-                findViewById(R.id.roomView).getLayoutParams().width = roomXInt;
-                findViewById(R.id.roomView).getLayoutParams().height = roomYInt;
+//                roomXInt = parseInt(roomXInput.getText().toString());
+//                roomYInt = parseInt(roomYInput.getText().toString());
+//                findViewById(R.id.roomView).getLayoutParams().width = roomXInt;
+//                findViewById(R.id.roomView).getLayoutParams().height = roomYInt;
 
-                System.out.print("x: " + roomXInt + "y: " + roomYInt);
+      //          System.out.print("x: " + roomXInt + "y: " + roomYInt);
 
 
                 //New idea: Antes de crear esta vista, pedir las dimensiones y el nombre del room

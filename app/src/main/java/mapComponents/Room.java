@@ -53,11 +53,11 @@ public class Room {
     }
 
     public String toString(){
-        String roomString = "Room: "+ String.valueOf(this.id) + " Empty\n";
+        String roomString = "Room: "+ this.id + " Empty\n";
 
         if(!room.isEmpty()) {
-            roomString = "Room ID: " + String.valueOf(this.id) + "\n";
-            roomString += "Element number: " + String.valueOf(this.nElements) + "\n";
+            roomString = "Room ID: " + this.id + "\n";
+            roomString += "Element number: " + this.nElements + "\n";
 
             for (int i = 0; i < nElements; ++i) {
                 roomString += room.get(i).toString();
