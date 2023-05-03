@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-            name="room_width"
-            type="Integer" />
-        <variable
-            name="room_length"
-            type="Integer" />
-        <variable
-            name="room_name"
-            type="String" />
+            name="room"
+            type="mapComponents.Room" />
+
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/createLayout"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -30,16 +28,14 @@
 <!-- THE PROBLEM IS HERE!!!!!!!!!!!!1 WRONG CAST OR SOMETHING -->
 <!--        android:layout_width="@{room_width + `dp`}"-->
 <!--        android:layout_height="@{room_length + `dp`}"-->
-        <TextView
+        <ImageView
             android:id="@+id/roomView"
-            android:layout_width="100dp"
-            android:layout_height="200dp"
+            android:layout_width="400px"
+            android:layout_height="400px"
             android:layout_centerInParent="true"
             android:background="@drawable/room"
             android:gravity="center"
-            android:text="@{room_name}"
-            android:textAlignment="center"
-            android:textColor="#311B92" />
+            />
 
         <com.example.wayfinding.MapCanvas
             android:id="@+id/mapCanvas"

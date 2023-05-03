@@ -2,15 +2,55 @@ package mapComponents;
 
 import android.text.Editable;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.example.wayfinding.BR;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room extends BaseObservable {
+
+    private String name;
     private int id;
     private int nElements;
     private List<Element> room;
-    private int width; //x
-    private int length; //y
+    private String width; //x
+    private String length; //y
+
+    @Bindable
+    public String getName() {
+        return name;
+
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
+        notifyPropertyChanged(BR.width);
+    }
+
+    @Bindable
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+        notifyPropertyChanged(BR.length);
+    }
+
+
 
 
     public Room(){
@@ -37,10 +77,10 @@ public class Room {
         this.room = room;
     }
 
-    public void setParameters(int x, int y){
-        this.length= y;
-        this.width = x;
-    }
+//    public void setParameters(int x, int y){
+//        this.length= y;
+//        this.width = x;
+//    }
     public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;

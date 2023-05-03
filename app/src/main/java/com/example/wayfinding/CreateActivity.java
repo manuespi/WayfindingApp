@@ -1,5 +1,6 @@
 package com.example.wayfinding;
 
+import static android.content.ContentValues.TAG;
 import static java.lang.Integer.parseInt;
 
 import android.annotation.SuppressLint;
@@ -7,13 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -24,12 +28,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+
 import com.example.wayfinding.databinding.ActivityCreateBinding;
 import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
+import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
@@ -58,42 +64,51 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.basic_room_inputs);
 
-//        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
-//        roomName = basicRoomInputsBinding.getRoomName() != null ? basicRoomInputsBinding.getRoomName().toString() : "";
-//        roomWidth = basicRoomInputsBinding.getRoomWidth() != null ? basicRoomInputsBinding.getRoomWidth() : 0;
-//        roomLength = basicRoomInputsBinding.getRoomLength() != null ? basicRoomInputsBinding.getRoomLength() : 0;
+        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
 
-//        roomName = basicRoomInputsBinding.getRoomName().toString();
-//        roomWidth = basicRoomInputsBinding.getRoomWidth();
-//        roomLength = basicRoomInputsBinding.getRoomLength();
+        Room room = new Room(1);
+        room.setName("");
+        room.setLength("400");
+        room.setWidth("400");
+        basicRoomInputsBinding.setRoom(room);
 
-
-
-
-//        activityCreateBinding.setRoomName(roomName);
-//        activityCreateBinding.setRoomWidth(((Integer) roomWidth));
-//        activityCreateBinding.setRoomLength(((Integer) roomLength));
-
-
-
-        nextButton = findViewById(R.id.next);
+        //nextButton = findViewById(R.id.next);
+        nextButton = basicRoomInputsBinding.next;
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //setContentView(R.layout.activity_create);
+
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
+                //activityCreateBinding.setRoom(room);
 
 
-//                activityCreateBinding.setRoomName("Salon");
-//                activityCreateBinding.setRoomWidth(400);
-//                activityCreateBinding.setRoomLength(500);
+                ImageView roomView = findViewById(R.id.roomView);
+                roomView.post(() -> {
 
+                    String widthStr = room.getWidth();
+                    Log.d(TAG, "Width string: " + widthStr);
+                    float width = Float.parseFloat(widthStr);
+                    int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+                    Log.d(TAG, "Parsed width: " + pixelsW);
 
-                TextView roomTextView = activityCreateBinding.roomView;
-                roomTextView.setText("hola");
+                    String lengthStr = room.getLength();
+                    Log.d(TAG, "Length string: " + lengthStr);
+                    float length = Float.parseFloat(lengthStr);
+                    int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
+                    Log.d(TAG, "Parsed width: " + pixelsL);
+                    //int height = Integer.parseInt(room.getLength());
+
+                    ViewGroup.LayoutParams layoutParams = roomView.getLayoutParams();
+                    layoutParams.width = (int) width;
+                    layoutParams.height = (int) length;
+                    roomView.setLayoutParams(layoutParams);
+                });
+
                 initializeAttributes();
                 setInterface();
             }
@@ -446,7 +461,7 @@ public class CreateActivity extends AppCompatActivity {
 
                 nRoom++;
                 indoorMap.addRoom();
-                indoorMap.getMap().get(nRoom).setParameters(roomXInt, roomYInt);
+                //indoorMap.getMap().get(nRoom).setParameters(roomXInt, roomYInt);
 
 
                 refreshRoomElementsView();

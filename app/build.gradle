@@ -6,7 +6,7 @@ android {
     namespace 'com.example.wayfinding'
     compileSdk 32
 
-    //probando
+
     dataBinding {
         enabled = true
     }

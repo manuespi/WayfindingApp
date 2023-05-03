@@ -4,15 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="roomWidth"
-            type="Integer" />
-        <variable
-            name="roomName"
-            type="String" />
-        <variable
-            name="roomLength"
-            type="Integer" />
+            name="room"
+            type="mapComponents.Room" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,38 +16,38 @@
         android:layout_height="match_parent"
         tools:context=".CreateActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/nameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="116dp"
             android:hint="@string/introduce_room_name"
             android:inputType="text"
-            android:text="@{roomName}"
+            android:text="@{room.name}"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/roomXWidth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="introduce x"
-            android:inputType="number"
-            android:text="@{roomWidth}"
+            android:inputType="text"
+            android:text="@={room.width}"
             android:minHeight="48dp"
             app:layout_constraintTop_toBottomOf="@+id/nameInput"
             tools:layout_editor_absoluteX="0dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/roomYLength"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="introduce y"
-            android:inputType="number"
-            android:text="@{roomLength}"
+            android:inputType="text"
+            android:text="@={room.length}"
             android:minHeight="48dp"
             app:layout_constraintTop_toBottomOf="@+id/roomXWidth"
             tools:layout_editor_absoluteX="-31dp" />
