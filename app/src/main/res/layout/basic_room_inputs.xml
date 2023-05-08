@@ -32,11 +32,11 @@
             android:id="@+id/roomXWidth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="128dp"
             android:hint="introduce x"
             android:inputType="text"
-            android:text="@={room.width}"
             android:minHeight="48dp"
+            android:text="@={room.width}"
             app:layout_constraintTop_toBottomOf="@+id/nameInput"
             tools:layout_editor_absoluteX="0dp" />
 
@@ -44,13 +44,13 @@
             android:id="@+id/roomYLength"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:hint="introduce y"
             android:inputType="text"
-            android:text="@={room.length}"
             android:minHeight="48dp"
+            android:text="@={room.length}"
             app:layout_constraintTop_toBottomOf="@+id/roomXWidth"
-            tools:layout_editor_absoluteX="-31dp" />
+            tools:layout_editor_absoluteX="0dp" />
 
         <Button
             android:id="@+id/next"
@@ -61,6 +61,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/roomYLength" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Position yourself in one of the room's corners. Measure the steps it takes to arrive to the next corner. Repeat with following wall to obtain an approximation of the room's dimensions."
+            app:layout_constraintBottom_toTopOf="@+id/roomXWidth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

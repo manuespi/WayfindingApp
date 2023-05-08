@@ -39,7 +39,7 @@ import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
-    private int nRoom;
+    private int nRoom = 0;
     private LinearLayout createLayout;
     private String element;
     private ArrayList<String> orientationList;
@@ -81,32 +81,35 @@ public class CreateActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //setContentView(R.layout.activity_create);
-
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
-                //activityCreateBinding.setRoom(room);
-
 
                 ImageView roomView = findViewById(R.id.roomView);
                 roomView.post(() -> {
 
                     String widthStr = room.getWidth();
                     Log.d(TAG, "Width string: " + widthStr);
-                    float width = Float.parseFloat(widthStr);
+                    float width = Float.parseFloat(widthStr) * 40; //el 40 por ejemplo
                     int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsW);
 
                     String lengthStr = room.getLength();
                     Log.d(TAG, "Length string: " + lengthStr);
-                    float length = Float.parseFloat(lengthStr);
+                    float length = Float.parseFloat(lengthStr) * 40;
                     int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsL);
                     //int height = Integer.parseInt(room.getLength());
+
+                    // hay que hacer exception handling para cuando las dimensiones se saldrían de la pantalla
+                    //1 opcion es dividir por un numero y hacer escala mas pequeña de las mismas dimensiones
 
                     ViewGroup.LayoutParams layoutParams = roomView.getLayoutParams();
                     layoutParams.width = (int) width;
                     layoutParams.height = (int) length;
                     roomView.setLayoutParams(layoutParams);
+
+                    room.setName(room.getName());
+                    room.setLength(String.valueOf(length));
+                    room.setWidth(String.valueOf(width));
                 });
 
                 initializeAttributes();
@@ -128,7 +131,8 @@ public class CreateActivity extends AppCompatActivity {
     private void initializeAttributes(){
         indoorMap = new IndoorMap();
         orientationList = new ArrayList<>();
-        nRoom = 0;
+
+        nRoom++;
         indoorMap.addRoom();
         orientation = 0;
         roomConnectionAlert = new AlertDialog.Builder(this);
@@ -226,7 +230,7 @@ public class CreateActivity extends AppCompatActivity {
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
 
-        resizeRoom = findViewById(R.id.prueba);
+        resizeRoom = findViewById(R.id.resize);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
         showButton = findViewById(R.id.show_button);
@@ -499,17 +503,7 @@ public class CreateActivity extends AppCompatActivity {
         resizeRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                roomXInt = parseInt(roomXInput.getText().toString());
-//                roomYInt = parseInt(roomYInput.getText().toString());
-//                findViewById(R.id.roomView).getLayoutParams().width = roomXInt;
-//                findViewById(R.id.roomView).getLayoutParams().height = roomYInt;
-
-      //          System.out.print("x: " + roomXInt + "y: " + roomYInt);
-
-
-                //New idea: Antes de crear esta vista, pedir las dimensiones y el nombre del room
-                //Una vez tengamos estos inputs, creamos el dibujo del Room como NEW TextView (no forma parte del xml)
-                //Si se le da a resize, borra este textView y crea uno nuevo.
+                setContentView(R.layout.basic_room_inputs);
             }
         });
     }

@@ -25,9 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!-- THE PROBLEM IS HERE!!!!!!!!!!!!1 WRONG CAST OR SOMETHING -->
-<!--        android:layout_width="@{room_width + `dp`}"-->
-<!--        android:layout_height="@{room_length + `dp`}"-->
         <ImageView
             android:id="@+id/roomView"
             android:layout_width="400px"
@@ -46,13 +43,10 @@
 
 
         <Button
-            android:id="@+id/prueba"
+            android:id="@+id/resize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="RESIZE" />
-
-
-        <!--            android:onClick="setRoomLength()" -->
 
 
     </RelativeLayout>
