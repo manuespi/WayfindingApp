@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -50,14 +52,10 @@ public class CreateActivity extends AppCompatActivity {
             addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
-    private EditText capacityInput, roomXInput, roomYInput;
-    private int roomXInt;
-    private int roomYInt;
-    private Integer roomWidth;
-    private Integer roomLength;
+    private EditText capacityInput;
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
-    private String roomName;
+    public String roomName;
 
 
 
@@ -83,9 +81,9 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
 
+
                 ImageView roomView = findViewById(R.id.roomView);
                 roomView.post(() -> {
-
                     String widthStr = room.getWidth();
                     Log.d(TAG, "Width string: " + widthStr);
                     float width = Float.parseFloat(widthStr) * 40; //el 40 por ejemplo
@@ -97,7 +95,6 @@ public class CreateActivity extends AppCompatActivity {
                     float length = Float.parseFloat(lengthStr) * 40;
                     int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsL);
-                    //int height = Integer.parseInt(room.getLength());
 
                     // hay que hacer exception handling para cuando las dimensiones se saldrían de la pantalla
                     //1 opcion es dividir por un numero y hacer escala mas pequeña de las mismas dimensiones
@@ -106,14 +103,16 @@ public class CreateActivity extends AppCompatActivity {
                     layoutParams.width = (int) width;
                     layoutParams.height = (int) length;
                     roomView.setLayoutParams(layoutParams);
-
-                    room.setName(room.getName());
                     room.setLength(String.valueOf(length));
                     room.setWidth(String.valueOf(width));
                 });
 
+
+
                 initializeAttributes();
                 setInterface();
+                setDefaultValues();
+                setDefaultLayout();
             }
         });
 
@@ -184,7 +183,7 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void refreshCurrentRoom(){
-        String currentRoom = "Current room: " + nRoom;
+        String currentRoom = "Current room: " + roomName;
 
         this.currentRoom.setText(currentRoom);
     }
@@ -229,6 +228,8 @@ public class CreateActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
+//        TextView roomTag = findViewById(R.id.roomName);
+//        roomTag.setText(roomName);
 
         resizeRoom = findViewById(R.id.resize);
 
@@ -236,7 +237,7 @@ public class CreateActivity extends AppCompatActivity {
         showButton = findViewById(R.id.show_button);
         newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
-        newElementButton = findViewById(R.id.newElement_button);
+     //   newElementButton = findViewById(R.id.newElement_button);
 
         roomElementsView = findViewById(R.id.roomElements);
         roomElementsView.setText("Room empty");
@@ -251,21 +252,21 @@ public class CreateActivity extends AppCompatActivity {
         openButton = new Button(this);
         closeButton = new Button(this);
 
-        doorButton.setText("Door");
+        //doorButton.setText("Door");
         stairsButton.setText("Stairs");
         elevatorButton.setText("Elevator");
         openButton.setText("Open");
         closeButton.setText("Closed");
 
-        RelativeLayout.LayoutParams doorButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        doorButton.setId(1);
-        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        //doorButtonParams.setMargins(20, 300, 20, 20);
-        doorButton.setLayoutParams(doorButtonParams);
+//        RelativeLayout.LayoutParams doorButtonParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//        );
+//        doorButton.setId(1);
+//        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+//        //doorButtonParams.setMargins(20, 300, 20, 20);
+//        doorButton.setLayoutParams(doorButtonParams);
 
         RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -361,6 +362,8 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 ////
+
+        doorButton.findViewById(R.id.newDoor);
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -414,23 +417,24 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        newElementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDefaultValues();
-                setDefaultLayout();
 
-                if(createLayout.findViewById(1) == null) {
-                    createLayout.addView(doorButton);
-                }
-                if(createLayout.findViewById(2) == null) {
-                    createLayout.addView(stairsButton);
-                }
-                if(createLayout.findViewById(3) == null) {
-                    createLayout.addView(elevatorButton);
-                }
-            }
-        });
+        //se puede borrar
+//        newElementButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+////                if(createLayout.findViewById(1) == null) {
+////                    createLayout.addView(doorButton);
+////                }
+//                if(createLayout.findViewById(2) == null) {
+//                    createLayout.addView(stairsButton);
+//                }
+//                if(createLayout.findViewById(3) == null) {
+//                    createLayout.addView(elevatorButton);
+//                }
+//            }
+//        });
 
         addElementButton.setOnClickListener(new View.OnClickListener() {
             @Override

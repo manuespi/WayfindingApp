@@ -66,7 +66,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Position yourself in one of the room's corners. Measure the steps it takes to arrive to the next corner. Repeat with following wall to obtain an approximation of the room's dimensions."
+            android:text="Position yourself in one of the room's corners. Measure the steps it takes to arrive to the next corner. Repeat with the following wall to obtain an approximation of the room's dimensions."
             app:layout_constraintBottom_toTopOf="@+id/roomXWidth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,8 +13,7 @@
     </data>
 
     <LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/createLayout"
+        android:id="@+id/createLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -21,7 +21,7 @@
 
 
     <RelativeLayout
-        android:layout_weight="0.6"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -49,17 +49,14 @@
             android:text="RESIZE" />
 
 
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
 
         <Button
             android:id="@+id/mainMenu_button"
@@ -81,14 +78,6 @@
             android:layout_marginBottom="20px"
             android:text="View all" />
 
-        <Button
-            android:id="@+id/newElement_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80px"
-            android:text="New element" />
 
         <Button
             android:id="@+id/addElement_button"
@@ -133,11 +122,22 @@
             android:id="@+id/currentRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current room"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="130px"
-            android:layout_marginStart="40px"/>
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="121dp"
+            android:text="Current room" />
+
+        <Button
+            android:id="@+id/newDoor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="200px"
+            android:layout_marginRight="116dp"
+            android:layout_marginBottom="273dp"
+            android:text="Door" />
 
 
     </RelativeLayout>
