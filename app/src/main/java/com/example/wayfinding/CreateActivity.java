@@ -183,7 +183,7 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void refreshCurrentRoom(){
-        String currentRoom = "Current room: " + roomName;
+        String currentRoom = "Current room: " + nRoom;
 
         this.currentRoom.setText(currentRoom);
     }
@@ -253,7 +253,7 @@ public class CreateActivity extends AppCompatActivity {
         closeButton = new Button(this);
 
         //doorButton.setText("Door");
-        stairsButton.setText("Stairs");
+        //stairsButton.setText("Stairs");
         elevatorButton.setText("Elevator");
         openButton.setText("Open");
         closeButton.setText("Closed");
@@ -268,25 +268,25 @@ public class CreateActivity extends AppCompatActivity {
 //        //doorButtonParams.setMargins(20, 300, 20, 20);
 //        doorButton.setLayoutParams(doorButtonParams);
 
-        RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        stairsButton.setId(2);
-        stairsButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        stairsButtonParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        //stairsButtonParams.setMargins(20, 300, 20, 20);
-        stairsButton.setLayoutParams(stairsButtonParams);
+//        RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//        );
+//        stairsButton.setId(2);
+//        stairsButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+//        stairsButtonParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//        //stairsButtonParams.setMargins(20, 300, 20, 20);
+//        stairsButton.setLayoutParams(stairsButtonParams);
 
-        RelativeLayout.LayoutParams elevatorButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        elevatorButton.setId(3);
-        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        //elevatorButtonParams.setMargins(20, 300, 20, 20);
-        elevatorButton.setLayoutParams(elevatorButtonParams);
+//        RelativeLayout.LayoutParams elevatorButtonParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//        );
+//        elevatorButton.setId(3);
+//        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+//        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//        //elevatorButtonParams.setMargins(20, 300, 20, 20);
+//        elevatorButton.setLayoutParams(elevatorButtonParams);
 ////Spinner
         orientationSpinner = new Spinner(this);
 
@@ -381,7 +381,7 @@ public class CreateActivity extends AppCompatActivity {
                 }
             }
         });
-
+        stairsButton = findViewById(R.id.newStairs);
         stairsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,6 +400,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
+        elevatorButton = findViewById(R.id.newElevator);
         elevatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
