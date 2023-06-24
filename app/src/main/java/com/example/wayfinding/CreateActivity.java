@@ -44,7 +44,7 @@ public class CreateActivity extends AppCompatActivity {
     private ArrayList<String> orientationList;
     private int orientation, capacity;
     private boolean open, wheelchair;
-    private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
+    private Button mainMenuButton, saveButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
             addElementButton, newElementButton;
     private Spinner orientationSpinner;
@@ -91,6 +91,8 @@ public class CreateActivity extends AppCompatActivity {
             this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
             this.editingRoom = true;
             this.newMap = false;
+            Toast.makeText(CreateActivity.this, "Mapa cargado (room)", Toast.LENGTH_SHORT).show();
+
         }
         else if(incomingIntent != null && incomingIntent.hasExtra("id")){
             String name = incomingIntent.getStringExtra("name");
@@ -100,6 +102,7 @@ public class CreateActivity extends AppCompatActivity {
             this.room.setName(name);
             this.room.setId(id);
             this.editingRoom = false;
+            Toast.makeText(CreateActivity.this, "Mapa cargado (id) " + id, Toast.LENGTH_SHORT).show();
 
             if(incomingIntent.hasExtra("new"))
                 this.newMap = true;
@@ -107,6 +110,7 @@ public class CreateActivity extends AppCompatActivity {
         }
         else{
             Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
+            Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
             this.editingRoom = false;
             this.newMap = false;
         }
@@ -204,7 +208,7 @@ public class CreateActivity extends AppCompatActivity {
         createLayout = findViewById(R.id.createLayout);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
-        showButton = findViewById(R.id.show_button);
+        saveButton = findViewById(R.id.save_button);
         newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
         newElementButton = findViewById(R.id.newElement_button);
@@ -445,10 +449,10 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        showButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editingRoom){
+                if(editingRoom){Toast.makeText(CreateActivity.this, "Editing Room", Toast.LENGTH_SHORT).show();
                     ArrayList<Room> auxMap = indoorMap.getMap();
 
                     for(int i = 0; i < auxMap.size(); ++i)
@@ -457,7 +461,7 @@ public class CreateActivity extends AppCompatActivity {
 
                     indoorMap.setMap(auxMap);
                 }
-                else{
+                else{Toast.makeText(CreateActivity.this, "Not Editing Room", Toast.LENGTH_SHORT).show();
                     indoorMap.addRoom(room);
                 }
 
@@ -502,6 +506,16 @@ public class CreateActivity extends AppCompatActivity {
         }
         else{Log.d("SaveMap", "EDITING MAP");
             if(editingRoom){Log.d("SaveMap", "EDITING ROOM");
+                try {
+                    String json = objectMapper.writeValueAsString(this.indoorMap);
+                    FileWriter writer = new FileWriter(file);
+                    writer.write(json);
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{ ///TODO revisar si tiene sentido hacerlo así o lo hice de la otra manera por algo.
                 try {
                     String json = objectMapper.writeValueAsString(this.indoorMap);
                     FileWriter writer = new FileWriter(file);

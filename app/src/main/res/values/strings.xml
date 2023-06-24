@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Wayfinding</string>
+    <string name="save_button">save_button</string>
 </resources>
