@@ -106,7 +106,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
 
     public void openActivityRoomSelection(String map){
         Intent intent = new Intent(this, RoomSelectionActivity.class);
-        intent.putExtra("map", map);
+        intent.putExtra("Smap", map);
         startActivity(intent);
         finish();
     }

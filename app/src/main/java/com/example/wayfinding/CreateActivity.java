@@ -465,9 +465,16 @@ public class CreateActivity extends AppCompatActivity {
                     indoorMap.addRoom(room);
                 }
 
-                SaveMap();
+                saveMap();
 
-                String mapString = "";
+                Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
+                if(indoorMap == null) Log.d("CALVERIO", "IM is null: ");
+                else Log.d("CALVERIO", "IM is not null: "+indoorMap.getnRoom());
+                intent.putExtra("IMmap", indoorMap);
+                startActivity(intent);
+                finish();
+
+                /*String mapString = "";
                 for (int i = 0; i < indoorMap.getMap().size(); ++i) {
                     mapString += indoorMap.getRoom(i).toString() + "\n";
                 }
@@ -475,7 +482,7 @@ public class CreateActivity extends AppCompatActivity {
                 Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
                 intent.putExtra("map", mapString);
                 startActivity(intent);
-                finish();
+                finish();*/
             }
         });
 
@@ -487,77 +494,24 @@ public class CreateActivity extends AppCompatActivity {
         });
     }
 
-    public void SaveMap(){
+    public void saveMap(){
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
         
-        if(newMap){Log.d("SaveMap", "NEW MAP");
-            if(file.exists())
+        if(newMap) {
+            Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
+            if (file.exists())
                 file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
-
-            try {
-                String json = objectMapper.writeValueAsString(this.indoorMap);
-                FileWriter writer = new FileWriter(file);
-                writer.write(json);
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
-        else{Log.d("SaveMap", "EDITING MAP");
-            if(editingRoom){Log.d("SaveMap", "EDITING ROOM");
-                try {
-                    String json = objectMapper.writeValueAsString(this.indoorMap);
-                    FileWriter writer = new FileWriter(file);
-                    writer.write(json);
-                    writer.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else{ ///TODO revisar si tiene sentido hacerlo así o lo hice de la otra manera por algo.
-                try {
-                    String json = objectMapper.writeValueAsString(this.indoorMap);
-                    FileWriter writer = new FileWriter(file);
-                    writer.write(json);
-                    writer.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-///////////////////////////////////////////////////////////////////////////////////////
-        /*if(file.exists()) {
-            Log.d("pruebasJson", this.indoorMap.getName() + ".json already exists");
-            Toast.makeText(CreateActivity.this,
-                    this.indoorMap.getName() + ".json already exists", Toast.LENGTH_SHORT).show();
-            try {
-                String json = "";
-                FileReader reader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(reader);
+        if(editingRoom)Log.d("SaveMap", "EDITING ROOM");
 
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    json += line;
-                }
-
-                this.indoorMap = objectMapper.readValue(json, IndoorMap.class);
-                nRoom = this.indoorMap.getMap().size() - 1;
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            String json = objectMapper.writeValueAsString(this.indoorMap);
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        else{
-            try {
-                String json = objectMapper.writeValueAsString(this.indoorMap);
-                FileWriter writer = new FileWriter(file);
-                writer.write(json);
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
     }
 }

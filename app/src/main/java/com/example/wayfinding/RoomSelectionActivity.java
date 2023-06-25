@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -45,11 +46,15 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         setInterface();
     }
 
-    private void setRoomList(){
+    private void setRoomList() {
         Intent incomingIntent = getIntent();
-        if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+        if (incomingIntent != null && incomingIntent.hasExtra("IMmap")) {
             this.newMap = false;
-            String mapString = incomingIntent.getStringExtra("map");
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("IMmap");
+            this.roomList = this.indoorMap.getMap();
+        }
+        else if (incomingIntent != null && incomingIntent.hasExtra("Smap")){
+            String mapString = incomingIntent.getStringExtra("Smap");
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 this.indoorMap = objectMapper.readValue(mapString, IndoorMap.class);
@@ -114,6 +119,8 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
             @Override
             public void onClick(View view) {
                 //TODO guardar mapa en json en la memoria
+                saveMap();
+                openMapSelectionActivity();
             }
         });
     }
@@ -143,6 +150,12 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         finish();
     }
 
+    private void openMapSelectionActivity(){
+        Intent intent = new Intent(this, MapSelectionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void deleteRoom(int position) { //TODO preguntar confirmacion y borrar la room correspondiente
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
@@ -156,5 +169,25 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
         openActivityCreate(roomList.get(position));
         //TODO crear el editor de rooms común
+    }
+
+    public void saveMap(){
+        File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if(newMap) {
+            Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
+            if (file.exists())
+                file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
+        }
+
+        try {
+            String json = objectMapper.writeValueAsString(this.indoorMap);
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
