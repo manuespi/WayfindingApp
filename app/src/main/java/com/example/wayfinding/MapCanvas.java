@@ -17,7 +17,7 @@ public class MapCanvas extends View {
 //        super(context);
 //    }
 
-    Paint paintR, paintD;
+    Paint paintD;
     Path path;
     int roomLength = 900, roomWidth = 600;
     int viewWidth, viewHeight;
@@ -26,25 +26,25 @@ public class MapCanvas extends View {
         super(context, attrs);
 
 
-        paintR = new Paint();
+
         paintD = new Paint();
         path = new Path();
 
-        //room
-        paintR.setColor(Color.GRAY);
-        paintR.setAntiAlias(true);
-        paintR.setStrokeWidth(10);
-        paintR.setStyle(Paint.Style.STROKE);
-        // paintR.setStrokeJoin(Paint.Join.ROUND);
-        // paintR.setStrokeCap(Paint.Cap.ROUND);
 
         //door
+        //esta seccion se va a borrar, pero está bien documentarla y recordarla
+        //como primer approach: queriamos poder dibujar manualmente la puerta
+        //y que se guardasen las coordenadas de la "pintura" pero es muy messy
+        //no me gusta
+        /*
         paintD.setAntiAlias(true);
-        paintD.setColor(Color.RED);
+        paintD.setColor(Color.TRANSPARENT);  //ANTES ERA RED
         paintD.setStrokeJoin(Paint.Join.ROUND); //cuando retiramos dedo de pantalla, se queda round
         paintD.setStrokeCap(Paint.Cap.ROUND);
         paintD.setStyle(Paint.Style.STROKE);
         paintD.setStrokeWidth(20f);
+        */
+
 
     }
 

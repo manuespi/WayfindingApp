@@ -6,6 +6,7 @@ import static java.lang.Integer.parseInt;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,6 +42,7 @@ import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
+    private Canvas canvas;
     private int nRoom = 0;
     private LinearLayout createLayout;
     private String element;
@@ -56,7 +58,6 @@ public class CreateActivity extends AppCompatActivity {
     private TextView roomElementsView, roomsView, currentRoom;
     private AlertDialog.Builder roomConnectionAlert;
     public String roomName;
-
 
 
     @Override
@@ -258,47 +259,19 @@ public class CreateActivity extends AppCompatActivity {
         openButton.setText("Open");
         closeButton.setText("Closed");
 
-//        RelativeLayout.LayoutParams doorButtonParams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        doorButton.setId(1);
-//        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//        //doorButtonParams.setMargins(20, 300, 20, 20);
-//        doorButton.setLayoutParams(doorButtonParams);
 
-//        RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        stairsButton.setId(2);
-//        stairsButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//        stairsButtonParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//        //stairsButtonParams.setMargins(20, 300, 20, 20);
-//        stairsButton.setLayoutParams(stairsButtonParams);
-
-//        RelativeLayout.LayoutParams elevatorButtonParams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        elevatorButton.setId(3);
-//        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//        //elevatorButtonParams.setMargins(20, 300, 20, 20);
-//        elevatorButton.setLayoutParams(elevatorButtonParams);
 ////Spinner
         orientationSpinner = new Spinner(this);
-
-        RelativeLayout.LayoutParams orientationSpinnerParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        orientationSpinner.setId(4);
-        orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        orientationSpinnerParams.setMargins(150, 550, 20, 20);
-        orientationSpinner.setLayoutParams(orientationSpinnerParams);
+        orientationSpinner = findViewById(R.id.spinner);
+       // RelativeLayout.LayoutParams orientationSpinnerParams = new RelativeLayout.LayoutParams(
+       //         RelativeLayout.LayoutParams.WRAP_CONTENT,
+       //         RelativeLayout.LayoutParams.WRAP_CONTENT
+       // );
+       // orientationSpinner.setId(4);
+       // orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+       // orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+       // orientationSpinnerParams.setMargins(150, 550, 20, 20);
+       // orientationSpinner.setLayoutParams(orientationSpinnerParams);
 
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, orientationList);
         orientationSpinner.setAdapter(spinnerAdapter);
@@ -368,6 +341,8 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 element = "door";
+                RoomElement doorObj = new RoomElement(10,10); //coordinate donde empieza
+                doorObj.draw(canvas);
 
                 if(createLayout.findViewById(5) != null) {
                     createLayout.removeView(wheelchairCheckBox);
@@ -381,6 +356,9 @@ public class CreateActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
         stairsButton = findViewById(R.id.newStairs);
         stairsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -391,9 +369,14 @@ public class CreateActivity extends AppCompatActivity {
                     createLayout.removeView(capacityInput);
                 }
 
-                if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
+               // if(createLayout.findViewById(R.id.spinner) == null) {
+               //     createLayout.addView(orientationSpinner);
+               // }
+
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){
+                    orientationSpinner.setVisibility(View.VISIBLE);
                 }
+
                 if(createLayout.findViewById(5) == null) {
                     createLayout.addView(wheelchairCheckBox);
                 }

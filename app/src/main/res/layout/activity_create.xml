@@ -31,15 +31,8 @@
             android:layout_height="400px"
             android:layout_centerInParent="true"
             android:background="@drawable/room"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
-        <com.example.wayfinding.MapCanvas
-            android:id="@+id/mapCanvas"
-            android:name=".MapCanvas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:exported="false" />
 
 
         <TextView
@@ -173,6 +166,16 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="334dp"
             android:background="?android:attr/listDivider" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="217dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            />
 
 
     </RelativeLayout>
