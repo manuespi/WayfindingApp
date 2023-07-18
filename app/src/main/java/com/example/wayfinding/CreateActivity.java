@@ -70,8 +70,8 @@ public class CreateActivity extends AppCompatActivity {
 
         Room room = new Room(1);
         room.setName("");
-        room.setLength("400");
-        room.setWidth("400");
+        room.setLength("15");
+        room.setWidth("20");
         basicRoomInputsBinding.setRoom(room);
 
         //nextButton = findViewById(R.id.next);
@@ -200,10 +200,10 @@ public class CreateActivity extends AppCompatActivity {
         if(createLayout.findViewById(3) != null) {
             createLayout.removeView(elevatorButton);
         }
-        if(createLayout.findViewById(4) != null) {
+        if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(orientationSpinner);
         }
-        if(createLayout.findViewById(5) != null) {
+        if(createLayout.findViewById(R.id.checkBox).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(wheelchairCheckBox);
         }
         if(createLayout.findViewById(6) != null) {
@@ -255,7 +255,7 @@ public class CreateActivity extends AppCompatActivity {
 
         //doorButton.setText("Door");
         //stairsButton.setText("Stairs");
-        elevatorButton.setText("Elevator");
+       // elevatorButton.setText("Elevator");
         openButton.setText("Open");
         closeButton.setText("Closed");
 
@@ -263,16 +263,7 @@ public class CreateActivity extends AppCompatActivity {
 ////Spinner
         orientationSpinner = new Spinner(this);
         orientationSpinner = findViewById(R.id.spinner);
-       // RelativeLayout.LayoutParams orientationSpinnerParams = new RelativeLayout.LayoutParams(
-       //         RelativeLayout.LayoutParams.WRAP_CONTENT,
-       //         RelativeLayout.LayoutParams.WRAP_CONTENT
-       // );
-       // orientationSpinner.setId(4);
-       // orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-       // orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-       // orientationSpinnerParams.setMargins(150, 550, 20, 20);
-       // orientationSpinner.setLayoutParams(orientationSpinnerParams);
-
+        //orientationSpinner = setId(4);
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, orientationList);
         orientationSpinner.setAdapter(spinnerAdapter);
 
@@ -281,26 +272,16 @@ public class CreateActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 orientation = position;
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-////CheckBox
+
+
+//CheckBox
         wheelchairCheckBox = new CheckBox(this);
-
-        wheelchairCheckBox.setText("Wheelchair");
-
-        RelativeLayout.LayoutParams wheelchairCheckBoxParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        wheelchairCheckBox.setId(5);
-        wheelchairCheckBoxParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        wheelchairCheckBoxParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        wheelchairCheckBoxParams.setMargins(20, 550, 150, 20);
-        wheelchairCheckBox.setLayoutParams(wheelchairCheckBoxParams);
+        wheelchairCheckBox = findViewById(R.id.checkBox);
+        //wheelchairCheckBox.setId(5);
 
         wheelchairCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -311,19 +292,11 @@ public class CreateActivity extends AppCompatActivity {
 
 //// EditText
         capacityInput = new EditText(this);
+        capacityInput = findViewById(R.id.capacity);
+        //capacityInput.setId(6);
+        //capacityInput.setHint("Capacity");
 
-        //capacityInput.setText("");
-        capacityInput.setId(6);
-        capacityInput.setHint("Capacity");
 
-        RelativeLayout.LayoutParams capacityInputParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        capacityInputParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        capacityInputParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        capacityInputParams.setMargins(20, 550, 20, 20);
-        capacityInput.setLayoutParams(capacityInputParams);
 //// AlertDialog Builder
         roomConnectionAlert.setTitle("Now I`m going through:");
         String[] elements = {"1", "2", "3"};
@@ -344,16 +317,13 @@ public class CreateActivity extends AppCompatActivity {
                 RoomElement doorObj = new RoomElement(10,10); //coordinate donde empieza
                 doorObj.draw(canvas);
 
-                if(createLayout.findViewById(5) != null) {
-                    createLayout.removeView(wheelchairCheckBox);
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
+                    orientationSpinner.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(6) != null) {
-                    createLayout.removeView(capacityInput);
+                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
+                    wheelchairCheckBox.setVisibility(View.VISIBLE);
                 }
 
-                if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
-                }
             }
         });
 
@@ -365,21 +335,13 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "stairs";
 
-                if(createLayout.findViewById(6) != null) {
-                    createLayout.removeView(capacityInput);
-                }
-
-               // if(createLayout.findViewById(R.id.spinner) == null) {
-               //     createLayout.addView(orientationSpinner);
-               // }
-
-                if (orientationSpinner.getVisibility() == View.INVISIBLE){
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
                 }
-
-                if(createLayout.findViewById(5) == null) {
-                    createLayout.addView(wheelchairCheckBox);
+                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
+                    wheelchairCheckBox.setVisibility(View.VISIBLE);
                 }
+
             }
         });
 
@@ -389,18 +351,18 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "elevator";
 
-                if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
+                    orientationSpinner.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(5) == null) {
-                    createLayout.addView(wheelchairCheckBox);
+                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
+                    wheelchairCheckBox.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(6) == null) {
-                    createLayout.addView(capacityInput);
+
+                if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
+                    capacityInput.setVisibility(View.VISIBLE);
                 }
             }
         });
-
 
         //se puede borrar
 //        newElementButton.setOnClickListener(new View.OnClickListener() {
