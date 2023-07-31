@@ -342,6 +342,10 @@ public class CreateActivity extends AppCompatActivity {
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
                 }
 
+                if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
+                    capacityInput.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
 
@@ -354,8 +358,8 @@ public class CreateActivity extends AppCompatActivity {
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
                 }
-                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
-                    wheelchairCheckBox.setVisibility(View.VISIBLE);
+                if (wheelchairCheckBox.getVisibility() == View.VISIBLE){ //id 5
+                    wheelchairCheckBox.setVisibility(View.INVISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
