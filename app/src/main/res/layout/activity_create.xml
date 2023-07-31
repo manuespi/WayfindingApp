@@ -14,204 +14,230 @@
 
     <LinearLayout
         android:id="@+id/createLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CreateActivity">
-
-
-    <RelativeLayout
-        android:layout_weight="0.7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/roomView"
-            android:layout_width="400px"
-            android:layout_height="400px"
-            android:layout_centerInParent="true"
-            android:background="@drawable/room"
-            android:gravity="center" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".CreateActivity">
 
 
-
-        <TextView
-            android:id="@+id/currentRoom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="162dp"
-            android:layout_marginTop="137dp"
-            android:text="Current room" />
-
-        <Button
-            android:id="@+id/resize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RESIZE" />
-
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_weight="0.3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <Button
-            android:id="@+id/mainMenu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="100px"
-            android:layout_marginBottom="20px"
-            android:text="Main menu" />
-
-        <Button
-            android:id="@+id/show_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="100px"
-            android:layout_marginBottom="20px"
-            android:text="View all" />
-
-
-        <Button
-            android:id="@+id/addElement_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="200px"
-            android:layout_marginLeft="200px"
-            android:text="Add elem" />
-
-        <Button
-            android:id="@+id/newRoom_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="200px"
-            android:layout_marginEnd="200px"
-            android:text="New room" />
-
-        <TextView
-            android:id="@+id/roomElements"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Room elements"
-            android:layout_marginBottom="360px"
-            android:layout_alignStart="@+id/addElement_button"
-            android:layout_alignParentBottom="true"/>
-
-        <TextView
-            android:id="@+id/rooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rooms"
-            android:layout_marginBottom="360px"
-            android:layout_marginEnd="120px"
-            android:layout_alignStart="@+id/newRoom_button"
-            android:layout_alignParentBottom="true"/>
-
-
-        <Button
-            android:id="@+id/newElevator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="46dp"
-            android:layout_marginBottom="418dp"
-            android:text="Elevator" />
-
-        <Button
-            android:id="@+id/newDoor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="46dp"
-            android:layout_marginEnd="200px"
-            android:layout_marginRight="277dp"
-            android:layout_marginBottom="418dp"
-            android:text="Door" />
-
-        <Button
-            android:id="@+id/newStairs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="150dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginRight="173dp"
-            android:layout_marginBottom="418dp"
-            android:text="Stairs" />
-
-        <View
-            android:id="@+id/divider"
+        <RelativeLayout
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="401dp"
-            android:background="?android:attr/listDivider" />
+            android:layout_height="0dp"
+            android:layout_weight="0.3">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="265dp"
-            android:layout_marginBottom="292dp"
-            android:gravity="center"
-            android:spinnerMode="dropdown"
-            android:visibility="invisible" />
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="106dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="279dp"
-            android:layout_marginEnd="274dp"
-            android:layout_marginBottom="-124dp"
-            android:text="Wheelchair friendly"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/capacity"
-            android:layout_width="96dp"
-            android:layout_height="29dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="278dp"
-            android:layout_marginEnd="285dp"
-            android:layout_marginBottom="204dp"
-            android:ems="5"
-            android:inputType="number"
-            android:text="Capacity"
-            android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/roomView"
+                android:layout_width="400px"
+                android:layout_height="400px"
+                android:layout_centerInParent="true"
+                android:background="@drawable/room"
+                android:gravity="center" />
 
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/currentRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="162dp"
+                android:layout_marginTop="137dp"
+                android:text="Current room" />
 
+            <Button
+                android:id="@+id/resize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RESIZE" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.08">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/newDoor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Door"
+                    />
+
+                <Button
+                    android:id="@+id/newStairs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stairs"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <Button
+                    android:id="@+id/newElevator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Elevator" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.54">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!-- First panel -->
+                <RelativeLayout
+                    android:id="@+id/panel1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="138dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginBottom="266dp"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:visibility="invisible" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="200px"
+                        android:layout_marginBottom="600px"
+                        android:text="Wheelchair friendly"
+                        android:visibility="invisible" />
+
+
+                    <EditText
+                        android:id="@+id/capacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="200px"
+                        android:layout_marginBottom="600px"
+                        android:inputType="number"
+                        android:text="Capacity"
+                        android:visibility="invisible" />
+
+                    <Button
+                        android:id="@+id/addElement_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="200px"
+                        android:layout_marginBottom="200px"
+                        android:text="Add" />
+
+                    <TextView
+                        android:id="@+id/roomElements"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="360px"
+                        android:text="Room elements" />
+
+                </RelativeLayout>
+
+                <!-- Second panel -->
+                <RelativeLayout
+                    android:id="@+id/panel2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+
+                    <Button
+                        android:id="@+id/newRoom_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="200px"
+                        android:layout_marginBottom="200px"
+                        android:text="New room" />
+
+
+                    <TextView
+                        android:id="@+id/rooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/newRoom_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="120px"
+                        android:layout_marginBottom="360px"
+                        android:text="Rooms" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.08">
+
+
+            <Button
+                android:id="@+id/mainMenu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="100px"
+                android:layout_marginBottom="20px"
+                android:text="Main menu" />
+
+            <Button
+                android:id="@+id/show_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="100px"
+                android:layout_marginBottom="20px"
+                android:text="View all" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 </layout>
