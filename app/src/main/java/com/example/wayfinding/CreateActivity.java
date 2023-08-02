@@ -35,6 +35,8 @@ import androidx.databinding.DataBindingUtil;
 import com.example.wayfinding.databinding.ActivityCreateBinding;
 import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
@@ -55,7 +57,7 @@ public class CreateActivity extends AppCompatActivity {
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
     private EditText capacityInput;
-    private TextView roomElementsView, roomsView, currentRoom;
+    private TextView roomElementsView, roomsView, currentRoom, spinnerText, wheelchairText, capacityText;
     private AlertDialog.Builder roomConnectionAlert;
     public String roomName;
 
@@ -264,6 +266,9 @@ public class CreateActivity extends AppCompatActivity {
         orientationSpinner = new Spinner(this);
         orientationSpinner = findViewById(R.id.spinner);
         //orientationSpinner = setId(4);
+        spinnerText = new TextView(this);
+        spinnerText = findViewById(R.id.spinnerText);
+
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, orientationList);
         orientationSpinner.setAdapter(spinnerAdapter);
 
@@ -282,6 +287,8 @@ public class CreateActivity extends AppCompatActivity {
         wheelchairCheckBox = new CheckBox(this);
         wheelchairCheckBox = findViewById(R.id.checkBox);
         //wheelchairCheckBox.setId(5);
+        wheelchairText = new TextView(this);
+        wheelchairText = findViewById(R.id.checkBoxText);
 
         wheelchairCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -292,10 +299,9 @@ public class CreateActivity extends AppCompatActivity {
 
 //// EditText
         capacityInput = new EditText(this);
-        capacityInput = findViewById(R.id.capacity);
-        //capacityInput.setId(6);
-        //capacityInput.setHint("Capacity");
-
+        capacityInput = findViewById(R.id.capacity); //6
+        capacityText = new TextView(this);
+        capacityText = findViewById(R.id.capacityText);
 
 //// AlertDialog Builder
         roomConnectionAlert.setTitle("Now I`m going through:");
@@ -314,11 +320,12 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 element = "door";
-                RoomElement doorObj = new RoomElement(10,10); //coordinate donde empieza
-                doorObj.draw(canvas);
+              //  RoomElement doorObj = new RoomElement(10,10); //coordinate donde empieza
+              //  doorObj.draw(canvas);
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
+                    spinnerText.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
@@ -337,13 +344,16 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
+                    spinnerText.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
+                    wheelchairText.setVisibility(View.VISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
                     capacityInput.setVisibility(View.INVISIBLE);
+                    capacityText.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -357,13 +367,16 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
+                    spinnerText.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.VISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.INVISIBLE);
+                    wheelchairText.setVisibility(View.INVISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
                     capacityInput.setVisibility(View.VISIBLE);
+                    capacityText.setVisibility(View.VISIBLE);
                 }
             }
         });
