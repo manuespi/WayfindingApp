@@ -193,22 +193,22 @@ public class CreateActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceType")
     private void setDefaultLayout(){
-        if(createLayout.findViewById(1) != null) {
-            createLayout.removeView(doorButton);
+        if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(doorButton); //id 1
         }
-        if(createLayout.findViewById(2) != null) {
-            createLayout.removeView(stairsButton);
+        if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(stairsButton); //id 2
         }
-        if(createLayout.findViewById(3) != null) {
+        if(createLayout.findViewById(R.id.newElevator).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(elevatorButton);
         }
         if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(orientationSpinner);
         }
-        if(createLayout.findViewById(R.id.checkBox).getVisibility() != View.INVISIBLE) {
+        if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(wheelchairCheckBox);
         }
-        if(createLayout.findViewById(6) != null) {
+        if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(capacityInput);
         }
     }
@@ -285,7 +285,7 @@ public class CreateActivity extends AppCompatActivity {
 
 //CheckBox
         wheelchairCheckBox = new CheckBox(this);
-        wheelchairCheckBox = findViewById(R.id.checkBox);
+        wheelchairCheckBox = findViewById(R.id.wcCheckBox);
         //wheelchairCheckBox.setId(5);
         wheelchairText = new TextView(this);
         wheelchairText = findViewById(R.id.checkBoxText);
@@ -403,7 +403,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
-                if(createLayout.findViewById(6) != null) {
+                if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {
                     try
                     {
                         capacity = parseInt(capacityInput.getText().toString());
