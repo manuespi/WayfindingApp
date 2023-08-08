@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //openActivityCreate();
-                openActivityMapSelection();
+                openMapSelectionActivity();
             }
         });
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void openActivityMapSelection(){
+    private void openMapSelectionActivity(){
         Intent intent = new Intent(this, MapSelectionActivity.class);
         startActivity(intent);
         finish();

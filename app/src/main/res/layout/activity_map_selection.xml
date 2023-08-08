@@ -45,7 +45,7 @@
         app:layout_constraintStart_toEndOf="@+id/MapList_textView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <!--<Button
         android:id="@+id/mainMenu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,5 +57,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@+id/map_recyclerview" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

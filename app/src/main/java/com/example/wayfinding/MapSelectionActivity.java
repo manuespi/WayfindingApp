@@ -60,13 +60,13 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         this.mapListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //Button
         this.newMapButton = findViewById(R.id.newMap_button);
-        this.mainMenuButton = findViewById(R.id.mainMenu_button);
-        this.mainMenuButton.setOnClickListener(new View.OnClickListener() {
+        //this.mainMenuButton = findViewById(R.id.mainMenu_button);
+        /*this.mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openActivityMain();
             }
-        });
+        });*/
         this.newMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +125,12 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         finish();
     }
 
+    private void openActivityPlay(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void deleteMap(int position) { //TODO preguntar confirmacion y borrar el fichero correspondiente
         Log.d("MapSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
@@ -155,5 +161,12 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         }
         Log.d("editMap", map);
         openActivityRoomSelection(map);
+    }
+
+    @Override
+    public void playMap(int position) { //TODO preguntar confirmacion y borrar el fichero correspondiente
+        Log.d("MapSelectionActivity", "Se ha pulsado el botón play del elemento nº: " + position);
+
+        openActivityPlay();
     }
 }

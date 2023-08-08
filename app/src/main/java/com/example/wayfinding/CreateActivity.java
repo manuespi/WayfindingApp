@@ -137,6 +137,12 @@ public class CreateActivity extends AppCompatActivity {
         finish();
     }
 
+    private void openMapSelectionActivity(){
+        Intent intent = new Intent(this, MapSelectionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void addElementToRoom(){
             if(element == "empty"){
                 Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
@@ -489,7 +495,8 @@ public class CreateActivity extends AppCompatActivity {
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivityMain();
+                //openActivityMain();
+                openMapSelectionActivity();
             }
         });
     }

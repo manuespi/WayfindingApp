@@ -28,12 +28,19 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/playMap_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="190dp"
+            app:icon="@android:drawable/ic_media_play" />
+
+        <Button
             android:id="@+id/editMap_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="142dp"
-            android:text="Edit"
+            android:layout_marginRight="95dp"
             app:icon="@android:drawable/ic_menu_edit" />
 
         <Button
@@ -42,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="0dp"
-            android:text="Delete"
             app:icon="@android:drawable/ic_menu_delete" />
-    </RelativeLayout>
+</RelativeLayout>
 </androidx.cardview.widget.CardView>

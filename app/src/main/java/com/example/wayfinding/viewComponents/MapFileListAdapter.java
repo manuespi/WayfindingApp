@@ -21,7 +21,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
 
         private MapFileListAdapter adapter;
         private TextView mapItemView;
-        private Button deleteMapButton, editMapButton;
+        private Button deleteMapButton, editMapButton, playMapButton;
 
         //Añadir los botones supongo
 
@@ -35,6 +35,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             this.adapter = adapter;
             this.deleteMapButton = itemView.findViewById(R.id.deleteMap_button);
             this.editMapButton = itemView.findViewById(R.id.editMap_button);
+            this.playMapButton = itemView.findViewById(R.id.playMap_button);
             itemView.setOnClickListener(this);
         }
 
@@ -47,6 +48,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
     public interface OnItemClickListener {
         void deleteMap(int position);
         void editMap(int position);
+        void playMap(int position);
     }
 
     private OnItemClickListener listener;
@@ -84,6 +86,15 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             }
         });
         holder.editMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.editMap(holder.getBindingAdapterPosition());
+                }
+            }
+        });
+
+        holder.playMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {

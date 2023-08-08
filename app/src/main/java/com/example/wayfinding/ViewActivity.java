@@ -31,13 +31,20 @@ private Button mainMenu_button;
         mainMenu_button.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
-                openActivityMain();
+                //openActivityMain();
+                openMapSelectionActivity();
             }
         });
     }
 
     public void openActivityMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openMapSelectionActivity(){
+        Intent intent = new Intent(this, MapSelectionActivity.class);
         startActivity(intent);
         finish();
     }

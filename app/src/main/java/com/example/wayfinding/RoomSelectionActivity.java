@@ -84,7 +84,8 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         this.mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivityMain();
+                //openActivityMain();
+                openMapSelectionActivity();
             }
         });
         this.newRoomButton.setOnClickListener(new View.OnClickListener() {
