@@ -158,11 +158,36 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     }
 
     @Override
-    public void deleteRoom(int position) { //TODO preguntar confirmacion y borrar la room correspondiente
+    public void deleteRoom(int position) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.delete_confirm_popup, null);
+
+        Button delete = popupView.findViewById(R.id.confirm_button);
+        Button cancel = popupView.findViewById(R.id.cancel_button);
+
+        AlertDialog dialog = new AlertDialog.Builder(RoomSelectionActivity.this)
+                .setView(popupView)
+                .create();
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roomList.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, roomList.size());
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
-        roomList.remove(position);
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, roomList.size());
     }
 
     @Override

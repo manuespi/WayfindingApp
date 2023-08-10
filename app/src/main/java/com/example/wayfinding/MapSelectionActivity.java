@@ -132,13 +132,38 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     }
 
     @Override
-    public void deleteMap(int position) { //TODO preguntar confirmacion y borrar el fichero correspondiente
+    public void deleteMap(int position) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.delete_confirm_popup, null);
+
+        Button delete = popupView.findViewById(R.id.confirm_button);
+        Button cancel = popupView.findViewById(R.id.cancel_button);
+
+        AlertDialog dialog = new AlertDialog.Builder(MapSelectionActivity.this)
+                .setView(popupView)
+                .create();
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File f = jsonFileList.get(position);
+                jsonFileList.remove(position);
+                f.delete();
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, jsonFileList.size());
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
         Log.d("MapSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
-        File f = jsonFileList.get(position);
-        jsonFileList.remove(position);
-        f.delete();
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, jsonFileList.size());
     }
 
     @Override
