@@ -98,7 +98,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.editMap(holder.getBindingAdapterPosition());
+                    listener.playMap(holder.getBindingAdapterPosition());
                 }
             }
         });

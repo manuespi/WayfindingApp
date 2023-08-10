@@ -25,30 +25,57 @@
             android:layout_marginLeft="12dp"
             android:text="Map name"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/playMap_button"
+            android:layout_marginStart="105dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="190dp"
-            app:icon="@android:drawable/ic_media_play" />
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:text="Play"
+            app:icon="@android:drawable/ic_media_play"
+            android:scaleType="fitCenter"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:textSize="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <Button
             android:id="@+id/editMap_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="95dp"
-            app:icon="@android:drawable/ic_menu_edit" />
+            android:layout_toRightOf="@id/playMap_button"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:text="Edit"
+            app:icon="@android:drawable/ic_menu_edit"
+            android:scaleType="fitCenter"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:textSize="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <Button
             android:id="@+id/deleteMap_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/editMap_button"
+            android:layout_marginLeft="8dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            app:icon="@android:drawable/ic_menu_delete" />
-</RelativeLayout>
+            android:layout_marginRight="3dp"
+            android:layout_centerVertical="true"
+            android:text="Delete"
+            app:icon="@android:drawable/ic_menu_delete"
+            android:scaleType="fitCenter"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:textSize="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

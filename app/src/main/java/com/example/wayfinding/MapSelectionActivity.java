@@ -189,7 +189,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     }
 
     @Override
-    public void playMap(int position) { //TODO preguntar confirmacion y borrar el fichero correspondiente
+    public void playMap(int position) {
         Log.d("MapSelectionActivity", "Se ha pulsado el botón play del elemento nº: " + position);
 
         openActivityPlay();
