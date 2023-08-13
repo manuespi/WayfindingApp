@@ -320,8 +320,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 element = "door";
-              //  RoomElement doorObj = new RoomElement(10,10); //coordinate donde empieza
-              //  doorObj.draw(canvas);
+
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
@@ -329,6 +328,7 @@ public class CreateActivity extends AppCompatActivity {
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
+                    wheelchairText.setVisibility(View.VISIBLE);
                 }
 
             }

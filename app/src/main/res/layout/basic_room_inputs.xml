@@ -38,7 +38,8 @@
             android:minHeight="48dp"
             android:text="@={room.width}"
             app:layout_constraintTop_toBottomOf="@+id/nameInput"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="HardcodedText,TextFields" />
 
         <EditText
             android:id="@+id/roomYLength"
@@ -50,7 +51,8 @@
             android:minHeight="48dp"
             android:text="@={room.length}"
             app:layout_constraintTop_toBottomOf="@+id/roomXWidth"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="HardcodedText,TextFields" />
 
         <Button
             android:id="@+id/next"
