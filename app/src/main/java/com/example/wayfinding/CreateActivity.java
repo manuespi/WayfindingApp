@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -22,7 +20,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +53,8 @@ public class CreateActivity extends AppCompatActivity {
             addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
-    private EditText capacityInput;
-    private TextView roomElementsView, roomsView, currentRoom, spinnerText, wheelchairText, capacityText;
+    private EditText capacityInput, coordXInput, coordYInput;
+    private TextView roomElementsView, roomsView, currentRoom, spinnerPrompt, wheelchairPrompt, capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt;
     private AlertDialog.Builder roomConnectionAlert;
     public String roomName;
 
@@ -216,8 +213,14 @@ public class CreateActivity extends AppCompatActivity {
         if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(wheelchairCheckBox);
         }
-        if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {
+        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(capacityInput);
+        }
+        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(coordXInput);
+        }
+        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(coordYInput);
         }
     }
 
@@ -269,13 +272,29 @@ public class CreateActivity extends AppCompatActivity {
         openButton.setText("Open");
         closeButton.setText("Closed");
 
+////Element coordinates
+        //text prompts
+        coordinatesPrompt = new TextView(this);
+        coordinatesPrompt = findViewById(R.id.coordinatesPrompt);
+        coordXPrompt = new TextView(this);
+        coordXPrompt = findViewById(R.id.coordXPrompt);
+        coordYPrompt = new TextView(this);
+        coordYPrompt = findViewById(R.id.coordYPrompt);
 
-////Spinner
+        //number input for WIDTH coordinate
+        coordXInput = new EditText(this);
+        coordXInput = findViewById(R.id.coordXWidth);
+        //number input for LENGTH coordinate
+        coordYInput = new EditText(this);
+        coordYInput = findViewById(R.id.coordYLength);
+
+
+
+////Element Orientation Spinner
         orientationSpinner = new Spinner(this);
-        orientationSpinner = findViewById(R.id.spinner);
-        //orientationSpinner = setId(4);
-        spinnerText = new TextView(this);
-        spinnerText = findViewById(R.id.spinnerText);
+        orientationSpinner = findViewById(R.id.spinner); //id 4
+        spinnerPrompt = new TextView(this);
+        spinnerPrompt = findViewById(R.id.spinnerPrompt);
 
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, orientationList);
         orientationSpinner.setAdapter(spinnerAdapter);
@@ -291,12 +310,11 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 
-//CheckBox
+//Wheelchair CheckBox
         wheelchairCheckBox = new CheckBox(this);
-        wheelchairCheckBox = findViewById(R.id.wcCheckBox);
-        //wheelchairCheckBox.setId(5);
-        wheelchairText = new TextView(this);
-        wheelchairText = findViewById(R.id.checkBoxText);
+        wheelchairCheckBox = findViewById(R.id.wcCheckBox); //id 5
+        wheelchairPrompt = new TextView(this);
+        wheelchairPrompt = findViewById(R.id.wheelchairPrompt);
 
         wheelchairCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -305,11 +323,11 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-//// EditText
+//// Elevator Capacity
         capacityInput = new EditText(this);
-        capacityInput = findViewById(R.id.capacity); //6
-        capacityText = new TextView(this);
-        capacityText = findViewById(R.id.capacityText);
+        capacityInput = findViewById(R.id.capacityInput); //6
+        capacityPrompt = new TextView(this);
+        capacityPrompt = findViewById(R.id.capacityPrompt);
 
 //// AlertDialog Builder
         roomConnectionAlert.setTitle("Now I`m going through:");
@@ -321,8 +339,8 @@ public class CreateActivity extends AppCompatActivity {
                 Log.d("Alert", "Item " + which + "selected.");
             }
         });
-////
 
+//// DOOR BUTTON
         doorButton.findViewById(R.id.newDoor);
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,11 +350,11 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
-                    wheelchairText.setVisibility(View.VISIBLE);
+                    wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -350,19 +368,30 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "stairs";
 
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
+
+
+                }
+
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
-                    wheelchairText.setVisibility(View.VISIBLE);
+                    wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
                     capacityInput.setVisibility(View.INVISIBLE);
-                    capacityText.setVisibility(View.INVISIBLE);
+                    capacityPrompt.setVisibility(View.INVISIBLE);
                 }
+
 
             }
         });
@@ -375,16 +404,16 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.VISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.INVISIBLE);
-                    wheelchairText.setVisibility(View.INVISIBLE);
+                    wheelchairPrompt.setVisibility(View.INVISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
                     capacityInput.setVisibility(View.VISIBLE);
-                    capacityText.setVisibility(View.VISIBLE);
+                    capacityPrompt.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -411,7 +440,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
-                if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {
+                if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
                     try
                     {
                         capacity = parseInt(capacityInput.getText().toString());
