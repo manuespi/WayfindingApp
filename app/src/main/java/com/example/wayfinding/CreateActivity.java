@@ -34,26 +34,44 @@ import java.util.ArrayList;
 
 import com.example.wayfinding.mapComponents.IndoorMap;
 
+//CreateClara
+import static android.content.ContentValues.TAG;
+import static java.lang.Integer.parseInt;
+import android.graphics.Canvas;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import androidx.databinding.DataBindingUtil;
+import com.example.wayfinding.databinding.ActivityCreateBinding;
+//import com.example.wayfinding.databinding.BasicRoomInputsBinding;
+
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
     private int nRoom;
     private Room room;
     //private LinearLayout createLayout;
-    private RelativeLayout createLayout;
+    //private RelativeLayout createLayout;
     private String element;
     private ArrayList<String> orientationList;
     private int orientation, capacity;
     private boolean open, wheelchair;
     private Button mainMenuButton, saveButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton;
+            addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
     private EditText capacityInput;
-    private TextView roomElementsView, roomsView, currentRoom;
+    private TextView roomElementsView, roomsView, currentRoom, spinnerText, wheelchairText, capacityText;
     private AlertDialog.Builder roomConnectionAlert;
     private Gson gson;
     private boolean editingRoom, newMap;
+    //CreateClara
+    private Canvas canvas;
+    private LinearLayout createLayout;
+    public String roomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
