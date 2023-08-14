@@ -19,22 +19,32 @@ private Button mainMenu_button;
         TextView incomingData = findViewById(R.id.map);
 
         Intent incomingIntent = getIntent();
-        String mapString = incomingIntent.getStringExtra("map");
+        if(incomingIntent != null && incomingIntent.hasExtra("map")) {
+            String mapString = incomingIntent.getStringExtra("map");
 
-        Log.d("Showing map", mapString);
-        incomingData.setText(mapString);
+            Log.d("Showing map", mapString);
+            incomingData.setText(mapString);
+        }
+        else incomingData.setText("Not available yet");
 
         mainMenu_button = (Button) findViewById(R.id.mainMenu_button);
         mainMenu_button.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
-                openActivityMain();
+                //openActivityMain();
+                openMapSelectionActivity();
             }
         });
     }
 
     public void openActivityMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openMapSelectionActivity(){
+        Intent intent = new Intent(this, MapSelectionActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,16 +1,13 @@
-package mapComponents;
+package com.example.wayfinding.mapComponents;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Elevator extends Element{
+public class Elevator extends Element implements Serializable {
     private boolean wheelchair;
     private int capacity;
 
-    Elevator(){
-        super();
-        this.wheelchair = true;
-        this.capacity = 6;
-    }
+    public Elevator(){}
 
     public Elevator(boolean wheelchair, int capacity) {
         this.wheelchair = wheelchair;
@@ -44,7 +41,7 @@ public class Elevator extends Element{
         return elevatorString;
     }
 
-    public boolean Wheelchair() {
+    public boolean isWheelchair() {
         return wheelchair;
     }
 
