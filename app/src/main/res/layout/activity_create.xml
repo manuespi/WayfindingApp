@@ -26,13 +26,28 @@
             android:layout_height="0dp"
             android:layout_weight="0.3">
 
-            <ImageView
-                android:id="@+id/roomView"
-                android:layout_width="400px"
-                android:layout_height="400px"
-                android:layout_centerInParent="true"
-                android:background="@drawable/room"
-                android:gravity="center" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Room ImageView -->
+                <ImageView
+                    android:id="@+id/roomView"
+                    android:layout_width="400px"
+                    android:layout_height="400px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/room"
+                    android:gravity="center" />
+
+                <!-- Grid Overlay -->
+                <View
+                    android:id="@+id/gridOverlay"
+                    android:layout_width="400px"
+                    android:layout_height="400px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/grid_background" />
+
+            </RelativeLayout>
 
 
             <TextView

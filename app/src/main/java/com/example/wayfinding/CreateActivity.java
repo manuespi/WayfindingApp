@@ -108,6 +108,14 @@ public class CreateActivity extends AppCompatActivity {
                     roomView.setLayoutParams(layoutParams);
                     room.setLength(String.valueOf(length));
                     room.setWidth(String.valueOf(width));
+
+                    // Update the layout parameters of the grid overlay View
+                    View gridOverlay = findViewById(R.id.gridOverlay);
+                    ViewGroup.LayoutParams gridOverlayLayoutParams = gridOverlay.getLayoutParams();
+                    gridOverlayLayoutParams.width = (int) width; // Set the width
+                    gridOverlayLayoutParams.height = (int) length; // Set the height
+                    gridOverlay.setLayoutParams(gridOverlayLayoutParams);
+                    gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
                 });
 
 
