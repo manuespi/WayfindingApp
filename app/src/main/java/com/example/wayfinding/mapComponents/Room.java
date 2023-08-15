@@ -10,7 +10,7 @@ public class Room implements Serializable {
     private int nElements;
     private List<Element> room;
     private int width; //x
-    private int height; //y
+    private int length; //y
 
 
     public Room(){
@@ -115,11 +115,11 @@ public class Room implements Serializable {
         this.width = width;
     }
 
-    public int getHeight() {
-        return height;
+    public int getLength() {
+        return length;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setLength(int length) {
+        this.length = length;
     }
 }

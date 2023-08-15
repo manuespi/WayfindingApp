@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 import com.example.wayfinding.mapComponents.Room;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -63,7 +64,7 @@ public class CreateActivity extends AppCompatActivity {
             addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
-    private EditText capacityInput;
+    private EditText capacityInput, coordXInput, coordYInput;
     private TextView roomElementsView, roomsView, currentRoom, spinnerText, wheelchairText, capacityText;
     private AlertDialog.Builder roomConnectionAlert;
     private Gson gson;
@@ -81,6 +82,17 @@ public class CreateActivity extends AppCompatActivity {
         initializeAttributes();
         setInterface();
         refreshRoomElementsView();
+        drawMap();
+    }
+
+    private void drawMap(){
+        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+
+        Room room = new Room(1);
+        room.setName("");
+        room.setLength("15");
+        room.setWidth("20");
+        basicRoomInputsBinding.setRoom(room);
     }
 
     private void setDefaultValues(){
@@ -238,8 +250,14 @@ public class CreateActivity extends AppCompatActivity {
         if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(wheelchairCheckBox);
         }
-        if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {
+        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(capacityInput);
+        }
+        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(coordXInput);
+        }
+        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
+            createLayout.removeView(coordYInput);
         }
     }
 
@@ -313,7 +331,7 @@ public class CreateActivity extends AppCompatActivity {
         orientationSpinner = new Spinner(this);
         orientationSpinner = findViewById(R.id.spinner);//TODO XML
         spinnerText = new TextView(this);
-        spinnerText = findViewById(R.id.spinnerText);
+        spinnerText = findViewById(R.id.spinnerPrompt);
 
         /*RelativeLayout.LayoutParams orientationSpinnerParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -345,7 +363,7 @@ public class CreateActivity extends AppCompatActivity {
         wheelchairCheckBox = findViewById(R.id.wcCheckBox);
         //wheelchairCheckBox.setId(5);
         wheelchairText = new TextView(this);
-        wheelchairText = findViewById(R.id.checkBoxText);
+        wheelchairText = findViewById(R.id.wheelchairPrompt);
 
         /*wheelchairCheckBox.setText("Wheelchair");
 
@@ -369,9 +387,9 @@ public class CreateActivity extends AppCompatActivity {
 
 //// EditText
         capacityInput = new EditText(this);//TODO XML
-        capacityInput = findViewById(R.id.capacity); //6
+        capacityInput = findViewById(R.id.capacityInput); //6
         capacityText = new TextView(this);
-        capacityText = findViewById(R.id.capacityText);
+        capacityText = findViewById(R.id.capacityPrompt);
 
         //capacityInput.setText("");
         /*capacityInput.setId(6);
@@ -515,7 +533,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean parametersOk = true;
                 //if(createLayout.findViewById(6) != null) {
-                if(createLayout.findViewById(R.id.capacity).getVisibility() != View.INVISIBLE) {//TODO XML
+                if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {//TODO XML
                     try
                     {
                         capacity = Integer.parseInt(capacityInput.getText().toString());
