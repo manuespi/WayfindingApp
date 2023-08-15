@@ -1,16 +1,22 @@
 package com.example.wayfinding.mapComponents;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.example.wayfinding.BR;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room implements Serializable {
+public class Room extends BaseObservable implements Serializable {
     private int id;
     private String name;
     private int nElements;
     private List<Element> room;
-    private int width; //x
-    private int length; //y
+    private String width; //x
+    private String length; //y
 
 
     public Room(){
@@ -107,19 +113,23 @@ public class Room implements Serializable {
         this.room = room;
     }
 
-    public int getWidth() {
+    @Bindable
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(String width) {
         this.width = width;
+        notifyPropertyChanged(BR.width);
     }
 
-    public int getLength() {
+    @Bindable
+    public String getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(String length) {
         this.length = length;
+        notifyPropertyChanged(BR.length);
     }
 }
