@@ -18,40 +18,43 @@
 
         <EditText
             android:id="@+id/nameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
+            android:layout_width="268dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="124dp"
             android:hint="@string/introduce_room_name"
             android:inputType="text"
-            android:text="@{room.name}"
             android:minHeight="48dp"
+            android:text="@={room.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/roomXWidth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
+            android:layout_width="215dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="132dp"
             android:hint="introduce x"
             android:inputType="text"
             android:minHeight="48dp"
             android:text="@={room.width}"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameInput"
-            tools:layout_editor_absoluteX="0dp"
             tools:ignore="HardcodedText,TextFields" />
 
         <EditText
             android:id="@+id/roomYLength"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_width="215dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="28dp"
             android:hint="introduce y"
             android:inputType="text"
             android:minHeight="48dp"
             android:text="@={room.length}"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/roomXWidth"
-            tools:layout_editor_absoluteX="0dp"
             tools:ignore="HardcodedText,TextFields" />
 
         <Button
@@ -66,13 +69,15 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="391dp"
+            android:layout_height="66dp"
             android:text="Position yourself in one of the room's corners. Measure the steps it takes to arrive to the next corner. Repeat with the following wall to obtain an approximation of the room's dimensions."
             app:layout_constraintBottom_toTopOf="@+id/roomXWidth"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+            app:layout_constraintTop_toBottomOf="@+id/nameInput"
+            app:layout_constraintVertical_bias="0.803" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

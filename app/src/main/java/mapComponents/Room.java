@@ -12,21 +12,20 @@ import java.util.List;
 
 public class Room extends BaseObservable {
 
-    private String name;
     private int id;
     private int nElements;
     private List<Element> room;
     private String width; //x
     private String length; //y
+    private String roomName;
+
 
     @Bindable
-    public String getName() {
-        return name;
+    public String getName() { return roomName;    }
 
-    }
-
+    @Bindable
     public void setName(String name) {
-        this.name = name;
+        this.roomName = name;
         notifyPropertyChanged(BR.name);
     }
 
@@ -35,6 +34,7 @@ public class Room extends BaseObservable {
         return width;
     }
 
+    @Bindable
     public void setWidth(String width) {
         this.width = width;
         notifyPropertyChanged(BR.width);
@@ -45,6 +45,7 @@ public class Room extends BaseObservable {
         return length;
     }
 
+    @Bindable
     public void setLength(String length) {
         this.length = length;
         notifyPropertyChanged(BR.length);

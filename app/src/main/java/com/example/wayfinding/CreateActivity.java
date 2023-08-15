@@ -41,7 +41,6 @@ import mapComponents.Room;
 
 public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
-    private Canvas canvas;
     private int nRoom = 0;
     private LinearLayout createLayout;
     private String element;
@@ -52,20 +51,20 @@ public class CreateActivity extends AppCompatActivity {
             elevatorButton, openButton, closeButton,
             addElementButton, newElementButton, resizeRoom, nextButton;
     private Spinner orientationSpinner;
-    private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
+    private CheckBox wheelchairCheckBox;
     private EditText capacityInput, coordXInput, coordYInput;
     private TextView roomElementsView, roomsView, currentRoom, spinnerPrompt, wheelchairPrompt, capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt;
     private AlertDialog.Builder roomConnectionAlert;
-    public String roomName;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.basic_room_inputs);
-
+        //inflamos layout y creamos objeto enlazado q nos da acceso a Views definidos en el layout basic_room_inputs
         BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+        setContentView(basicRoomInputsBinding.getRoot()); //cleaner
 
         Room room = new Room(1);
         room.setName("");
@@ -73,14 +72,13 @@ public class CreateActivity extends AppCompatActivity {
         room.setWidth("20");
         basicRoomInputsBinding.setRoom(room);
 
-        //nextButton = findViewById(R.id.next);
-        nextButton = basicRoomInputsBinding.next;
+        nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
-
+                setContentView(activityCreateBinding.getRoot());
 
                 ImageView roomView = findViewById(R.id.roomView);
                 roomView.post(() -> {
@@ -96,13 +94,20 @@ public class CreateActivity extends AppCompatActivity {
                     int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsL);
 
+                    String nameStr = room.getName();
+                    room.setName(nameStr);
+                    Log.d(TAG, "Room name: " + nameStr);
+                    currentRoom = findViewById(R.id.currentRoom);
+                    currentRoom.setText(nameStr);
+
                     // hay que hacer exception handling para cuando las dimensiones se saldrían de la pantalla
                     //1 opcion es dividir por un numero y hacer escala mas pequeña de las mismas dimensiones
 
-                    ViewGroup.LayoutParams layoutParams = roomView.getLayoutParams();
-                    layoutParams.width = (int) width;
-                    layoutParams.height = (int) length;
-                    roomView.setLayoutParams(layoutParams);
+                    // Update the layout parametes & name of the room View
+                    ViewGroup.LayoutParams roomLayoutParams = roomView.getLayoutParams();
+                    roomLayoutParams.width = (int) width;
+                    roomLayoutParams.height = (int) length;
+                    roomView.setLayoutParams(roomLayoutParams);
                     room.setLength(String.valueOf(length));
                     room.setWidth(String.valueOf(width));
 
@@ -114,8 +119,6 @@ public class CreateActivity extends AppCompatActivity {
                     gridOverlay.setLayoutParams(gridOverlayLayoutParams);
                     gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
                 });
-
-
 
                 initializeAttributes();
                 setInterface();
@@ -190,17 +193,16 @@ public class CreateActivity extends AppCompatActivity {
         roomsView.setText(roomsText);
     }
 
-    private void refreshCurrentRoom(){
-        String currentRoom = "Current room: " + nRoom;
-
-        this.currentRoom.setText(currentRoom);
-    }
+  //  private void refreshCurrentRoom(){
+    //   String currentRoomStr = nRoom + ". " + roomName;
+      // this.currentRoom.setText(currentRoomStr); //antes era currentRoom
+    //}
 
     @SuppressLint("ResourceType")
     private void setDefaultLayout(){
-        if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(doorButton); //id 1
-        }
+       // if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
+         //   createLayout.removeView(doorButton); //id 1
+       // }
         if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
             createLayout.removeView(stairsButton); //id 2
         }
@@ -242,9 +244,6 @@ public class CreateActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
-//        TextView roomTag = findViewById(R.id.roomName);
-//        roomTag.setText(roomName);
-
         resizeRoom = findViewById(R.id.resize);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
@@ -257,8 +256,8 @@ public class CreateActivity extends AppCompatActivity {
         roomElementsView.setText("Room empty");
         roomsView = findViewById(R.id.rooms);
         roomsView.setText("Room 0: 0 elements");
-        currentRoom = findViewById(R.id.currentRoom);
-        refreshCurrentRoom();
+       // currentRoom = findViewById(R.id.currentRoom);
+       // refreshCurrentRoom();
 
         doorButton = new Button(this);
         stairsButton = new Button(this);
@@ -347,6 +346,13 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "door";
 
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
+                }
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
@@ -374,8 +380,6 @@ public class CreateActivity extends AppCompatActivity {
                     coordXInput.setVisibility(View.VISIBLE);
                     coordYPrompt.setVisibility(View.VISIBLE);
                     coordYInput.setVisibility(View.VISIBLE);
-
-
                 }
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
@@ -402,6 +406,14 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "elevator";
 
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
+                }
+
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
                     spinnerPrompt.setVisibility(View.VISIBLE);
@@ -418,23 +430,6 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        //se puede borrar
-//        newElementButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-////                if(createLayout.findViewById(1) == null) {
-////                    createLayout.addView(doorButton);
-////                }
-//                if(createLayout.findViewById(2) == null) {
-//                    createLayout.addView(stairsButton);
-//                }
-//                if(createLayout.findViewById(3) == null) {
-//                    createLayout.addView(elevatorButton);
-//                }
-//            }
-//        });
 
         addElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -474,7 +469,7 @@ public class CreateActivity extends AppCompatActivity {
 
                 refreshRoomElementsView();
                 refreshRoomsView();
-                refreshCurrentRoom();
+                //refreshCurrentRoom();
                 setDefaultValues();
                 setDefaultLayout();
             }
