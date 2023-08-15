@@ -6,7 +6,6 @@ import static java.lang.Integer.parseInt;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -32,8 +31,6 @@ import androidx.databinding.DataBindingUtil;
 import com.example.wayfinding.databinding.ActivityCreateBinding;
 import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
@@ -43,13 +40,13 @@ public class CreateActivity extends AppCompatActivity {
     private IndoorMap indoorMap;
     private int nRoom = 0;
     private LinearLayout createLayout;
-    private String element;
+    private String element, tempName, tempWidth, tempLength;
     private ArrayList<String> orientationList;
     private int orientation, capacity;
     private boolean open, wheelchair;
     private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton, resizeRoom, nextButton;
+            addElementButton, newElementButton, editRoom, nextButton;
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private EditText capacityInput, coordXInput, coordYInput;
@@ -57,19 +54,31 @@ public class CreateActivity extends AppCompatActivity {
     private AlertDialog.Builder roomConnectionAlert;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setOriginalContentView(true);
+
+    }
+
+    private void setOriginalContentView(Boolean firstTime) {
 
         //inflamos layout y creamos objeto enlazado q nos da acceso a Views definidos en el layout basic_room_inputs
         BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
         setContentView(basicRoomInputsBinding.getRoot()); //cleaner
 
         Room room = new Room(1);
-        room.setName("");
-        room.setLength("15");
-        room.setWidth("20");
+        if(firstTime){
+            room.setName("");
+            room.setLength("15");
+            room.setWidth("20");
+        }
+        else{
+            room.setName(tempName);
+            room.setLength(tempLength);
+            room.setWidth(tempWidth);
+        }
+
         basicRoomInputsBinding.setRoom(room);
 
         nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
@@ -83,18 +92,21 @@ public class CreateActivity extends AppCompatActivity {
                 ImageView roomView = findViewById(R.id.roomView);
                 roomView.post(() -> {
                     String widthStr = room.getWidth();
+                    tempWidth = widthStr;
                     Log.d(TAG, "Width string: " + widthStr);
                     float width = Float.parseFloat(widthStr) * 40; //el 40 por ejemplo
                     int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsW);
 
                     String lengthStr = room.getLength();
+                    tempLength = lengthStr;
                     Log.d(TAG, "Length string: " + lengthStr);
                     float length = Float.parseFloat(lengthStr) * 40;
                     int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
                     Log.d(TAG, "Parsed width: " + pixelsL);
 
                     String nameStr = room.getName();
+                    tempName = nameStr;
                     room.setName(nameStr);
                     Log.d(TAG, "Room name: " + nameStr);
                     currentRoom = findViewById(R.id.currentRoom);
@@ -123,10 +135,9 @@ public class CreateActivity extends AppCompatActivity {
                 initializeAttributes();
                 setInterface();
                 setDefaultValues();
-                setDefaultLayout();
+                // setDefaultLayout();
             }
         });
-
 
     }
 
@@ -193,38 +204,33 @@ public class CreateActivity extends AppCompatActivity {
         roomsView.setText(roomsText);
     }
 
-  //  private void refreshCurrentRoom(){
-    //   String currentRoomStr = nRoom + ". " + roomName;
-      // this.currentRoom.setText(currentRoomStr); //antes era currentRoom
-    //}
-
-    @SuppressLint("ResourceType")
-    private void setDefaultLayout(){
-       // if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
-         //   createLayout.removeView(doorButton); //id 1
-       // }
-        if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(stairsButton); //id 2
-        }
-        if(createLayout.findViewById(R.id.newElevator).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(elevatorButton);
-        }
-        if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(orientationSpinner);
-        }
-        if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(wheelchairCheckBox);
-        }
-        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(capacityInput);
-        }
-        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(coordXInput);
-        }
-        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(coordYInput);
-        }
-    }
+//    @SuppressLint("ResourceType")
+//    private void setDefaultLayout(){
+//       // if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
+//         //   createLayout.removeView(doorButton); //id 1
+//       // }
+//        if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(stairsButton); //id 2
+//        }
+//        if(createLayout.findViewById(R.id.newElevator).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(elevatorButton);
+//        }
+//        if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(orientationSpinner);
+//        }
+//        if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(wheelchairCheckBox);
+//        }
+//        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(capacityInput);
+//        }
+//        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(coordXInput);
+//        }
+//        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
+//            createLayout.removeView(coordYInput);
+//        }
+//    }
 
     private void roomConnectionAlert() {
         /*String[] elements = new String[map.get(nRoom).nElements()];
@@ -244,7 +250,7 @@ public class CreateActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
-        resizeRoom = findViewById(R.id.resize);
+        editRoom = findViewById(R.id.resize);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
         showButton = findViewById(R.id.show_button);
@@ -260,6 +266,7 @@ public class CreateActivity extends AppCompatActivity {
        // refreshCurrentRoom();
 
         doorButton = new Button(this);
+        doorButton.findViewById(R.id.newDoor);
         stairsButton = new Button(this);
         elevatorButton = new Button(this);
         openButton = new Button(this);
@@ -340,10 +347,12 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 //// DOOR BUTTON
-        doorButton.findViewById(R.id.newDoor);
+
+        doorButton.setEnabled(true);
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Button clicked");
                 element = "door";
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -452,7 +461,7 @@ public class CreateActivity extends AppCompatActivity {
                     refreshRoomElementsView();
                     refreshRoomsView();
                     setDefaultValues();
-                    setDefaultLayout();
+                    //setDefaultLayout();
                 }
             }
         });
@@ -471,7 +480,7 @@ public class CreateActivity extends AppCompatActivity {
                 refreshRoomsView();
                 //refreshCurrentRoom();
                 setDefaultValues();
-                setDefaultLayout();
+                //setDefaultLayout();
             }
         });
 
@@ -499,10 +508,10 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        resizeRoom.setOnClickListener(new View.OnClickListener() {
+        editRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.basic_room_inputs);
+                setOriginalContentView(false);
             }
         });
     }

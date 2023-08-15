@@ -63,13 +63,11 @@
             </RelativeLayout>
 
 
-
-
             <Button
                 android:id="@+id/resize"
-                android:layout_width="wrap_content"
+                android:layout_width="67dp"
                 android:layout_height="wrap_content"
-                android:text="RESIZE" />
+                android:text="EDIT" />
 
 
         </RelativeLayout>
