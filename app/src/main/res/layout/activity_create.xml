@@ -145,111 +145,16 @@
                         android:layout_alignParentRight="true"
                         android:background="?android:attr/listDivider" />
 
-                    <TextView
-                        android:id="@+id/coordinatesPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/addElement_button"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="-56dp"
-                        android:layout_marginBottom="369dp"
-                        android:text="Give the element an x and y coordinate:"
-                        android:visibility="invisible" />
-
-                    <TextView
-                        android:id="@+id/coordXPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/addElement_button"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="-36dp"
-                        android:layout_marginBottom="333dp"
-                        android:text="X:"
-                        android:visibility="invisible" />
-
-                    <EditText
-                        android:id="@+id/coordXWidth"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="59dp"
-                        android:layout_marginBottom="325dp"
-                        android:background="@drawable/custom_wc_checkbox"
-                        android:inputType="number"
-                        android:text=""
-                        android:visibility="invisible" />
-
-                    <TextView
-                        android:id="@+id/coordYPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/addElement_button"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="63dp"
-                        android:layout_marginBottom="334dp"
-                        android:text="Y:"
-                        android:visibility="invisible" />
-
                     <EditText
                         android:id="@+id/coordYLength"
                         android:layout_width="40dp"
                         android:layout_height="35dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="156dp"
-                        android:layout_marginBottom="324dp"
+                        android:layout_marginLeft="151dp"
+                        android:layout_marginBottom="279dp"
                         android:background="@drawable/custom_wc_checkbox"
                         android:inputType="number"
-                        android:text=""
-                        android:visibility="invisible" />
-
-                    <TextView
-                        android:id="@+id/spinnerPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/addElement_button"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="-50dp"
-                        android:layout_marginBottom="287dp"
-                        android:text="Pick a wall"
-                        android:visibility="invisible"/>
-
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="107dp"
-                        android:layout_height="35dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="88dp"
-                        android:layout_marginBottom="277dp"
-                        android:background="@drawable/custom_spinner"
-                        android:dropDownVerticalOffset="20dp"
-                        android:gravity="center"
-                        android:spinnerMode="dropdown"
-                        android:textSize="18dp"
-                        android:visibility="invisible" />
-
-                    <TextView
-                        android:id="@+id/wheelchairPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/addElement_button"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="-46dp"
-                        android:layout_marginBottom="221dp"
-                        android:text="Wheelchair friendly"
-                        android:visibility="invisible"/>
-
-                    <CheckBox
-                        android:id="@+id/wcCheckBox"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="155dp"
-                        android:layout_marginBottom="210dp"
-                        android:background="@drawable/custom_wc_checkbox"
                         android:text=""
                         android:visibility="invisible" />
 
@@ -259,10 +164,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@+id/addElement_button"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="-46dp"
-                        android:layout_marginBottom="221dp"
+                        android:layout_marginStart="-51dp"
+                        android:layout_marginBottom="177dp"
                         android:text="Maximum capacity"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" />
 
                     <EditText
                         android:id="@+id/capacityInput"
@@ -270,22 +175,107 @@
                         android:layout_height="35dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="154dp"
-                        android:layout_marginBottom="209dp"
+                        android:layout_marginLeft="149dp"
+                        android:layout_marginBottom="164dp"
                         android:background="@drawable/custom_wc_checkbox"
                         android:inputType="number"
                         android:text=""
                         android:visibility="invisible" />
 
-                    <Button
-                        android:id="@+id/addElement_button"
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="107dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="200px"
-                        android:layout_marginBottom="200px"
-                        android:text="Add" />
+                        android:layout_marginLeft="83dp"
+                        android:layout_marginBottom="232dp"
+                        android:background="@drawable/custom_spinner"
+                        android:dropDownVerticalOffset="20dp"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textSize="18dp"
+                        android:visibility="invisible" />
+
+                    <EditText
+                        android:id="@+id/coordXWidth"
+                        android:layout_width="40dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="54dp"
+                        android:layout_marginBottom="280dp"
+                        android:background="@drawable/custom_wc_checkbox"
+                        android:inputType="number"
+                        android:text=""
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/coordXPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="-41dp"
+                        android:layout_marginBottom="289dp"
+                        android:text="X:"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/coordinatesPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="-60dp"
+                        android:layout_marginBottom="324dp"
+                        android:text="Give the element an x and y coordinate:"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/coordYPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="58dp"
+                        android:layout_marginBottom="290dp"
+                        android:text="Y:"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/spinnerPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="-54dp"
+                        android:layout_marginBottom="243dp"
+                        android:text="Pick a wall"
+                        android:visibility="invisible" />
+
+                    <CheckBox
+                        android:id="@+id/wcCheckBox"
+                        android:layout_width="40dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="148dp"
+                        android:layout_marginBottom="165dp"
+                        android:background="@drawable/custom_wc_checkbox"
+                        android:text=""
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/wheelchairPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/addElement_button"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="-53dp"
+                        android:layout_marginBottom="178dp"
+                        android:text="Wheelchair friendly"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/roomElements"
@@ -293,8 +283,19 @@
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@+id/addElement_button"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="360px"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginBottom="81dp"
                         android:text="Room elements" />
+
+                    <Button
+                        android:id="@+id/addElement_button"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="76dp"
+                        android:layout_marginBottom="25dp"
+                        android:text="Add" />
 
                 </RelativeLayout>
 
@@ -310,12 +311,14 @@
                         android:id="@+id/newRoom_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginStart="13dp"
                         android:layout_marginEnd="200px"
-                        android:layout_marginBottom="200px"
+                        android:layout_marginRight="77dp"
+                        android:layout_marginBottom="25dp"
                         android:text="New room" />
-
 
                     <TextView
                         android:id="@+id/rooms"
@@ -323,8 +326,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@+id/newRoom_button"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginStart="2dp"
                         android:layout_marginEnd="120px"
-                        android:layout_marginBottom="360px"
+                        android:layout_marginBottom="82dp"
                         android:text="Rooms" />
                 </RelativeLayout>
 

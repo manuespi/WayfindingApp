@@ -42,7 +42,7 @@ public class CreateActivity extends AppCompatActivity {
     private LinearLayout createLayout;
     private String element, tempName, tempWidth, tempLength;
     private ArrayList<String> orientationList;
-    private int orientation, capacity;
+    private int orientation, capacity, xCoordinate, yCoordinate;
     private boolean open, wheelchair;
     private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
@@ -252,6 +252,7 @@ public class CreateActivity extends AppCompatActivity {
         createLayout = findViewById(R.id.createLayout);
         editRoom = findViewById(R.id.resize);
 
+
         mainMenuButton = findViewById(R.id.mainMenu_button);
         showButton = findViewById(R.id.show_button);
         newRoomButton = findViewById(R.id.newRoom_button);
@@ -265,10 +266,11 @@ public class CreateActivity extends AppCompatActivity {
        // currentRoom = findViewById(R.id.currentRoom);
        // refreshCurrentRoom();
 
-        doorButton = new Button(this);
-        doorButton.findViewById(R.id.newDoor);
-        stairsButton = new Button(this);
-        elevatorButton = new Button(this);
+
+        doorButton = findViewById(R.id.newDoor);
+        //doorButton.findViewById(R.id.newDoor);
+        //stairsButton = new Button(this);
+        //elevatorButton = new Button(this);
         openButton = new Button(this);
         closeButton = new Button(this);
 
@@ -347,8 +349,6 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 //// DOOR BUTTON
-
-        doorButton.setEnabled(true);
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -444,10 +444,25 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
+
+                //x & y
+                try
+                {
+                    xCoordinate = parseInt(coordXInput.getText().toString());
+                    yCoordinate = parseInt(coordYInput.getText().toString());
+                    Log.d(TAG, "X: " + xCoordinate + " Y:" + yCoordinate);
+                }
+                catch (NumberFormatException nfe)
+                {
+                    Toast.makeText(CreateActivity.this, "X & Y should be numbers", Toast.LENGTH_SHORT).show();
+                    parametersOk = false;
+                }
+
                 if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
                     try
                     {
                         capacity = parseInt(capacityInput.getText().toString());
+
                     }
                     catch (NumberFormatException nfe)
                     {
