@@ -162,13 +162,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <data>
+        <!--<data>
 
                 <variable
                     name="room"
                     type="com.example.wayfinding.mapComponents.Room" />
 
-        </data>
+        </data>-->
 
         <LinearLayout
             android:id="@+id/createLayout"

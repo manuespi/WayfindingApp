@@ -120,7 +120,7 @@ public class Room extends BaseObservable implements Serializable {
 
     public void setWidth(String width) {
         this.width = width;
-        notifyPropertyChanged(BR.width);
+        //notifyPropertyChanged(BR.width);
     }
 
     @Bindable
@@ -130,6 +130,6 @@ public class Room extends BaseObservable implements Serializable {
 
     public void setLength(String length) {
         this.length = length;
-        notifyPropertyChanged(BR.length);
+        //notifyPropertyChanged(BR.length);
     }
 }

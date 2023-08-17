@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wayfinding.databinding.BasicRoomInputsBinding;
+//import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 import com.example.wayfinding.mapComponents.Room;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -45,8 +45,8 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import androidx.databinding.DataBindingUtil;
-import com.example.wayfinding.databinding.ActivityCreateBinding;
+//import androidx.databinding.DataBindingUtil;
+//import com.example.wayfinding.databinding.ActivityCreateBinding;
 //import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 
 public class CreateActivity extends AppCompatActivity {
@@ -86,13 +86,13 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void drawMap(){
-        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+        //BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
 
         Room room = new Room(1);
         room.setName("");
         room.setLength("15");
         room.setWidth("20");
-        basicRoomInputsBinding.setRoom(room);
+        //basicRoomInputsBinding.setRoom(room);
     }
 
     private void setDefaultValues(){
@@ -386,7 +386,7 @@ public class CreateActivity extends AppCompatActivity {
 
 
 //// EditText
-        capacityInput = new EditText(this);//TODO XML
+        capacityInput = new EditText(this);
         capacityInput = findViewById(R.id.capacityInput); //6
         capacityText = new TextView(this);
         capacityText = findViewById(R.id.capacityPrompt);
@@ -416,7 +416,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 ////
-        doorButton.findViewById(R.id.newDoor);//TODO XML
+        doorButton.findViewById(R.id.newDoor);
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -444,7 +444,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        stairsButton = findViewById(R.id.newStairs);//TODO XML
+        stairsButton = findViewById(R.id.newStairs);
         stairsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -477,7 +477,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        elevatorButton = findViewById(R.id.newElevator);//TODO XML
+        elevatorButton = findViewById(R.id.newElevator);
         elevatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -510,7 +510,7 @@ public class CreateActivity extends AppCompatActivity {
         });
 
         //Se puede borrar
-        newElementButton.setOnClickListener(new View.OnClickListener() {
+        /*newElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaultValues();
@@ -526,14 +526,14 @@ public class CreateActivity extends AppCompatActivity {
                     createLayout.addView(elevatorButton);
                 }
             }
-        });
+        });*/
 
         addElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
                 //if(createLayout.findViewById(6) != null) {
-                if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {//TODO XML
+                if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
                     try
                     {
                         capacity = Integer.parseInt(capacityInput.getText().toString());
@@ -590,8 +590,8 @@ public class CreateActivity extends AppCompatActivity {
                 saveMap();
 
                 Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
-                if(indoorMap == null) Log.d("CALVERIO", "IM is null: ");
-                else Log.d("CALVERIO", "IM is not null: "+indoorMap.getnRoom());
+                if(indoorMap == null) Log.d("null", "IM is null: ");
+                else Log.d("no null", "IM is not null: "+indoorMap.getnRoom());
                 intent.putExtra("IMmap", indoorMap);
                 startActivity(intent);
                 finish();
@@ -619,7 +619,7 @@ public class CreateActivity extends AppCompatActivity {
         resizeRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.basic_room_inputs);//TODO XML
+                //setContentView(R.layout.basic_room_inputs);
             }
         });
     }
