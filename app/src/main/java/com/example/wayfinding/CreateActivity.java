@@ -50,7 +50,8 @@ public class CreateActivity extends AppCompatActivity {
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private EditText capacityInput, coordXInput, coordYInput;
-    private TextView roomElementsView, roomsView, currentRoom, spinnerPrompt, wheelchairPrompt, capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader;
+    private TextView roomElementsView, roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
+            capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader, editingHeader;
     private AlertDialog.Builder roomConnectionAlert;
 
 
@@ -164,6 +165,8 @@ public class CreateActivity extends AppCompatActivity {
         orientationList.add("West");
 
         setDefaultValues();
+       // refreshRoomsView();
+
     }
 
     private void openActivityMain(){
@@ -194,43 +197,22 @@ public class CreateActivity extends AppCompatActivity {
         roomElementsView.setText(elementsText);
     }
 
-    private void refreshRoomsView(){
+    private void refreshRoomsView(){ //esto peta pq indoorMap no está rellenandose bien
         String roomsText = "";
         for(int i = 0; i <= nRoom; i++){
-            roomsText += "Room " + i + ": " + indoorMap.getMap().get(i).nElements() + " elements";
+            if(i == 0){
+                roomsText += indoorMap.getMap().get(i).nElements() + " ELEMENTS";
 
+            }
+            else{
+                roomsText += indoorMap.getMap().get(i).nElements() + " ELEMENT";
+
+            }
             if(i < nRoom) roomsText += "\n";
         }
-        roomsView.setText(roomsText);
-    }
 
-//    @SuppressLint("ResourceType")
-//    private void setDefaultLayout(){
-//       // if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
-//         //   createLayout.removeView(doorButton); //id 1
-//       // }
-//        if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(stairsButton); //id 2
-//        }
-//        if(createLayout.findViewById(R.id.newElevator).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(elevatorButton);
-//        }
-//        if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(orientationSpinner);
-//        }
-//        if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(wheelchairCheckBox);
-//        }
-//        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(capacityInput);
-//        }
-//        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(coordXInput);
-//        }
-//        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
-//            createLayout.removeView(coordYInput);
-//        }
-//    }
+        roomElementsCounter.setText(roomsText);
+    }
 
     private void roomConnectionAlert() {
         /*String[] elements = new String[map.get(nRoom).nElements()];
@@ -261,8 +243,8 @@ public class CreateActivity extends AppCompatActivity {
 
         roomElementsView = findViewById(R.id.roomElements);
         roomElementsView.setText("Room empty");
-        roomsView = findViewById(R.id.rooms);
-        roomsView.setText("Room 0: 0 elements");
+        roomElementsCounter = findViewById(R.id.elemCount);
+        roomElementsCounter.setText("0 ELEMENTS");
        // currentRoom = findViewById(R.id.currentRoom);
        // refreshCurrentRoom();
 
@@ -281,19 +263,21 @@ public class CreateActivity extends AppCompatActivity {
 
 ////Element coordinates
         //text prompts
-        coordinatesPrompt = new TextView(this); //are these necessary? already definded up there
+     //   coordinatesPrompt = new TextView(this); //are these necessary? already definded up there
         coordinatesPrompt = findViewById(R.id.coordinatesPrompt);
-        coordXPrompt = new TextView(this);
+       // coordXPrompt = new TextView(this);
         coordXPrompt = findViewById(R.id.coordXPrompt);
-        coordYPrompt = new TextView(this);
+       // coordYPrompt = new TextView(this);
         coordYPrompt = findViewById(R.id.coordYPrompt);
-        addElemHeader = new TextView(this);
+       // addElemHeader = new TextView(this);
         addElemHeader = findViewById(R.id.addElementHeader);
+       // editHeader = new TextView(this);
+        editingHeader = findViewById(R.id.editingHeader);
         //number input for WIDTH coordinate
-        coordXInput = new EditText(this);
+       // coordXInput = new EditText(this);
         coordXInput = findViewById(R.id.coordXWidth);
         //number input for LENGTH coordinate
-        coordYInput = new EditText(this);
+       // coordYInput = new EditText(this);
         coordYInput = findViewById(R.id.coordYLength);
 
 
@@ -357,6 +341,7 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -393,6 +378,7 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -429,6 +415,7 @@ public class CreateActivity extends AppCompatActivity {
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){

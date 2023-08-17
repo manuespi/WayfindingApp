@@ -31,7 +31,7 @@
 
         <EditText
             android:id="@+id/roomXWidth"
-            android:layout_width="215dp"
+            android:layout_width="155dp"
             android:layout_height="54dp"
             android:layout_marginStart="96dp"
             android:layout_marginTop="132dp"
@@ -39,13 +39,14 @@
             android:inputType="text"
             android:minHeight="48dp"
             android:text="@={room.width}"
+            android:textSize="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameInput"
             tools:ignore="HardcodedText,TextFields" />
 
         <EditText
             android:id="@+id/roomYLength"
-            android:layout_width="215dp"
+            android:layout_width="155dp"
             android:layout_height="50dp"
             android:layout_marginStart="96dp"
             android:layout_marginTop="28dp"
@@ -53,6 +54,7 @@
             android:inputType="text"
             android:minHeight="48dp"
             android:text="@={room.length}"
+            android:textSize="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/roomXWidth"
             tools:ignore="HardcodedText,TextFields" />
