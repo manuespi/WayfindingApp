@@ -50,7 +50,7 @@ public class CreateActivity extends AppCompatActivity {
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private EditText capacityInput, coordXInput, coordYInput;
-    private TextView roomElementsView, roomsView, currentRoom, spinnerPrompt, wheelchairPrompt, capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt;
+    private TextView roomElementsView, roomsView, currentRoom, spinnerPrompt, wheelchairPrompt, capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader;
     private AlertDialog.Builder roomConnectionAlert;
 
 
@@ -268,7 +268,6 @@ public class CreateActivity extends AppCompatActivity {
 
 
         doorButton = findViewById(R.id.newDoor);
-        //doorButton.findViewById(R.id.newDoor);
         //stairsButton = new Button(this);
         //elevatorButton = new Button(this);
         openButton = new Button(this);
@@ -282,13 +281,14 @@ public class CreateActivity extends AppCompatActivity {
 
 ////Element coordinates
         //text prompts
-        coordinatesPrompt = new TextView(this);
+        coordinatesPrompt = new TextView(this); //are these necessary? already definded up there
         coordinatesPrompt = findViewById(R.id.coordinatesPrompt);
         coordXPrompt = new TextView(this);
         coordXPrompt = findViewById(R.id.coordXPrompt);
         coordYPrompt = new TextView(this);
         coordYPrompt = findViewById(R.id.coordYPrompt);
-
+        addElemHeader = new TextView(this);
+        addElemHeader = findViewById(R.id.addElementHeader);
         //number input for WIDTH coordinate
         coordXInput = new EditText(this);
         coordXInput = findViewById(R.id.coordXWidth);
@@ -355,6 +355,10 @@ public class CreateActivity extends AppCompatActivity {
                 Log.d(TAG, "Button clicked");
                 element = "door";
 
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                }
+
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
                     coordinatesPrompt.setVisibility(View.VISIBLE);
                     coordXPrompt.setVisibility(View.VISIBLE);
@@ -372,6 +376,10 @@ public class CreateActivity extends AppCompatActivity {
                     wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
+                if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
+                    capacityInput.setVisibility(View.INVISIBLE);
+                    capacityPrompt.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -382,6 +390,10 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 element = "stairs";
+
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
                     coordinatesPrompt.setVisibility(View.VISIBLE);
@@ -414,6 +426,10 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 element = "elevator";
+
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
                     coordinatesPrompt.setVisibility(View.VISIBLE);
