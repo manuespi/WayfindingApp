@@ -1,14 +1,24 @@
 package mapComponents;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class IndoorMap {
+import mapComponents.Room;
+
+public class IndoorMap implements Serializable {
     private ArrayList<Room> map;
+    private int nRoom;
     private String name;
 
     public IndoorMap(){
         map = new ArrayList<Room>();
+        nRoom = 0;
+    }
+
+    public IndoorMap(String name){
+        this.name = name;
+        map = new ArrayList<Room>();
+        nRoom = 0;
     }
 
     public void addElementToRoom(int id, String type,  int orientation, int capacity, boolean open, boolean wheelchair){
@@ -16,11 +26,27 @@ public class IndoorMap {
     }
 
     public void addRoom(){
-        this.map.add(this.map.size(), new Room(this.map.size() - 1));
+        this.map.add(nRoom, new Room(nRoom, Integer.toString(nRoom))); //TODO meterle el nombre cuando proceda
+        nRoom++;
     }
 
-    public IndoorMap(String name){
-        this.name = name;
+    public void addRoom(Room r){
+        this.map.add(nRoom, r);
+        nRoom++;
+    }
+
+    public int NextId(){
+        int ret = -1;
+
+        for(int i = 0; i < this.map.size(); ++i)
+            if(map.get(i).getId() > ret) ret = map.get(i).getId();
+
+        if(ret == -1) return 0;
+        else return ret + 1;
+    }
+
+    public Room getRoom(int pos){
+        return this.map.get(pos);
     }
 
     public ArrayList<Room> getMap() {
@@ -29,6 +55,14 @@ public class IndoorMap {
 
     public void setMap(ArrayList<Room> map) {
         this.map = map;
+    }
+
+    public int getnRoom() {
+        return nRoom;
+    }
+
+    public void setnRoom(int nRoom) {
+        this.nRoom = nRoom;
     }
 
     public String getName() {

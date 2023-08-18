@@ -1,9 +1,23 @@
 package mapComponents;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Element {
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Door.class, name = "door"),
+        @JsonSubTypes.Type(value = Stairs.class, name = "stairs"),
+        @JsonSubTypes.Type(value = Elevator.class, name = "elevator"),
+})
+public class Element implements Serializable {
     private int id;
     private int orientation; // 0 North, 1 East, 2 South, 3 West
     private String type;    // door, elevator, stairs
@@ -11,20 +25,19 @@ public class Element {
     private List<Integer> connects; //id of Rooms it connects
     private int x, y; //position in the room
 
-    Element(){
-        this.type = "door";
+    public Element(){
         this.open = true;
         this.connects = new ArrayList<Integer>();
     }
 
-    Element(int id){
+    public Element(int id){
         this.id = id;
         this.type = "door";
         this.open = true;
         this.connects = new ArrayList<Integer>();
     }
 
-    Element(int id, int orientation, String type, boolean open){
+    public Element(int id, int orientation, String type, boolean open){
         this.id = id;
         this.orientation = orientation;
         this.type = type;
@@ -32,7 +45,7 @@ public class Element {
         this.connects = new ArrayList<Integer>();
     }
 
-    Element(int id, int orientation, String type, boolean open, List<Integer> connects){
+    public Element(int id, int orientation, String type, boolean open, List<Integer> connects){
         this.id = id;
         this.orientation = orientation;
         this.type = type;
@@ -43,15 +56,14 @@ public class Element {
     public String toString(){
         String ret;
 
-        ret = type + ": " + this.id + "\n";
-        ret += "Orientation: " + this.getOrientationString() + "\n";
+        ret = type + ": " + String.valueOf(this.id) + "\n";
+        ret += "Orientation: " + this.orientationString() + "\n";
         //ret += getConnectsString() + "\n";
-
 
         return ret;
     }
 
-    public String getOrientationString() {
+    public String orientationString() {
         String orientationString;
 
         switch (this.orientation){
@@ -113,5 +125,21 @@ public class Element {
 
     public void setConnects(List<Integer> connects) {
         this.connects = connects;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

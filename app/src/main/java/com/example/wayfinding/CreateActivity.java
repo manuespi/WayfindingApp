@@ -31,20 +31,35 @@ import androidx.databinding.DataBindingUtil;
 import com.example.wayfinding.databinding.ActivityCreateBinding;
 import com.example.wayfinding.databinding.BasicRoomInputsBinding;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import mapComponents.IndoorMap;
 import mapComponents.Room;
 
+//manu
+import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 public class CreateActivity extends AppCompatActivity {
+    //manu
     private IndoorMap indoorMap;
-    private int nRoom = 0;
+    private int nRoom;
+    private Room room;
+    private Gson gson;
+    private boolean editingRoom, newMap;
+
+    //mio
+   // private int nRoom = 0;
     private LinearLayout createLayout;
     private String element, tempName, tempWidth, tempLength;
     private ArrayList<String> orientationList;
     private int orientation, capacity, xCoordinate, yCoordinate;
     private boolean open, wheelchair;
-    private Button mainMenuButton, showButton, newRoomButton, doorButton, stairsButton,
+    private Button mainMenuButton, saveButton, showButton, newRoomButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
             addElementButton, newElementButton, editRoom, nextButton;
     private Spinner orientationSpinner;
@@ -151,22 +166,63 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
-        indoorMap = new IndoorMap();
+        //Manu
         orientationList = new ArrayList<>();
-
-        nRoom++;
-        indoorMap.addRoom();
-        orientation = 0;
-        roomConnectionAlert = new AlertDialog.Builder(this);
-
         orientationList.add("North");
         orientationList.add("East");
         orientationList.add("South");
         orientationList.add("West");
+        orientation = 0;
+        roomConnectionAlert = new AlertDialog.Builder(this);
+        gson = new Gson();
+        this.indoorMap = new IndoorMap();
+        roomElementsView = findViewById(R.id.roomElements);
+
+        Intent incomingIntent = getIntent();
+
+        if(incomingIntent != null && incomingIntent.hasExtra("room")) {
+            this.room = (Room) incomingIntent.getSerializableExtra("room");
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
+            this.editingRoom = true;
+            this.newMap = false;
+            Toast.makeText(CreateActivity.this, "Mapa cargado (room)", Toast.LENGTH_SHORT).show();
+
+        }
+        else if(incomingIntent != null && incomingIntent.hasExtra("id")){
+            String name = incomingIntent.getStringExtra("name");
+            int id = incomingIntent.getIntExtra("id", 0);
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
+            this.room = new Room();
+            this.room.setName(name);
+            this.room.setId(id);
+            this.editingRoom = false;
+            Toast.makeText(CreateActivity.this, "Mapa cargado (id) " + id, Toast.LENGTH_SHORT).show();
+
+            if(incomingIntent.hasExtra("new"))
+                this.newMap = true;
+            else this.newMap = false;
+        }
+        else{
+            Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
+            Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
+            this.editingRoom = false;
+            this.newMap = false;
+        }
 
         setDefaultValues();
-       // refreshRoomsView();
+    }
 
+    private void receiveMap(String map, String name){
+        this.indoorMap.setName(name);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Log.d("CreateActivity", this.indoorMap.getName() + "receiving map");
+        try {
+            this.indoorMap = objectMapper.readValue(map, IndoorMap.class);
+            nRoom = this.indoorMap.getMap().size() - 1;
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void openActivityMain(){
@@ -175,57 +231,58 @@ public class CreateActivity extends AppCompatActivity {
         finish();
     }
 
+    //Manu
+    private void openMapSelectionActivity(){
+        Intent intent = new Intent(this, MapSelectionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //Manu
     private void addElementToRoom(){
-        if(!indoorMap.getMap().isEmpty()) {
-            if(element == "empty"){
-                Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                indoorMap.getMap().get(nRoom).addElement(element, orientation, capacity, open, wheelchair);
-            }
+        if(element == "empty"){
+            Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
+            this.room.addElement(element, orientation, capacity, open, wheelchair);
         }
     }
 
+    //Manu
     private void refreshRoomElementsView(){
-        int nElem = indoorMap.getMap().get(nRoom).nElements();
+        //int nElem = indoorMap.getRoom(nRoom).getnElements();
+        Log.d("refresh", room.toString());
+        int nElem = this.room.getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            elementsText += indoorMap.getMap().get(nRoom).get(i).getType() + ": " + indoorMap.getMap().get(nRoom).get(i).getOrientationString();
+            //elementsText += indoorMap.getRoom(nRoom).getElement(i).getType() + ": " + indoorMap.getRoom(nRoom).getElement(i).orientationString();
+            elementsText += this.room.getElement(i).getType() + ": " + this.room.getElement(i).orientationString();Log.d("refresh", "Entra");
 
             if(i < nElem - 1) elementsText += "\n";
         }
         roomElementsView.setText(elementsText);
     }
 
-    private void refreshRoomsView(){ //esto peta pq indoorMap no está rellenandose bien
+
+    private void refreshRoomsView(){
         String roomsText = "";
         for(int i = 0; i <= nRoom; i++){
-            if(i == 0){
-                roomsText += indoorMap.getMap().get(i).nElements() + " ELEMENTS";
+            roomsText += "Room " + i + ": " + indoorMap.getRoom(i).getnElements() + " elements";
 
-            }
-            else{
-                roomsText += indoorMap.getMap().get(i).nElements() + " ELEMENT";
-
-            }
             if(i < nRoom) roomsText += "\n";
         }
-
         roomElementsCounter.setText(roomsText);
     }
 
+    //creo q es inecesario
+    /*private void refreshCurrentRoom(){
+        String currentRoom = "Current room: " + nRoom;
+
+        this.currentRoom.setText(currentRoom);
+    }*/
+
     private void roomConnectionAlert() {
-        /*String[] elements = new String[map.get(nRoom).nElements()];
-        List<Integer> connects = new ArrayList<Integer>();
-        connects.add(nRoom);
-        connects.add(nRoom + 1); //esto no tiene sentido
-
-        for(int i = 0; i < map.get(nRoom).nElements(); i++){
-            elements[i] = i + " " + map.get(nRoom).get(i).getType();
-        }
-
-        Log.d("roomConnectionAlert", elements.toString());*/
-
         roomConnectionAlert.create().show();
     }
 
@@ -236,7 +293,7 @@ public class CreateActivity extends AppCompatActivity {
 
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
-        showButton = findViewById(R.id.show_button);
+        saveButton = findViewById(R.id.show_button);
         newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
      //   newElementButton = findViewById(R.id.newElement_button);
@@ -477,7 +534,7 @@ public class CreateActivity extends AppCompatActivity {
                 if(parametersOk) {
                     addElementToRoom();
                     refreshRoomElementsView();
-                    refreshRoomsView();
+                    refreshRoomsView(); //prueba borrarlo
                     setDefaultValues();
                     //setDefaultLayout();
                 }
@@ -487,37 +544,74 @@ public class CreateActivity extends AppCompatActivity {
         newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roomConnectionAlert();
+                //roomConnectionAlert();
 
                 nRoom++;
                 indoorMap.addRoom();
-                //indoorMap.getMap().get(nRoom).setParameters(roomXInt, roomYInt);
-
 
                 refreshRoomElementsView();
-                refreshRoomsView();
+                //refreshRoomsView();
                 //refreshCurrentRoom();
                 setDefaultValues();
-                //setDefaultLayout();
+               // setDefaultLayout();
             }
         });
 
-        showButton.setOnClickListener(new View.OnClickListener() {
+//        showButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
+//                else {
+//                    String mapString = "";
+//                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
+//                        mapString += indoorMap.getMap().get(i).toString() + "\n";
+//                    }
+//                    Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
+//                    intent.putExtra("map", mapString);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        });
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
-                else {
-                    String mapString = "";
-                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
-                        mapString += indoorMap.getMap().get(i).toString() + "\n";
-                    }
-                    Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
-                    intent.putExtra("map", mapString);
-                    startActivity(intent);
-                    finish();
+                if(editingRoom){Toast.makeText(CreateActivity.this, "Editing Room", Toast.LENGTH_SHORT).show();
+                    ArrayList<Room> auxMap = indoorMap.getMap();
+
+                    for(int i = 0; i < auxMap.size(); ++i)
+                        if(auxMap.get(i).getId() == room.getId())
+                            auxMap.set(i, room);
+
+                    indoorMap.setMap(auxMap);
                 }
+                else{Toast.makeText(CreateActivity.this, "Not Editing Room", Toast.LENGTH_SHORT).show();
+                    indoorMap.addRoom(room);
+                }
+
+                saveMap();
+
+                Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
+                if(indoorMap == null) Log.d("null", "IM is null: ");
+                else Log.d("no null", "IM is not null: "+indoorMap.getnRoom());
+                intent.putExtra("IMmap", indoorMap);
+                startActivity(intent);
+                finish();
+
+                /*String mapString = "";
+                for (int i = 0; i < indoorMap.getMap().size(); ++i) {
+                    mapString += indoorMap.getRoom(i).toString() + "\n";
+                }
+
+                Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
+                intent.putExtra("map", mapString);
+                startActivity(intent);
+                finish();*/
             }
         });
+
 
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,6 +628,26 @@ public class CreateActivity extends AppCompatActivity {
         });
     }
 
+    public void saveMap(){
+        File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if(newMap) {
+            Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
+            if (file.exists())
+                file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
+        }
+        if(editingRoom)Log.d("SaveMap", "EDITING ROOM");
+
+        try {
+            String json = objectMapper.writeValueAsString(this.indoorMap);
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /*@Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

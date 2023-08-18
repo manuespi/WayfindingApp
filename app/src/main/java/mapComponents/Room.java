@@ -1,9 +1,8 @@
 package mapComponents;
 
-import android.text.Editable;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
 
 import com.example.wayfinding.BR;
 
@@ -17,15 +16,45 @@ public class Room extends BaseObservable {
     private List<Element> room;
     private String width; //x
     private String length; //y
-    private String roomName;
+    private String name;
 
+    public Room(){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
+    }
+
+    public Room(int id){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
+        this.id = id;
+    }
+
+    public Room(int id, String name){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
+        this.id = id;
+        this.name = name;
+    }
+
+    Room(int id, boolean up, boolean down){
+        this.room = new ArrayList<Element>();
+        this.nElements = 0;
+        this.id = id;
+    }
+
+    Room(int id, int nElements, List<Element> room){
+        this.room = new ArrayList<Element>();
+        this.id = id;
+        this.nElements = nElements;
+        this.room = room;
+    }
 
     @Bindable
-    public String getName() { return roomName;    }
+    public String getName() { return name;    }
 
     @Bindable
     public void setName(String name) {
-        this.roomName = name;
+        this.name = name;
         notifyPropertyChanged(BR.name);
     }
 
@@ -52,36 +81,6 @@ public class Room extends BaseObservable {
     }
 
 
-
-
-    public Room(){
-        this.room = new ArrayList<Element>();
-        this.nElements = 0;
-    }
-
-    public Room(int id){
-        this.room = new ArrayList<Element>();
-        this.nElements = 0;
-        this.id = id;
-    }
-
-    Room(int id, boolean up, boolean down){
-        this.room = new ArrayList<Element>();
-        this.nElements = 0;
-        this.id = id;
-    }
-
-    Room(int id, int nElements, List<Element> room){
-        this.room = new ArrayList<Element>();
-        this.id = id;
-        this.nElements = nElements;
-        this.room = room;
-    }
-
-//    public void setParameters(int x, int y){
-//        this.length= y;
-//        this.width = x;
-//    }
     public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;
@@ -94,11 +93,12 @@ public class Room extends BaseObservable {
     }
 
     public String toString(){
-        String roomString = "Room: "+ this.id + " Empty\n";
+        String roomString = "Room: "+ String.valueOf(this.id) + " Empty\n";
 
         if(!room.isEmpty()) {
-            roomString = "Room ID: " + this.id + "\n";
-            roomString += "Element number: " + this.nElements + "\n";
+            roomString = "Room ID: " + String.valueOf(this.id) + "\n";
+            roomString = "Room name: " + this.name + "\n";
+            roomString += "Element number: " + String.valueOf(this.nElements) + "\n";
 
             for (int i = 0; i < nElements; ++i) {
                 roomString += room.get(i).toString();
@@ -106,6 +106,11 @@ public class Room extends BaseObservable {
         }
 
         return roomString;
+    }
+
+    //Manu
+    public Element getElement(int pos){
+        return this.room.get(pos);
     }
 
     public int getId() {
@@ -116,6 +121,13 @@ public class Room extends BaseObservable {
         this.id = id;
     }
 
+    public int getnElements() {
+        return nElements;
+    }
+//
+//    public void setnElements(int nElements) {
+//        this.nElements = nElements;
+//    }
 
     public int nElements() {
         return nElements;
