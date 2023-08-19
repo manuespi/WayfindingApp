@@ -1,4 +1,4 @@
-package com.example.wayfinding.mapComponents;
+package mapComponents;
 
 import java.io.Serializable;
 import java.util.ArrayList;

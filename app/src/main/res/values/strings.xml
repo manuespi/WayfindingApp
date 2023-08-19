@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Wayfinding</string>
+    <string name="y">y</string>
+    <string name="x">x</string>
+    <string name="room">ROOM</string>
+    <string name="introduce_room_name">introduce room name</string>
+  <!-- Manu -->
     <string name="save_button">save_button</string>
     <string name="title_activity_play_map">PlayMapActivity</string>
     <!-- Strings used for fragments for navigation -->

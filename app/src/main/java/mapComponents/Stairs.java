@@ -1,14 +1,14 @@
-package com.example.wayfinding.mapComponents;
+package mapComponents;
 
-import android.util.Log;
-
-import java.io.Serializable;
 import java.util.List;
 
-public class Stairs extends Element implements Serializable {
+public class Stairs extends Element{
     private boolean wheelchair;
 
-    public Stairs(){}
+    Stairs(){
+        super();
+        this.wheelchair = true;
+    }
 
     public Stairs(boolean wheelchair) {
         this.wheelchair = wheelchair;
@@ -33,12 +33,11 @@ public class Stairs extends Element implements Serializable {
     public String toString() {
         String stairsString = super.toString();
         stairsString += "Wheelchair: " + this.wheelchair + "\n";
-        Log.d("tostring", "lo iso");
 
         return stairsString;
     }
 
-    public boolean isWheelchair() {
+    public boolean Wheelchair() {
         return wheelchair;
     }
 

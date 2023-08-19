@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ViewActivity extends AppCompatActivity {
-private Button mainMenu_button;
+    private Button mainMenu_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

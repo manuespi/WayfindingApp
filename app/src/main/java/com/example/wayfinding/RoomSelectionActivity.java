@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wayfinding.mapComponents.IndoorMap;
-import com.example.wayfinding.mapComponents.Room;
-import com.example.wayfinding.viewComponents.MapFileListAdapter;
-import com.example.wayfinding.viewComponents.RoomListAdapter;
+import mapComponents.IndoorMap;
+import mapComponents.Room;
+import viewComponents.MapFileListAdapter;
+import viewComponents.RoomListAdapter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -130,7 +130,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
         intent.putExtra("id", id);
-        intent.putExtra("map", this.indoorMap);
+        intent.putExtra("map",  this.indoorMap);
         if(this.newMap) intent.putExtra("new", true);
 
         startActivity(intent);
@@ -139,7 +139,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
 
     public void openActivityCreate(Room room){//TODO modificar createActivity pa recibir todo bn
         Intent intent = new Intent(this, CreateActivity.class);
-        intent.putExtra("room", room);
+        intent.putExtra("room", (CharSequence)  room);
         intent.putExtra("map", this.indoorMap);
         startActivity(intent);
         finish();

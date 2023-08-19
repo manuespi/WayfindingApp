@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.wayfinding.mapComponents.IndoorMap;
-import com.example.wayfinding.viewComponents.MapFileListAdapter;
+import mapComponents.IndoorMap;
+import viewComponents.MapFileListAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +23,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import viewComponents.MapFileListAdapter;
 
 public class MapSelectionActivity extends AppCompatActivity implements MapFileListAdapter.OnItemClickListener{
     private RecyclerView mapListRecyclerView;

@@ -1,7 +1,9 @@
-package com.example.wayfinding.mapComponents;
+package mapComponents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import mapComponents.Room;
 
 public class IndoorMap implements Serializable {
     private ArrayList<Room> map;

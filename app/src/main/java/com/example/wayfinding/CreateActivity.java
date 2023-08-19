@@ -1,99 +1,162 @@
 package com.example.wayfinding;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.ContentValues.TAG;
+import static java.lang.Integer.parseInt;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.example.wayfinding.databinding.BasicRoomInputsBinding;
-import com.example.wayfinding.mapComponents.Room;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
-import java.io.BufferedReader;
+
+import com.example.wayfinding.databinding.ActivityCreateBinding;
+import com.example.wayfinding.databinding.BasicRoomInputsBinding;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.example.wayfinding.mapComponents.IndoorMap;
+import mapComponents.IndoorMap;
+import mapComponents.Room;
 
-//CreateClara
-import static android.content.ContentValues.TAG;
-import static java.lang.Integer.parseInt;
-import android.graphics.Canvas;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.TypedValue;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-//import androidx.databinding.DataBindingUtil;
-//import com.example.wayfinding.databinding.ActivityCreateBinding;
-//import com.example.wayfinding.databinding.BasicRoomInputsBinding;
+//manu
+import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class CreateActivity extends AppCompatActivity {
+    //manu
     private IndoorMap indoorMap;
     private int nRoom;
     private Room room;
-    //private LinearLayout createLayout;
-    //private RelativeLayout createLayout;
-    private String element;
-    private ArrayList<String> orientationList;
-    private int orientation, capacity;
-    private boolean open, wheelchair;
-    private Button mainMenuButton, saveButton, newRoomButton, doorButton, stairsButton,
-            elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton, resizeRoom, nextButton;
-    private Spinner orientationSpinner;
-    private CheckBox upCheckBox, downCheckBox, wheelchairCheckBox;
-    private EditText capacityInput, coordXInput, coordYInput;
-    private TextView roomElementsView, roomsView, currentRoom, spinnerText, wheelchairText, capacityText;
-    private AlertDialog.Builder roomConnectionAlert;
     private Gson gson;
     private boolean editingRoom, newMap;
-    //CreateClara
-    private Canvas canvas;
+
+    //mio
+   // private int nRoom = 0;
     private LinearLayout createLayout;
-    public String roomName;
+    private String element, tempName, tempWidth, tempLength;
+    private ArrayList<String> orientationList;
+    private int orientation, capacity, xCoordinate, yCoordinate;
+    private boolean open, wheelchair;
+    private Button mainMenuButton, saveButton, showButton, newRoomButton, doorButton, stairsButton,
+            elevatorButton, openButton, closeButton,
+            addElementButton, newElementButton, editRoom, nextButton;
+    private Spinner orientationSpinner;
+    private CheckBox wheelchairCheckBox;
+    private EditText capacityInput, coordXInput, coordYInput;
+    private TextView roomElementsView, roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
+            capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader, editingHeader;
+    private AlertDialog.Builder roomConnectionAlert;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create);
+        setOriginalContentView(true);
 
-        initializeAttributes();
-        setInterface();
-        refreshRoomElementsView();
-        drawMap();
     }
 
-    private void drawMap(){
-        //BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+    private void setOriginalContentView(Boolean firstTime) {
+
+        //inflamos layout y creamos objeto enlazado q nos da acceso a Views definidos en el layout basic_room_inputs
+        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+        setContentView(basicRoomInputsBinding.getRoot()); //cleaner
 
         Room room = new Room(1);
-        room.setName("");
-        room.setLength("15");
-        room.setWidth("20");
-        //basicRoomInputsBinding.setRoom(room);
+        if(firstTime){
+            room.setName("");
+            room.setLength("15");
+            room.setWidth("20");
+        }
+        else{
+            room.setName(tempName);
+            room.setLength(tempLength);
+            room.setWidth(tempWidth);
+        }
+
+        basicRoomInputsBinding.setRoom(room);
+
+        nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
+                setContentView(activityCreateBinding.getRoot());
+
+                ImageView roomView = findViewById(R.id.roomView);
+                roomView.post(() -> {
+                    String widthStr = room.getWidth();
+                    tempWidth = widthStr;
+                    Log.d(TAG, "Width string: " + widthStr);
+                    float width = Float.parseFloat(widthStr) * 40; //el 40 por ejemplo
+                    int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+                    Log.d(TAG, "Parsed width: " + pixelsW);
+
+                    String lengthStr = room.getLength();
+                    tempLength = lengthStr;
+                    Log.d(TAG, "Length string: " + lengthStr);
+                    float length = Float.parseFloat(lengthStr) * 40;
+                    int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
+                    Log.d(TAG, "Parsed width: " + pixelsL);
+
+                    String nameStr = room.getName();
+                    tempName = nameStr;
+                    room.setName(nameStr);
+                    Log.d(TAG, "Room name: " + nameStr);
+                    currentRoom = findViewById(R.id.currentRoom);
+                    currentRoom.setText(nameStr);
+
+                    // hay que hacer exception handling para cuando las dimensiones se saldrían de la pantalla
+                    //1 opcion es dividir por un numero y hacer escala mas pequeña de las mismas dimensiones
+
+                    // Update the layout parametes & name of the room View
+                    ViewGroup.LayoutParams roomLayoutParams = roomView.getLayoutParams();
+                    roomLayoutParams.width = (int) width;
+                    roomLayoutParams.height = (int) length;
+                    roomView.setLayoutParams(roomLayoutParams);
+                    room.setLength(String.valueOf(length));
+                    room.setWidth(String.valueOf(width));
+
+                    // Update the layout parameters of the grid overlay View
+                    View gridOverlay = findViewById(R.id.gridOverlay);
+                    ViewGroup.LayoutParams gridOverlayLayoutParams = gridOverlay.getLayoutParams();
+                    gridOverlayLayoutParams.width = (int) width; // Set the width
+                    gridOverlayLayoutParams.height = (int) length; // Set the height
+                    gridOverlay.setLayoutParams(gridOverlayLayoutParams);
+                    gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
+                });
+
+                initializeAttributes();
+                setInterface();
+                setDefaultValues();
+                // setDefaultLayout();
+            }
+        });
+
     }
+
 
     private void setDefaultValues(){
         element = "empty";
@@ -103,6 +166,7 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void initializeAttributes(){
+        //Manu
         orientationList = new ArrayList<>();
         orientationList.add("North");
         orientationList.add("East");
@@ -167,22 +231,25 @@ public class CreateActivity extends AppCompatActivity {
         finish();
     }
 
+    //Manu
     private void openMapSelectionActivity(){
         Intent intent = new Intent(this, MapSelectionActivity.class);
         startActivity(intent);
         finish();
     }
 
+    //Manu
     private void addElementToRoom(){
-            if(element == "empty"){
-                Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
-                this.room.addElement(element, orientation, capacity, open, wheelchair);
-            }
+        if(element == "empty"){
+            Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
+            this.room.addElement(element, orientation, capacity, open, wheelchair);
+        }
     }
 
+    //Manu
     private void refreshRoomElementsView(){
         //int nElem = indoorMap.getRoom(nRoom).getnElements();
         Log.d("refresh", room.toString());
@@ -197,6 +264,7 @@ public class CreateActivity extends AppCompatActivity {
         roomElementsView.setText(elementsText);
     }
 
+
     private void refreshRoomsView(){
         String roomsText = "";
         for(int i = 0; i <= nRoom; i++){
@@ -204,62 +272,15 @@ public class CreateActivity extends AppCompatActivity {
 
             if(i < nRoom) roomsText += "\n";
         }
-        roomsView.setText(roomsText);
+        roomElementsCounter.setText(roomsText);
     }
 
-    private void refreshCurrentRoom(){
+    //creo q es inecesario
+    /*private void refreshCurrentRoom(){
         String currentRoom = "Current room: " + nRoom;
 
         this.currentRoom.setText(currentRoom);
-    }
-
-    @SuppressLint("ResourceType")
-    /*private void setDefaultLayout(){
-        if(createLayout.findViewById(1) != null) {
-            createLayout.removeView(doorButton);
-        }
-        if(createLayout.findViewById(2) != null) {
-            createLayout.removeView(stairsButton);
-        }
-        if(createLayout.findViewById(3) != null) {
-            createLayout.removeView(elevatorButton);
-        }
-        if(createLayout.findViewById(4) != null) {
-            createLayout.removeView(orientationSpinner);
-        }
-        if(createLayout.findViewById(5) != null) {
-            createLayout.removeView(wheelchairCheckBox);
-        }
-        if(createLayout.findViewById(6) != null) {
-            createLayout.removeView(capacityInput);
-        }
     }*/
-    private void setDefaultLayout(){//TODO XML
-        if(createLayout.findViewById(R.id.newDoor).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(doorButton); //id 1
-        }
-        if(createLayout.findViewById(R.id.newStairs).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(stairsButton); //id 2
-        }
-        if(createLayout.findViewById(R.id.newElevator).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(elevatorButton);
-        }
-        if(createLayout.findViewById(R.id.spinner).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(orientationSpinner);
-        }
-        if(createLayout.findViewById(R.id.wcCheckBox).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(wheelchairCheckBox);
-        }
-        if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(capacityInput);
-        }
-        if(createLayout.findViewById(R.id.coordXWidth).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(coordXInput);
-        }
-        if(createLayout.findViewById(R.id.coordYLength).getVisibility() != View.INVISIBLE) {
-            createLayout.removeView(coordYInput);
-        }
-    }
 
     private void roomConnectionAlert() {
         roomConnectionAlert.create().show();
@@ -267,81 +288,62 @@ public class CreateActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceType")
     private void setInterface(){
-        createLayout = findViewById(R.id.createLayout);//TODO XML
+        createLayout = findViewById(R.id.createLayout);
+        editRoom = findViewById(R.id.resize);
 
-        resizeRoom = findViewById(R.id.resize);
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
-        saveButton = findViewById(R.id.save_button);
+        saveButton = findViewById(R.id.show_button);
         newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
-        //newElementButton = findViewById(R.id.newElement_button);
+     //   newElementButton = findViewById(R.id.newElement_button);
 
-        //roomElementsView = findViewById(R.id.roomElements);
+        roomElementsView = findViewById(R.id.roomElements);
         roomElementsView.setText("Room empty");
-        roomsView = findViewById(R.id.rooms);
-        //roomsView.setText("Room 0: 0 elements");
-        currentRoom = findViewById(R.id.currentRoom);
-        refreshCurrentRoom();
+        roomElementsCounter = findViewById(R.id.elemCount);
+        roomElementsCounter.setText("0 ELEMENTS");
+       // currentRoom = findViewById(R.id.currentRoom);
+       // refreshCurrentRoom();
 
-        doorButton = new Button(this);
-        stairsButton = new Button(this);
-        elevatorButton = new Button(this);
+
+        doorButton = findViewById(R.id.newDoor);
+        //stairsButton = new Button(this);
+        //elevatorButton = new Button(this);
         openButton = new Button(this);
         closeButton = new Button(this);
 
         //doorButton.setText("Door");
         //stairsButton.setText("Stairs");
-        //elevatorButton.setText("Elevator");
+       // elevatorButton.setText("Elevator");
         openButton.setText("Open");
         closeButton.setText("Closed");
 
-        /*RelativeLayout.LayoutParams doorButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        doorButton.setId(1);
-        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        doorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        //doorButtonParams.setMargins(20, 300, 20, 20);
-        doorButton.setLayoutParams(doorButtonParams);
-
-        RelativeLayout.LayoutParams stairsButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        stairsButton.setId(2);
-        stairsButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        stairsButtonParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        //stairsButtonParams.setMargins(20, 300, 20, 20);
-        stairsButton.setLayoutParams(stairsButtonParams);
-
-        RelativeLayout.LayoutParams elevatorButtonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        elevatorButton.setId(3);
-        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        elevatorButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        //elevatorButtonParams.setMargins(20, 300, 20, 20);
-        elevatorButton.setLayoutParams(elevatorButtonParams);*/
+////Element coordinates
+        //text prompts
+     //   coordinatesPrompt = new TextView(this); //are these necessary? already definded up there
+        coordinatesPrompt = findViewById(R.id.coordinatesPrompt);
+       // coordXPrompt = new TextView(this);
+        coordXPrompt = findViewById(R.id.coordXPrompt);
+       // coordYPrompt = new TextView(this);
+        coordYPrompt = findViewById(R.id.coordYPrompt);
+       // addElemHeader = new TextView(this);
+        addElemHeader = findViewById(R.id.addElementHeader);
+       // editHeader = new TextView(this);
+        editingHeader = findViewById(R.id.editingHeader);
+        //number input for WIDTH coordinate
+       // coordXInput = new EditText(this);
+        coordXInput = findViewById(R.id.coordXWidth);
+        //number input for LENGTH coordinate
+       // coordYInput = new EditText(this);
+        coordYInput = findViewById(R.id.coordYLength);
 
 
-////Spinner
+
+////Element Orientation Spinner
         orientationSpinner = new Spinner(this);
-        orientationSpinner = findViewById(R.id.spinner);//TODO XML
-        spinnerText = new TextView(this);
-        spinnerText = findViewById(R.id.spinnerPrompt);
-
-        /*RelativeLayout.LayoutParams orientationSpinnerParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        orientationSpinner.setId(4);
-        orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        orientationSpinnerParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        orientationSpinnerParams.setMargins(150, 550, 20, 20);
-        orientationSpinner.setLayoutParams(orientationSpinnerParams);*/
+        orientationSpinner = findViewById(R.id.spinner); //id 4
+        spinnerPrompt = new TextView(this);
+        spinnerPrompt = findViewById(R.id.spinnerPrompt);
 
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, orientationList);
         orientationSpinner.setAdapter(spinnerAdapter);
@@ -351,31 +353,17 @@ public class CreateActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 orientation = position;
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
 
-////CheckBox
+//Wheelchair CheckBox
         wheelchairCheckBox = new CheckBox(this);
-        wheelchairCheckBox = findViewById(R.id.wcCheckBox);
-        //wheelchairCheckBox.setId(5);
-        wheelchairText = new TextView(this);
-        wheelchairText = findViewById(R.id.wheelchairPrompt);
-
-        /*wheelchairCheckBox.setText("Wheelchair");
-
-        RelativeLayout.LayoutParams wheelchairCheckBoxParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        wheelchairCheckBox.setId(5);
-        wheelchairCheckBoxParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        wheelchairCheckBoxParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        wheelchairCheckBoxParams.setMargins(20, 550, 150, 20);
-        wheelchairCheckBox.setLayoutParams(wheelchairCheckBoxParams);*/
+        wheelchairCheckBox = findViewById(R.id.wcCheckBox); //id 5
+        wheelchairPrompt = new TextView(this);
+        wheelchairPrompt = findViewById(R.id.wheelchairPrompt);
 
         wheelchairCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -384,26 +372,11 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-
-//// EditText
+//// Elevator Capacity
         capacityInput = new EditText(this);
         capacityInput = findViewById(R.id.capacityInput); //6
-        capacityText = new TextView(this);
-        capacityText = findViewById(R.id.capacityPrompt);
-
-        //capacityInput.setText("");
-        /*capacityInput.setId(6);
-        capacityInput.setHint("Capacity");
-
-        RelativeLayout.LayoutParams capacityInputParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        capacityInputParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        capacityInputParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        capacityInputParams.setMargins(20, 550, 20, 20);
-        capacityInput.setLayoutParams(capacityInputParams);*/
-
+        capacityPrompt = new TextView(this);
+        capacityPrompt = findViewById(R.id.capacityPrompt);
 
 //// AlertDialog Builder
         roomConnectionAlert.setTitle("Now I`m going through:");
@@ -415,34 +388,44 @@ public class CreateActivity extends AppCompatActivity {
                 Log.d("Alert", "Item " + which + "selected.");
             }
         });
-////
-        doorButton.findViewById(R.id.newDoor);
+
+//// DOOR BUTTON
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Button clicked");
                 element = "door";
 
-                /*if(createLayout.findViewById(5) != null) {
-                    createLayout.removeView(wheelchairCheckBox);
-                }
-                if(createLayout.findViewById(6) != null) {
-                    createLayout.removeView(capacityInput);
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
 
-                if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
-                }*/
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
+                }
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
-                    wheelchairText.setVisibility(View.VISIBLE);
+                    wheelchairPrompt.setVisibility(View.VISIBLE);
+                }
+
+                if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
+                    capacityInput.setVisibility(View.INVISIBLE);
+                    capacityPrompt.setVisibility(View.INVISIBLE);
                 }
             }
         });
+
+
 
         stairsButton = findViewById(R.id.newStairs);
         stairsButton.setOnClickListener(new View.OnClickListener() {
@@ -450,30 +433,34 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "stairs";
 
-                /*if(createLayout.findViewById(6) != null) {
-                    createLayout.removeView(capacityInput);
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
 
-                if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(5) == null) {
-                    createLayout.addView(wheelchairCheckBox);
-                }*/
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
-                    wheelchairText.setVisibility(View.VISIBLE);
+                    wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
                     capacityInput.setVisibility(View.INVISIBLE);
-                    capacityText.setVisibility(View.INVISIBLE);
+                    capacityPrompt.setVisibility(View.INVISIBLE);
                 }
+
+
             }
         });
 
@@ -483,60 +470,59 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 element = "elevator";
 
-                /*if(createLayout.findViewById(4) == null) {
-                    createLayout.addView(orientationSpinner);
+                if (addElemHeader.getVisibility() == View.VISIBLE){
+                    addElemHeader.setVisibility(View.INVISIBLE);
+                    editingHeader.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(5) == null) {
-                    createLayout.addView(wheelchairCheckBox);
+
+                if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
+                    coordinatesPrompt.setVisibility(View.VISIBLE);
+                    coordXPrompt.setVisibility(View.VISIBLE);
+                    coordXInput.setVisibility(View.VISIBLE);
+                    coordYPrompt.setVisibility(View.VISIBLE);
+                    coordYInput.setVisibility(View.VISIBLE);
                 }
-                if(createLayout.findViewById(6) == null) {
-                    createLayout.addView(capacityInput);
-                }*/
 
                 if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
                     orientationSpinner.setVisibility(View.VISIBLE);
-                    spinnerText.setVisibility(View.VISIBLE);
+                    spinnerPrompt.setVisibility(View.VISIBLE);
                 }
                 if (wheelchairCheckBox.getVisibility() == View.VISIBLE){ //id 5
                     wheelchairCheckBox.setVisibility(View.INVISIBLE);
-                    wheelchairText.setVisibility(View.INVISIBLE);
+                    wheelchairPrompt.setVisibility(View.INVISIBLE);
                 }
 
                 if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
                     capacityInput.setVisibility(View.VISIBLE);
-                    capacityText.setVisibility(View.VISIBLE);
+                    capacityPrompt.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        //Se puede borrar
-        /*newElementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDefaultValues();
-                setDefaultLayout();
-
-                if(createLayout.findViewById(1) == null) {
-                    createLayout.addView(doorButton);
-                }
-                if(createLayout.findViewById(2) == null) {
-                    createLayout.addView(stairsButton);
-                }
-                if(createLayout.findViewById(3) == null) {
-                    createLayout.addView(elevatorButton);
-                }
-            }
-        });*/
 
         addElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
-                //if(createLayout.findViewById(6) != null) {
+
+                //x & y
+                try
+                {
+                    xCoordinate = parseInt(coordXInput.getText().toString());
+                    yCoordinate = parseInt(coordYInput.getText().toString());
+                    Log.d(TAG, "X: " + xCoordinate + " Y:" + yCoordinate);
+                }
+                catch (NumberFormatException nfe)
+                {
+                    Toast.makeText(CreateActivity.this, "X & Y should be numbers", Toast.LENGTH_SHORT).show();
+                    parametersOk = false;
+                }
+
                 if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
                     try
                     {
-                        capacity = Integer.parseInt(capacityInput.getText().toString());
+                        capacity = parseInt(capacityInput.getText().toString());
+
                     }
                     catch (NumberFormatException nfe)
                     {
@@ -548,9 +534,9 @@ public class CreateActivity extends AppCompatActivity {
                 if(parametersOk) {
                     addElementToRoom();
                     refreshRoomElementsView();
-                    //refreshRoomsView();
+                    refreshRoomsView(); //prueba borrarlo
                     setDefaultValues();
-                    setDefaultLayout();
+                    //setDefaultLayout();
                 }
             }
         });
@@ -565,11 +551,29 @@ public class CreateActivity extends AppCompatActivity {
 
                 refreshRoomElementsView();
                 //refreshRoomsView();
-                refreshCurrentRoom();
+                //refreshCurrentRoom();
                 setDefaultValues();
-                setDefaultLayout();
+               // setDefaultLayout();
             }
         });
+
+//        showButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
+//                else {
+//                    String mapString = "";
+//                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
+//                        mapString += indoorMap.getMap().get(i).toString() + "\n";
+//                    }
+//                    Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
+//                    intent.putExtra("map", mapString);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        });
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -608,18 +612,18 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
+
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //openActivityMain();
-                openMapSelectionActivity();
+                openActivityMain();
             }
         });
 
-        resizeRoom.setOnClickListener(new View.OnClickListener() {
+        editRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //setContentView(R.layout.basic_room_inputs);
+                setOriginalContentView(false);
             }
         });
     }
@@ -627,7 +631,7 @@ public class CreateActivity extends AppCompatActivity {
     public void saveMap(){
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
-        
+
         if(newMap) {
             Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
             if (file.exists())
@@ -644,4 +648,9 @@ public class CreateActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+    /*@Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("mapa", ArrayList<>(map);
+    }*/
 }

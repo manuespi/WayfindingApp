@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.wayfinding.mapComponents.Room;
+
+
+import mapComponents.Room;
 
 public class EditRoomActivity extends AppCompatActivity {
     private Room room;

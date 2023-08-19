@@ -1,23 +1,22 @@
-package com.example.wayfinding.mapComponents;
+package mapComponents;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
 
 import com.example.wayfinding.BR;
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room extends BaseObservable implements Serializable {
+public class Room extends BaseObservable {
+
     private int id;
-    private String name;
     private int nElements;
     private List<Element> room;
     private String width; //x
     private String length; //y
-
+    private String name;
 
     public Room(){
         this.room = new ArrayList<Element>();
@@ -50,7 +49,39 @@ public class Room extends BaseObservable implements Serializable {
         this.room = room;
     }
 
-    public void addElement(String type, int orientation, int capacity, boolean open, boolean wheelchair){
+    @Bindable
+    public String getName() { return name;    }
+
+    @Bindable
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public String getWidth() {
+        return width;
+    }
+
+    @Bindable
+    public void setWidth(String width) {
+        this.width = width;
+        notifyPropertyChanged(BR.width);
+    }
+
+    @Bindable
+    public String getLength() {
+        return length;
+    }
+
+    @Bindable
+    public void setLength(String length) {
+        this.length = length;
+        notifyPropertyChanged(BR.length);
+    }
+
+
+    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         switch (type) {
             case "door": room.add(new Door(nElements, orientation, type, open)); break;
             case "elevator": room.add(new Elevator(nElements, orientation, type, open, wheelchair, capacity)); break;
@@ -59,10 +90,6 @@ public class Room extends BaseObservable implements Serializable {
         }
 
         nElements++;
-    }
-
-    public Element getElement(int pos){
-        return this.room.get(pos);
     }
 
     public String toString(){
@@ -81,6 +108,11 @@ public class Room extends BaseObservable implements Serializable {
         return roomString;
     }
 
+    //Manu
+    public Element getElement(int pos){
+        return this.room.get(pos);
+    }
+
     public int getId() {
         return id;
     }
@@ -89,21 +121,22 @@ public class Room extends BaseObservable implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getnElements() {
         return nElements;
     }
+//
+//    public void setnElements(int nElements) {
+//        this.nElements = nElements;
+//    }
 
-    public void setnElements(int nElements) {
+    public int nElements() {
+        return nElements;
+    }
+
+    public void nElements(int nElements) {
         this.nElements = nElements;
     }
+
 
     public List<Element> getRoom() {
         return room;
@@ -113,23 +146,7 @@ public class Room extends BaseObservable implements Serializable {
         this.room = room;
     }
 
-    @Bindable
-    public String getWidth() {
-        return width;
-    }
-
-    public void setWidth(String width) {
-        this.width = width;
-        //notifyPropertyChanged(BR.width);
-    }
-
-    @Bindable
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-        //notifyPropertyChanged(BR.length);
+    public Element get(int pos){
+        return room.get(pos);
     }
 }

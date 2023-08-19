@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,38 +17,35 @@ public class MapCanvas extends View {
 //        super(context);
 //    }
 
-    Paint paintR, paintD;
+    Paint paintD;
     Path path;
-    Rect rect;
     int roomLength = 900, roomWidth = 600;
+    int viewWidth, viewHeight;
 
     public MapCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
 
-        paintR = new Paint();
+
         paintD = new Paint();
         path = new Path();
 
-        //room
-        paintR.setColor(Color.GRAY);
-        paintR.setAntiAlias(true);
-        paintR.setStrokeWidth(10);
-        paintR.setStyle(Paint.Style.STROKE);
-        // paintR.setStrokeJoin(Paint.Join.ROUND);
-        // paintR.setStrokeCap(Paint.Cap.ROUND);
 
         //door
+        //esta seccion se va a borrar, pero está bien documentarla y recordarla
+        //como primer approach: queriamos poder dibujar manualmente la puerta
+        //y que se guardasen las coordenadas de la "pintura" pero es muy messy
+        //no me gusta
+        /*
         paintD.setAntiAlias(true);
-        paintD.setColor(Color.RED);
+        paintD.setColor(Color.TRANSPARENT);  //ANTES ERA RED
         paintD.setStrokeJoin(Paint.Join.ROUND); //cuando retiramos dedo de pantalla, se queda round
         paintD.setStrokeCap(Paint.Cap.ROUND);
         paintD.setStyle(Paint.Style.STROKE);
         paintD.setStrokeWidth(20f);
+        */
 
 
-        //rectange stuff
-        rect = new Rect(150,200, roomLength, roomWidth);
     }
 
 //    public MapCanvas(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -64,7 +60,6 @@ public class MapCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRect(rect, paintR);
         canvas.drawPath(path,paintD);
     }
 
@@ -102,4 +97,11 @@ public class MapCanvas extends View {
         roomLength = y;
     }
 
+    @Override
+    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
+        super.onSizeChanged(xNew, yNew, xOld, yOld);
+
+        viewWidth = xNew;
+        viewHeight = yNew;
+    }
 }
