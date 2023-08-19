@@ -293,7 +293,7 @@ public class CreateActivity extends AppCompatActivity {
 
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
-        saveButton = findViewById(R.id.show_button);
+        saveButton = findViewById(R.id.save_button);
         newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
      //   newElementButton = findViewById(R.id.newElement_button);

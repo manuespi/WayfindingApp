@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set the room name"
+        android:text="Set the room name and dimensions"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
@@ -71,6 +71,24 @@
         android:layout_marginTop="16dp"
         android:padding="8dp"
         android:hint="Room name"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/newRoom_xcoord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:hint="X"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/newRoom_ycoord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:hint="Y"
         android:inputType="text"/>
 
     <Button

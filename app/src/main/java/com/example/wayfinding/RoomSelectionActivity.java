@@ -90,12 +90,14 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
         this.newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {//TODO hacer el popup del nombre y cambiar R.id.s
+            public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.room_name_popup, null);
 
                 Button saveButton = popupView.findViewById(R.id.roomName_edit_button);
                 EditText nameEditText = popupView.findViewById(R.id.roomName_edit_text);
+                EditText xcoord = popupView.findViewById(R.id.newRoom_xcoord);
+                EditText ycoord = popupView.findViewById(R.id.newRoom_ycoord);
 
                 AlertDialog dialog = new AlertDialog.Builder(RoomSelectionActivity.this)
                         .setView(popupView)
@@ -105,9 +107,11 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                     @Override
                     public void onClick(View v) {
                         String name = nameEditText.getText().toString();
+                        int x = Integer.parseInt(xcoord.getText().toString());
+                        int y = Integer.parseInt(ycoord.getText().toString());
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        Log.d("RoomSelectionActivity", "Se crea la habitación " + name);
+                        Log.d("RoomSelectionActivity", "Se crea la habitación " + name + " con x = " + x + " e y = " + y);
 
                         openActivityCreate(name, indoorMap.NextId());
                     }
