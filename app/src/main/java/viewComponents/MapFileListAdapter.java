@@ -25,9 +25,9 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
 
         //Añadir los botones supongo
 
-        public MapFileViewHolder(View itemView) { //antes estaba comentado
+        /*public MapFileViewHolder(View itemView) {
             super(itemView);
-        }
+        }*/
 
         public MapFileViewHolder(View itemView, MapFileListAdapter adapter) {
             super(itemView);
@@ -81,7 +81,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                   // listener.deleteMap(holder.getBindingAdapterPosition());
+                    listener.deleteMap(holder.getBindingAdapterPosition());
                 }
             }
         });
@@ -89,7 +89,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    //listener.editMap(holder.getBindingAdapterPosition());
+                    listener.editMap(holder.getBindingAdapterPosition());
                 }
             }
         });
@@ -98,7 +98,7 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                  //  listener.playMap(holder.getBindingAdapterPosition());
+                    listener.playMap(holder.getBindingAdapterPosition());
                 }
             }
         });

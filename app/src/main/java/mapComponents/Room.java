@@ -124,16 +124,8 @@ public class Room extends BaseObservable {
     public int getnElements() {
         return nElements;
     }
-//
-//    public void setnElements(int nElements) {
-//        this.nElements = nElements;
-//    }
 
-    public int nElements() {
-        return nElements;
-    }
-
-    public void nElements(int nElements) {
+    public void setnElements(int nElements) {
         this.nElements = nElements;
     }
 

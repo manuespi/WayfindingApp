@@ -14,7 +14,6 @@ import mapComponents.Room;
 
 import java.io.File;
 import java.util.ArrayList;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder> {
 
@@ -26,9 +25,9 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
 
         //Añadir los botones supongo
 
-        public RoomViewHolder(View itemView) { //antes era MapFileViewHolder y estaba comentado
+        /*public MapFileViewHolder(View itemView) {
             super(itemView);
-        }
+        }*/
 
         public RoomViewHolder(View itemView, RoomListAdapter adapter) {
             super(itemView);
@@ -44,7 +43,6 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         public void onClick(View view) {
 
         }
-
     }
 
     public interface OnItemClickListener {
@@ -52,9 +50,9 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         void editRoom(int position);
     }
 
-    private OnItemClickListener listener;
+    private RoomListAdapter.OnItemClickListener listener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(RoomListAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -67,14 +65,14 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         this.roomList = roomList;
     }
     @Override
-    public RoomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RoomListAdapter.RoomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.room_item, parent, false);
-        return new RoomViewHolder(itemView, this);
+        return new RoomListAdapter.RoomViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(RoomViewHolder holder, int position) {
+    public void onBindViewHolder(RoomListAdapter.RoomViewHolder holder, int position) {
         String roomName = this.roomList.get(position).getName();
         holder.roomItemView.setText(roomName);
         holder.nElems.setText(Integer.toString(this.roomList.get(position).getnElements()));
@@ -82,7 +80,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                  //  listener.deleteRoom(holder.getBindingAdapterPosition());
+                    listener.deleteRoom(holder.getBindingAdapterPosition());
                 }
             }
         });
@@ -90,7 +88,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                  //  listener.editRoom(holder.getBindingAdapterPosition());
+                    listener.editRoom(holder.getBindingAdapterPosition());
                 }
             }
         });
