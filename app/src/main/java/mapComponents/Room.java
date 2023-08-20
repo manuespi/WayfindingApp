@@ -6,10 +6,11 @@ import androidx.databinding.Bindable;
 
 import com.example.wayfinding.BR;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room extends BaseObservable {
+public class Room extends BaseObservable implements Serializable {
 
     private int id;
     private int nElements;
