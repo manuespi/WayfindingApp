@@ -21,6 +21,8 @@ import viewComponents.RoomListAdapter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.example.wayfinding.databinding.RoomNamePopupBinding;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,12 +93,29 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         this.newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//TODO hacer el popup del nombre y cambiar R.id.s
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.room_name_popup, null);
+//                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                View popupView = inflater.inflate(R.layout.room_name_popup, null);
+//
+//                Button saveButton = popupView.findViewById(R.id.roomName_edit_button);
+//                EditText nameEditText = popupView.findViewById(R.id.roomName_edit_text);
+//                EditText xcoord = popupView.findViewById(R.id.newRoom_xcoord);
+//                EditText ycoord = popupView.findViewById(R.id.newRoom_ycoord);
 
-                Button saveButton = popupView.findViewById(R.id.roomName_edit_button);
-                EditText nameEditText = popupView.findViewById(R.id.roomName_edit_text);
+                RoomNamePopupBinding popupBinding = RoomNamePopupBinding.inflate(getLayoutInflater());
+                View popupView = popupBinding.getRoot();
 
+                //probando
+                Room bindedRoom = new Room(1);
+                bindedRoom.setName("");
+                bindedRoom.setLength("15");
+                bindedRoom.setWidth("20");
+                popupBinding.setRoom(bindedRoom);
+
+                Button saveButton = popupBinding.roomNameSaveButton;
+
+                EditText nameEditText = popupBinding.roomNameEditText;
+                EditText xcoord = popupBinding.newRoomXcoord;
+                EditText ycoord = popupBinding.newRoomYcoord;
                 AlertDialog dialog = new AlertDialog.Builder(RoomSelectionActivity.this)
                         .setView(popupView)
                         .create();
@@ -105,11 +124,15 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                     @Override
                     public void onClick(View v) {
                         String name = nameEditText.getText().toString();
+                        int x = Integer.parseInt(xcoord.getText().toString());
+                        int y = Integer.parseInt(ycoord.getText().toString());
+
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        Log.d("RoomSelectionActivity", "Se crea la habitación " + name);
+                        Log.d("RoomSelectionActivity", "Se crea la habitación " + name + " con x = " + x + " e y = " + y);
+                        //openActivityCreate(name, indoorMap.NextId());
+                        openActivityCreate(bindedRoom);
 
-                        openActivityCreate(name, indoorMap.NextId());
                     }
                 });
 
@@ -126,20 +149,20 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
     }
 
-    public void openActivityCreate(String name, int id){//TODO modificar createActivity pa recibir todo bn
-        Intent intent = new Intent(this, CreateActivity.class);
-        intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
-        intent.putExtra("id", id);
-        intent.putExtra("map", this.indoorMap);
-        if(this.newMap) intent.putExtra("new", true);
-
-        startActivity(intent);
-        finish();
-    }
+//    public void openActivityCreate(String name, int id){//TODO modificar createActivity pa recibir todo bn
+//        Intent intent = new Intent(this, CreateActivity.class);
+//        intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
+//        intent.putExtra("id", id);
+//        intent.putExtra("map", this.indoorMap);
+//        if(this.newMap) intent.putExtra("new", true);
+//
+//        startActivity(intent);
+//        finish();
+//    }
 
     public void openActivityCreate(Room room){//TODO modificar createActivity pa recibir todo bn
         Intent intent = new Intent(this, CreateActivity.class);
-        intent.putExtra("room", (CharSequence) room);
+        intent.putExtra("room", room);
         intent.putExtra("map", this.indoorMap);
         startActivity(intent);
         finish();

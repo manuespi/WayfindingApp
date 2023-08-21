@@ -75,33 +75,41 @@ public class CreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setOriginalContentView(true);
 
+        // Retrieve the Intent that started this activity
+        Intent intent = getIntent();
+
+        // Retrieve the Room object
+        Room roomB = (Room) intent.getSerializableExtra("room");
+
+        // Retrieve the IndoorMap object
+        IndoorMap indoorMapB = (IndoorMap) intent.getSerializableExtra("map");
     }
 
     private void setOriginalContentView(Boolean firstTime) {
 
         //inflamos layout y creamos objeto enlazado q nos da acceso a Views definidos en el layout basic_room_inputs
-        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
-        setContentView(basicRoomInputsBinding.getRoot()); //cleaner
+//        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
+//        setContentView(basicRoomInputsBinding.getRoot()); //cleaner
+//
+//        Room room = new Room(1);
+//        if(firstTime){
+//            room.setName("");
+//            room.setLength("15");
+//            room.setWidth("20");
+//        }
+//        else{
+//            room.setName(tempName);
+//            room.setLength(tempLength);
+//            room.setWidth(tempWidth);
+//        }
+//
+//        basicRoomInputsBinding.setRoom(room);
 
-        Room room = new Room(1);
-        if(firstTime){
-            room.setName("");
-            room.setLength("15");
-            room.setWidth("20");
-        }
-        else{
-            room.setName(tempName);
-            room.setLength(tempLength);
-            room.setWidth(tempWidth);
-        }
+ //       nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
 
-        basicRoomInputsBinding.setRoom(room);
-
-        nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+   //     nextButton.setOnClickListener(new View.OnClickListener() {
+   //         @Override
+   //         public void onClick(View v) {
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
                 setContentView(activityCreateBinding.getRoot());
 
@@ -153,9 +161,9 @@ public class CreateActivity extends AppCompatActivity {
                 setDefaultValues();
                 // setDefaultLayout();
             }
-        });
+      //  });
 
-    }
+   // }
 
 
     private void setDefaultValues(){
