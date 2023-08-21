@@ -344,7 +344,7 @@
 
 
                     <Button
-                        android:id="@+id/newRoom_button"
+                        android:id="@+id/clear_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -354,7 +354,7 @@
                         android:layout_marginEnd="200px"
                         android:layout_marginRight="77dp"
                         android:layout_marginBottom="25dp"
-                        android:text="New room" />
+                        android:text="clear" />
 
                     <TextView
                         android:id="@+id/elemCount"
@@ -394,14 +394,14 @@
                 android:text="Main menu" />
 
             <Button
-                android:id="@+id/show_button"
+                android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="100px"
                 android:layout_marginBottom="20px"
-                android:text="View all" />
+                android:text="save" />
 
         </RelativeLayout>
 

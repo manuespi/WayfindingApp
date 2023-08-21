@@ -246,6 +246,15 @@ public class CreateActivity extends AppCompatActivity {
         finish();
     }
 
+    private void openRoomSelectionActivity(){
+        Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
+        if(indoorMap == null) Log.d("null", "IM is null: ");
+        else Log.d("no null", "IM is not null: "+indoorMap.getnRoom());
+        intent.putExtra("IMmap", indoorMap);
+        startActivity(intent);
+        finish();
+    }
+
     //Manu
     private void addElementToRoom(){
         if(element == "empty"){
@@ -301,8 +310,8 @@ public class CreateActivity extends AppCompatActivity {
 
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
-        saveButton = findViewById(R.id.show_button);
-        newRoomButton = findViewById(R.id.newRoom_button);
+        saveButton = findViewById(R.id.save_button);
+        //newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
      //   newElementButton = findViewById(R.id.newElement_button);
 
@@ -542,14 +551,14 @@ public class CreateActivity extends AppCompatActivity {
                 if(parametersOk) {
                     addElementToRoom();
                     refreshRoomElementsView();
-                    refreshRoomsView(); //prueba borrarlo
+                    //refreshRoomsView(); //prueba borrarlo
                     setDefaultValues();
                     //setDefaultLayout();
                 }
             }
         });
 
-        newRoomButton.setOnClickListener(new View.OnClickListener() {
+        /*newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //roomConnectionAlert();
@@ -563,7 +572,7 @@ public class CreateActivity extends AppCompatActivity {
                 setDefaultValues();
                // setDefaultLayout();
             }
-        });
+        });*/
 
 //        showButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -600,13 +609,7 @@ public class CreateActivity extends AppCompatActivity {
                 }
 
                 saveMap();
-
-                Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
-                if(indoorMap == null) Log.d("null", "IM is null: ");
-                else Log.d("no null", "IM is not null: "+indoorMap.getnRoom());
-                intent.putExtra("IMmap", indoorMap);
-                startActivity(intent);
-                finish();
+                openRoomSelectionActivity();
 
                 /*String mapString = "";
                 for (int i = 0; i < indoorMap.getMap().size(); ++i) {

@@ -21,6 +21,16 @@ public class IndoorMap implements Serializable {
         nRoom = 0;
     }
 
+    public int nextId(){
+        int ret = -1;
+
+        for(int i = 0; i < this.map.size(); ++i)
+            if(map.get(i).getId() > ret) ret = map.get(i).getId();
+
+        if(ret == -1) return 0;
+        else return ret + 1;
+    }
+
     public void addElementToRoom(int id, String type,  int orientation, int capacity, boolean open, boolean wheelchair){
         this.map.get(id).addElement(type, orientation, capacity, open, wheelchair);
     }
@@ -33,16 +43,6 @@ public class IndoorMap implements Serializable {
     public void addRoom(Room r){
         this.map.add(nRoom, r);
         nRoom++;
-    }
-
-    public int NextId(){
-        int ret = -1;
-
-        for(int i = 0; i < this.map.size(); ++i)
-            if(map.get(i).getId() > ret) ret = map.get(i).getId();
-
-        if(ret == -1) return 0;
-        else return ret + 1;
     }
 
     public Room getRoom(int pos){

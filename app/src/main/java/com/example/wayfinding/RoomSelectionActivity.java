@@ -105,7 +105,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 View popupView = popupBinding.getRoot();
 
                 //probando
-                Room bindedRoom = new Room(1);
+                Room bindedRoom = new Room(indoorMap.nextId());
                 bindedRoom.setName("");
                 bindedRoom.setLength("15");
                 bindedRoom.setWidth("20");
