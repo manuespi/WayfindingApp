@@ -37,7 +37,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     private ArrayList<Room> roomList;
     private IndoorMap indoorMap;
     private Button newRoomButton, mainMenuButton, saveButton;
-    private boolean newMap;
+    private boolean editRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     private void setRoomList() {
         Intent incomingIntent = getIntent();
         if (incomingIntent != null && incomingIntent.hasExtra("IMmap")) {
-            this.newMap = false;
             this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("IMmap");
             this.roomList = this.indoorMap.getMap();
         }
@@ -66,7 +65,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
             }
         }
         else if(incomingIntent != null && incomingIntent.hasExtra("new")) {Log.d("RSA", "Pilla el extra new");
-            this.newMap = true;
             this.roomList = new ArrayList<Room>();
             this.indoorMap = new IndoorMap(incomingIntent.getStringExtra("name"));
         }
@@ -74,6 +72,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
 
     private void setInterface(){
         //Recycler view config
+        this.editRoom = false;
         this.roomListRecyclerView = findViewById(R.id.room_recyclerview);
         this.adapter = new RoomListAdapter(this, this.roomList);
         this.adapter.setOnItemClickListener(this);
@@ -106,16 +105,13 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
 
                 //probando
                 Room bindedRoom = new Room(indoorMap.nextId());
-                bindedRoom.setName("");
-                bindedRoom.setLength("15");
-                bindedRoom.setWidth("20");
                 popupBinding.setRoom(bindedRoom);
 
                 Button saveButton = popupBinding.roomNameSaveButton;
 
-                EditText nameEditText = popupBinding.roomNameEditText;
+                /*EditText nameEditText = popupBinding.roomNameEditText;
                 EditText xcoord = popupBinding.newRoomXcoord;
-                EditText ycoord = popupBinding.newRoomYcoord;
+                EditText ycoord = popupBinding.newRoomYcoord;*/
                 AlertDialog dialog = new AlertDialog.Builder(RoomSelectionActivity.this)
                         .setView(popupView)
                         .create();
@@ -123,14 +119,16 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String name = nameEditText.getText().toString();
+                        /*String name = nameEditText.getText().toString();
                         int x = Integer.parseInt(xcoord.getText().toString());
                         int y = Integer.parseInt(ycoord.getText().toString());
-
+                        bindedRoom.setName(name);
+                        bindedRoom.setLength(x);
+                        bindedRoom.setWidth(y);*/
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        Log.d("RoomSelectionActivity", "Se crea la habitación " + name + " con x = " + x + " e y = " + y);
-                        //openActivityCreate(name, indoorMap.NextId());
+                        //Log.d("RoomSelectionActivity", "Se crea la habitación " + name + " con x = " + x + " e y = " + y);
+                        //openActivityCreate(name, indoorMap.nextId());
                         openActivityCreate(bindedRoom);
 
                     }
@@ -142,7 +140,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO guardar mapa en json en la memoria
                 saveMap();
                 openMapSelectionActivity();
             }
@@ -164,6 +161,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("room", room);
         intent.putExtra("map", this.indoorMap);
+        intent.putExtra("new", this.editRoom);
         startActivity(intent);
         finish();
     }
@@ -216,19 +214,19 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     @Override
     public void editRoom(int position) {
         Log.d("RoomSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
+        this.editRoom = true;
         openActivityCreate(roomList.get(position));
-        //TODO crear el editor de rooms común
     }
 
     public void saveMap(){
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
 
-        if(newMap) {
+        /*if(newMap) {
             Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
             if (file.exists())
                 file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
-        }
+        }*/
 
         try {
             String json = objectMapper.writeValueAsString(this.indoorMap);

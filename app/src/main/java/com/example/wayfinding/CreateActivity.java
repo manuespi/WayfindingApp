@@ -74,15 +74,6 @@ public class CreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setOriginalContentView(true);
-
-        // Retrieve the Intent that started this activity
-        Intent intent = getIntent();
-
-        // Retrieve the Room object
-        Room roomB = (Room) intent.getSerializableExtra("room");
-
-        // Retrieve the IndoorMap object
-        IndoorMap indoorMapB = (IndoorMap) intent.getSerializableExtra("map");
     }
 
     private void setOriginalContentView(Boolean firstTime) {
@@ -191,6 +182,23 @@ public class CreateActivity extends AppCompatActivity {
         if(incomingIntent != null && incomingIntent.hasExtra("room")) {
             this.room = (Room) incomingIntent.getSerializableExtra("room");
             this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
+            this.editingRoom =  incomingIntent.getBooleanExtra("new", false);
+            //this.newMap = false;
+            if(this.editingRoom)
+            Toast.makeText(CreateActivity.this, "Editando Room", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(CreateActivity.this, "Nueva Room", Toast.LENGTH_SHORT).show();
+
+        }
+        else{
+            Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
+            Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
+            this.editingRoom = false;
+            this.newMap = false;
+        }
+
+        /*if(incomingIntent != null && incomingIntent.hasExtra("room")) {
+            this.room = (Room) incomingIntent.getSerializableExtra("room");
+            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
             this.editingRoom = true;
             this.newMap = false;
             Toast.makeText(CreateActivity.this, "Mapa cargado (room)", Toast.LENGTH_SHORT).show();
@@ -215,7 +223,7 @@ public class CreateActivity extends AppCompatActivity {
             Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
             this.editingRoom = false;
             this.newMap = false;
-        }
+        }*/
 
         setDefaultValues();
     }
@@ -627,7 +635,7 @@ public class CreateActivity extends AppCompatActivity {
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivityMain();
+                openRoomSelectionActivity();
             }
         });
 
@@ -643,11 +651,11 @@ public class CreateActivity extends AppCompatActivity {
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
 
-        if(newMap) {
+        /*if(newMap) {
             Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
             if (file.exists())
                 file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
-        }
+        }*/
         if(editingRoom)Log.d("SaveMap", "EDITING ROOM");
 
         try {
@@ -659,9 +667,4 @@ public class CreateActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-    /*@Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("mapa", ArrayList<>(map);
-    }*/
 }
