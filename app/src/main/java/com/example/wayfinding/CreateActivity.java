@@ -59,9 +59,9 @@ public class CreateActivity extends AppCompatActivity {
     private ArrayList<String> orientationList;
     private int orientation, capacity, xCoordinate, yCoordinate;
     private boolean open, wheelchair;
-    private Button mainMenuButton, saveButton, showButton, newRoomButton, doorButton, stairsButton,
+    private Button mainMenuButton, saveButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, newElementButton, editRoom, nextButton;
+            addElementButton, editRoom, nextButton, clearButton;
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private EditText capacityInput, coordXInput, coordYInput;
@@ -226,6 +226,7 @@ public class CreateActivity extends AppCompatActivity {
         }*/
 
         setDefaultValues();
+        refreshRoomElementsView();
     }
 
     private void receiveMap(String map, String name){
@@ -322,6 +323,7 @@ public class CreateActivity extends AppCompatActivity {
         //newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
      //   newElementButton = findViewById(R.id.newElement_button);
+        clearButton = findViewById(R.id.clear_button);
 
         roomElementsView = findViewById(R.id.roomElements);
         roomElementsView.setText("Room empty");
@@ -566,44 +568,10 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        /*newRoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //roomConnectionAlert();
-
-                nRoom++;
-                indoorMap.addRoom();
-
-                refreshRoomElementsView();
-                //refreshRoomsView();
-                //refreshCurrentRoom();
-                setDefaultValues();
-               // setDefaultLayout();
-            }
-        });*/
-
-//        showButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(indoorMap.getMap().isEmpty()) Log.d("Map" , "Empty");
-//                else {
-//                    String mapString = "";
-//                    for (int i = 0; i < indoorMap.getMap().size(); ++i) {
-//                        mapString += indoorMap.getMap().get(i).toString() + "\n";
-//                    }
-//                    Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
-//                    intent.putExtra("map", mapString);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//            }
-//        });
-
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editingRoom){Toast.makeText(CreateActivity.this, "Editing Room", Toast.LENGTH_SHORT).show();
+                if(editingRoom){
                     ArrayList<Room> auxMap = indoorMap.getMap();
 
                     for(int i = 0; i < auxMap.size(); ++i)
@@ -612,22 +580,28 @@ public class CreateActivity extends AppCompatActivity {
 
                     indoorMap.setMap(auxMap);
                 }
-                else{Toast.makeText(CreateActivity.this, "Not Editing Room", Toast.LENGTH_SHORT).show();
+                else{
                     indoorMap.addRoom(room);
                 }
 
                 saveMap();
                 openRoomSelectionActivity();
+            }
+        });
 
-                /*String mapString = "";
-                for (int i = 0; i < indoorMap.getMap().size(); ++i) {
-                    mapString += indoorMap.getRoom(i).toString() + "\n";
-                }
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = room.getId();
+                String name = room.getName();
+                String w = room.getWidth();
+                String l = room.getLength();
+                room = new Room(id);
+                room.setName(name);
+                room.setWidth(w);
+                room.setLength(l);
 
-                Intent intent = new Intent(CreateActivity.this, ViewActivity.class);
-                intent.putExtra("map", mapString);
-                startActivity(intent);
-                finish();*/
+                refreshRoomElementsView();
             }
         });
 
@@ -656,7 +630,6 @@ public class CreateActivity extends AppCompatActivity {
             if (file.exists())
                 file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
         }*/
-        if(editingRoom)Log.d("SaveMap", "EDITING ROOM");
 
         try {
             String json = objectMapper.writeValueAsString(this.indoorMap);

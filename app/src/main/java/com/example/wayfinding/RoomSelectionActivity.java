@@ -197,6 +197,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeChanged(position, roomList.size());
                 dialog.dismiss();
+                indoorMap.setnRoom(indoorMap.getnRoom() -1);
             }
         });
 
