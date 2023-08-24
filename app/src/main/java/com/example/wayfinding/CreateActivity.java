@@ -581,6 +581,31 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     //refreshRoomsView(); //prueba borrarlo
                     setDefaultValues();
                     //setDefaultLayout();
+
+                    //para cuando se añada un elemento se restaure el panel de editing y esté vacío
+                    //en un futuro podriamos meter esto en setDefaultLayout() o en un metodo aparte
+                    if (editingHeader.getVisibility() == View.VISIBLE){
+                        editingHeader.setVisibility(View.INVISIBLE);
+                        addElemHeader.setVisibility(View.VISIBLE);
+
+                        coordinatesPrompt.setVisibility(View.INVISIBLE);
+                        coordXPrompt.setVisibility(View.INVISIBLE);
+                        coordXInput.setVisibility(View.INVISIBLE);
+                        coordYPrompt.setVisibility(View.INVISIBLE);
+                        coordYInput.setVisibility(View.INVISIBLE);
+
+                        orientationSpinner.setVisibility(View.INVISIBLE);
+                        spinnerPrompt.setVisibility(View.INVISIBLE);
+
+                        wheelchairCheckBox.setVisibility(View.INVISIBLE);
+                        wheelchairPrompt.setVisibility(View.INVISIBLE);
+
+                        capacityInput.setVisibility(View.INVISIBLE);
+                        capacityPrompt.setVisibility(View.INVISIBLE);
+                    }
+
+
+
                 }
             }
         });
