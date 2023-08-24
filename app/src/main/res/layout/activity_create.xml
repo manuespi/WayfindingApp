@@ -332,14 +332,23 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/roomElements"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="13dp"
                         android:layout_marginBottom="200dp"
-                        android:text="Room elements" />
+                        android:text="Room elements" />-->
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/elem_recyclerview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="200dp" />
 
 
                     <Button

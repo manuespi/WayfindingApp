@@ -4,11 +4,13 @@ import static android.content.ContentValues.TAG;
 import static java.lang.Integer.parseInt;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.wayfinding.databinding.ActivityCreateBinding;
@@ -36,15 +40,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import mapComponents.Element;
 import mapComponents.IndoorMap;
 import mapComponents.Room;
+import viewComponents.ElementListAdapter;
+import viewComponents.RoomListAdapter;
 
 //manu
 import com.google.gson.Gson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class CreateActivity extends AppCompatActivity {
+public class CreateActivity extends AppCompatActivity implements ElementListAdapter.OnItemClickListener {
     //manu
     private IndoorMap indoorMap;
     private int nRoom;
@@ -68,6 +75,9 @@ public class CreateActivity extends AppCompatActivity {
     private TextView roomElementsView, roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
             capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader, editingHeader;
     private AlertDialog.Builder roomConnectionAlert;
+    private RecyclerView elementsListRecyclerView;
+    private ElementListAdapter adapter;
+    private ArrayList<Element> elementList;
 
 
     @Override
@@ -225,8 +235,13 @@ public class CreateActivity extends AppCompatActivity {
 
         setDefaultValues();
 
-        roomElementsView = findViewById(R.id.roomElements);
-        roomElementsView.setText("Room empty");
+        this.elementsListRecyclerView = findViewById(R.id.elem_recyclerview);
+        this.adapter = new ElementListAdapter(this, this.elementList);
+        this.adapter.setOnItemClickListener(this);
+        this.elementsListRecyclerView.setAdapter(this.adapter);
+        this.elementsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        /*roomElementsView = findViewById(R.id.roomElements);
+        roomElementsView.setText("Room empty");*/
         roomElementsCounter = findViewById(R.id.elemCount);
         roomElementsCounter.setText("0 ELEMENTS");
         refreshRoomElementsView();
@@ -639,5 +654,39 @@ public class CreateActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void deleteElement(int position) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.delete_confirm_popup, null);
+
+        Button delete = popupView.findViewById(R.id.confirm_button);
+        Button cancel = popupView.findViewById(R.id.cancel_button);
+
+        AlertDialog dialog = new AlertDialog.Builder(CreateActivity.this)
+                .setView(popupView)
+                .create();
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                elementList.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, elementList.size());
+                dialog.dismiss();
+                room.setnElements(room.getnElements() -1);
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        Log.d("RoomSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
     }
 }

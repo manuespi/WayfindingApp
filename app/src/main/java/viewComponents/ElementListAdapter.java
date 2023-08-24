@@ -21,7 +21,7 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
     public class ElementViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ElementListAdapter adapter;
-        private TextView elementItemView, nElems;
+        private TextView elementItemView, wallType;
         private Button deleteElementButton;
 
         //Añadir los botones supongo
@@ -32,10 +32,10 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
 
         public ElementViewHolder(View itemView, ElementListAdapter adapter) {
             super(itemView);
-            this.elementItemView = itemView.findViewById(R.id.room_name);
-            this.nElems = itemView.findViewById(R.id.nElems_room);
+            this.elementItemView = itemView.findViewById(R.id.elem_type);
+            this.wallType = itemView.findViewById(R.id.wall_type);
             this.adapter = adapter;
-            this.deleteElementButton = itemView.findViewById(R.id.deleteRoom_button);
+            this.deleteElementButton = itemView.findViewById(R.id.deleteElem_button);
             itemView.setOnClickListener(this);
         }
 
@@ -66,15 +66,15 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
     @Override
     public ElementListAdapter.ElementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.room_item, parent, false);
+                .inflate(R.layout.element_item, parent, false);
         return new ElementListAdapter.ElementViewHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(ElementListAdapter.ElementViewHolder holder, int position) {
-        String elemName = this.elementList.get(position).getName();
-        holder.elementItemView.setText(elemName);
-        holder.nElems.setText(Integer.toString(this.elementList.get(position).getnElements()));
+        String elemType = this.elementList.get(position).getType();
+        holder.elementItemView.setText(elemType);
+        holder.wallType.setText(Integer.toString(this.elementList.get(position).getOrientation()));
         holder.deleteElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
