@@ -149,7 +149,6 @@ public class CreateActivity extends AppCompatActivity {
 
                 initializeAttributes();
                 setInterface();
-                setDefaultValues();
                 // setDefaultLayout();
             }
       //  });
@@ -175,7 +174,6 @@ public class CreateActivity extends AppCompatActivity {
         roomConnectionAlert = new AlertDialog.Builder(this);
         gson = new Gson();
         this.indoorMap = new IndoorMap();
-        roomElementsView = findViewById(R.id.roomElements);
 
         Intent incomingIntent = getIntent();
 
@@ -226,6 +224,11 @@ public class CreateActivity extends AppCompatActivity {
         }*/
 
         setDefaultValues();
+
+        roomElementsView = findViewById(R.id.roomElements);
+        roomElementsView.setText("Room empty");
+        roomElementsCounter = findViewById(R.id.elemCount);
+        roomElementsCounter.setText("0 ELEMENTS");
         refreshRoomElementsView();
     }
 
@@ -278,7 +281,7 @@ public class CreateActivity extends AppCompatActivity {
     //Manu
     private void refreshRoomElementsView(){
         //int nElem = indoorMap.getRoom(nRoom).getnElements();
-        Log.d("refresh", room.toString());
+        Log.d("refreshRoomElementsView", room.toString());
         int nElem = this.room.getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
@@ -288,6 +291,7 @@ public class CreateActivity extends AppCompatActivity {
             if(i < nElem - 1) elementsText += "\n";
         }
         roomElementsView.setText(elementsText);
+        roomElementsCounter.setText(room.getnElements() + " elements");
     }
 
 
@@ -325,10 +329,6 @@ public class CreateActivity extends AppCompatActivity {
      //   newElementButton = findViewById(R.id.newElement_button);
         clearButton = findViewById(R.id.clear_button);
 
-        roomElementsView = findViewById(R.id.roomElements);
-        roomElementsView.setText("Room empty");
-        roomElementsCounter = findViewById(R.id.elemCount);
-        roomElementsCounter.setText("0 ELEMENTS");
        // currentRoom = findViewById(R.id.currentRoom);
        // refreshCurrentRoom();
 
