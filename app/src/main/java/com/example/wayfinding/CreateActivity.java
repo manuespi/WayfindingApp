@@ -145,8 +145,10 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     roomLayoutParams.width = (int) width;
                     roomLayoutParams.height = (int) length;
                     roomView.setLayoutParams(roomLayoutParams);
-                    room.setLength(String.valueOf(length));
-                    room.setWidth(String.valueOf(width));
+                    //room.setLength(String.valueOf(length));
+                    room.setLength(lengthStr);
+                    //room.setWidth(String.valueOf(width));
+                    room.setWidth(widthStr);
 
                     // Update the layout parameters of the grid overlay View
                     View gridOverlay = findViewById(R.id.gridOverlay);
