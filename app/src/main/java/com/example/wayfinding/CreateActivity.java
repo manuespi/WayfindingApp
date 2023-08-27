@@ -236,6 +236,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         }*/
 
         setDefaultValues();
+        setElementList();
 
         this.elementsListRecyclerView = findViewById(R.id.elem_recyclerview);
         this.adapter = new ElementListAdapter(this, this.elementList);
@@ -247,6 +248,17 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         roomElementsCounter = findViewById(R.id.elemCount);
         roomElementsCounter.setText("0 ELEMENTS");
         refreshRoomElementsView();
+    }
+
+    private void setElementList(){
+        this.elementList = new ArrayList<Element>();
+        for (int i = 0; i < this.room.getnElements(); ++i){
+            this.elementList.add(this.room.getElement(i));
+        }
+    }
+
+    private void updateAdapter(){
+        adapter.notifyDataSetChanged();
     }
 
     private void receiveMap(String map, String name){
@@ -291,7 +303,8 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         }
         else {
             //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
-            this.room.addElement(element, orientation, capacity, open, wheelchair);
+            Element elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate);
+            elementList.add(elem);
         }
     }
 
@@ -307,7 +320,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
 
             if(i < nElem - 1) elementsText += "\n";
         }
-        roomElementsView.setText(elementsText);
+        //roomElementsView.setText(elementsText);
         roomElementsCounter.setText(room.getnElements() + " elements");
     }
 
@@ -439,6 +452,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             public void onClick(View v) {
                 Log.d(TAG, "Button clicked");
                 element = "door";
+                editingHeader.setText("DOOR");
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
@@ -476,6 +490,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             @Override
             public void onClick(View v) {
                 element = "stairs";
+                editingHeader.setText("STAIRS");
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
@@ -513,6 +528,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             @Override
             public void onClick(View v) {
                 element = "elevator";
+                editingHeader.setText("ELEVATOR");
 
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
@@ -578,9 +594,10 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                 if(parametersOk) {
                     addElementToRoom();
                     refreshRoomElementsView();
-                    //refreshRoomsView(); //prueba borrarlo
                     setDefaultValues();
                     //setDefaultLayout();
+                    //setElementList();
+                    adapter.notifyItemInserted(elementList.size()-1);
 
                     //para cuando se añada un elemento se restaure el panel de editing y esté vacío
                     //en un futuro podriamos meter esto en setDefaultLayout() o en un metodo aparte
@@ -634,16 +651,51 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id = room.getId();
-                String name = room.getName();
-                String w = room.getWidth();
-                String l = room.getLength();
-                room = new Room(id);
-                room.setName(name);
-                room.setWidth(w);
-                room.setLength(l);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.delete_confirm_popup, null);
 
-                refreshRoomElementsView();
+                Button delete = popupView.findViewById(R.id.confirm_button);
+                Button cancel = popupView.findViewById(R.id.cancel_button);
+
+                AlertDialog dialog = new AlertDialog.Builder(CreateActivity.this)
+                        .setView(popupView)
+                        .create();
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {Toast.makeText(CreateActivity.this, "DELETE CLEAR", Toast.LENGTH_SHORT).show();
+                        int id = room.getId();
+                        String name = room.getName();
+                        String w = room.getWidth();
+                        String l = room.getLength();
+                        room = new Room(id);
+                        room.setName(name);
+                        room.setWidth(w);
+                        room.setLength(l);
+                        elementList.clear();
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        /*
+
+                        setElementList();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });*/
+                        refreshRoomElementsView();
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
@@ -698,11 +750,14 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int id = elementList.get(position).getId();
+                boolean aux = room.removeById(id);
                 elementList.remove(position);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeChanged(position, elementList.size());
                 dialog.dismiss();
-                room.setnElements(room.getnElements() -1);
+                //room.setnElements(room.getnElements() -1);
+                refreshRoomElementsView();
             }
         });
 

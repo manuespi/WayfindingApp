@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -67,6 +69,7 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
     public ElementListAdapter.ElementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.element_item, parent, false);
+
         return new ElementListAdapter.ElementViewHolder(itemView, this);
     }
 
@@ -74,7 +77,7 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
     public void onBindViewHolder(ElementListAdapter.ElementViewHolder holder, int position) {
         String elemType = this.elementList.get(position).getType();
         holder.elementItemView.setText(elemType);
-        holder.wallType.setText(Integer.toString(this.elementList.get(position).getOrientation()));
+        holder.wallType.setText(this.elementList.get(position).orientationString());
         holder.deleteElementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

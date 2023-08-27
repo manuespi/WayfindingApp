@@ -19,8 +19,8 @@ public class Stairs extends Element{
         this.wheelchair = wheelchair;
     }
 
-    public Stairs(int id, int orientation, String type, boolean open, boolean wheelchair) {
-        super(id, orientation, type, open);
+    public Stairs(int id, int orientation, String type, boolean open, boolean wheelchair, int x, int y) {
+        super(id, orientation, type, open, x, y);
         this.wheelchair = wheelchair;
     }
 

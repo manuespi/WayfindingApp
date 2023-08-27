@@ -23,8 +23,8 @@ public class Elevator extends Element{
         this.capacity = capacity;
     }
 
-    public Elevator(int id, int orientation, String type, boolean open, boolean wheelchair, int capacity) {
-        super(id, orientation, type, open);
+    public Elevator(int id, int orientation, String type, boolean open, boolean wheelchair, int capacity, int x, int y) {
+        super(id, orientation, type, open, x, y);
         this.wheelchair = wheelchair;
         this.capacity = capacity;
     }

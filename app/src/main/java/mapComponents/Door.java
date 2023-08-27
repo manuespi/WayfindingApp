@@ -11,8 +11,8 @@ public class Door extends Element{
         super(id);
     }
 
-    public Door(int id, int orientation, String type, boolean open) {
-        super(id, orientation, type, open);
+    public Door(int id, int orientation, String type, boolean open, int x, int y) {
+        super(id, orientation, type, open, x, y);
     }
 
     public Door(int id, int orientation, String type, boolean open, List<Integer> connects) {

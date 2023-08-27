@@ -82,15 +82,17 @@ public class Room extends BaseObservable implements Serializable {
     }
 
 
-    public void addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair){
+    public Element addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair, int x, int y){
+        Element ret = new Element();
         switch (type) {
-            case "door": room.add(new Door(nElements, orientation, type, open)); break;
-            case "elevator": room.add(new Elevator(nElements, orientation, type, open, wheelchair, capacity)); break;
-            case "stairs": room.add(new Stairs(nElements, orientation, type, open, wheelchair)); break;
+            case "door": ret = new Door(nElements, orientation, type, open, x, y); room.add(ret); break;
+            case "elevator": ret = new Elevator(nElements, orientation, type, open, wheelchair, capacity, x, y); room.add(ret); break;
+            case "stairs": ret = new Stairs(nElements, orientation, type, open, wheelchair, x, y); room.add(ret); break;
             default: break;
         }
 
         nElements++;
+        return ret;
     }
 
     public String toString(){
@@ -107,6 +109,19 @@ public class Room extends BaseObservable implements Serializable {
         }
 
         return roomString;
+    }
+
+    public boolean removeById(int id){
+        int i = 0;
+        boolean found = false;
+        while(i < this.nElements && !found){
+            if(room.get(i).getId() == id) found = true;
+            ++i;
+        }
+
+        if(found){ room.remove(i-1); this.nElements--;}
+
+        return found;
     }
 
     //Manu

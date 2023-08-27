@@ -157,7 +157,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
 //        finish();
 //    }
 
-    public void openActivityCreate(Room room){//TODO modificar createActivity pa recibir todo bn
+    public void openActivityCreate(Room room){
         Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("room", room);
         intent.putExtra("map", this.indoorMap);
