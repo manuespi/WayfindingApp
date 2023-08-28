@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -21,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -157,6 +159,14 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     gridOverlayLayoutParams.height = (int) length; // Set the height
                     gridOverlay.setLayoutParams(gridOverlayLayoutParams);
                     gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
+
+                    //Update layout for the marker Container
+                    RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+                    ViewGroup.LayoutParams markerContainerParams = markerContainer.getLayoutParams();
+                    markerContainerParams.width = (int) width;
+                    markerContainerParams.height = (int) length;
+                    markerContainer.setLayoutParams(markerContainerParams);
+
                 });
 
                 initializeAttributes();
@@ -306,6 +316,11 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             Element elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate);
             elementList.add(elem);
         }
+        
+        drawElement(element);
+    }
+
+    private void drawElement(String element) {
     }
 
     //Manu

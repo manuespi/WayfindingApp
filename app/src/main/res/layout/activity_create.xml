@@ -27,6 +27,7 @@
             android:layout_weight="0.3">
 
             <RelativeLayout
+                android:id="@+id/roomLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -46,6 +47,13 @@
                     android:layout_height="400px"
                     android:layout_centerInParent="true"
                     android:background="@drawable/grid_background" />
+
+                <RelativeLayout
+                    android:id="@+id/markerContainer"
+                    android:layout_width="400px"
+                    android:layout_height="400px"
+                    android:layout_centerInParent="true" />
+
 
                 <TextView
                     android:id="@+id/currentRoom"
