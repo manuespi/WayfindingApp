@@ -457,6 +457,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
+                    addElementButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -495,6 +496,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
+                    addElementButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -533,6 +535,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                 if (addElemHeader.getVisibility() == View.VISIBLE){
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
+                    addElementButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -604,6 +607,8 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     if (editingHeader.getVisibility() == View.VISIBLE){
                         editingHeader.setVisibility(View.INVISIBLE);
                         addElemHeader.setVisibility(View.VISIBLE);
+                        addElementButton.setVisibility(View.INVISIBLE);
+
 
                         coordinatesPrompt.setVisibility(View.INVISIBLE);
                         coordXPrompt.setVisibility(View.INVISIBLE);
