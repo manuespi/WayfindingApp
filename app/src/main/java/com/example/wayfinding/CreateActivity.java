@@ -355,22 +355,28 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
 
     private void drawElement(Element element) {
 
-            MarkerView markerView = new MarkerView(CreateActivity.this, element);
-            int markerViewWidth = 100;
-            int markerViewHeight = 100;
-            RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
-            markerView.setLayoutParams(markerLayoutParams);
-            RelativeLayout markerContainer = findViewById(R.id.markerContainer);
-
-            float markerXfloat = xCoordinate * 40;
-            int markerXpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerXfloat, getResources().getDisplayMetrics());
-            float markerYfloat = yCoordinate * 40;
-            int markerYpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerYfloat, getResources().getDisplayMetrics());
-
+        MarkerView markerView = new MarkerView(CreateActivity.this, element);
+        int markerViewWidth = 100;
+        int markerViewHeight = 100;
+        RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
+        markerView.setLayoutParams(markerLayoutParams);
+        RelativeLayout markerContainer = findViewById(R.id.markerContainer);
 
 
         int markerLeft = markerLayoutParams.leftMargin; //represents the X-coordinate
         int markerTop = markerLayoutParams.topMargin;  //represents the Y-coordinate
+
+        if(element.orientationString() == "south" && (yCoordinate == Integer.parseInt(tempLength))){
+            yCoordinate = yCoordinate - 2;
+        }
+        else if(element.orientationString() == "east" && (xCoordinate == Integer.parseInt(tempWidth))){
+            xCoordinate = xCoordinate - 2;
+        }
+
+
+        float markerXfloat = xCoordinate * 40;
+        float markerYfloat = yCoordinate * 40;
+
         markerView.setX(markerLeft + markerXfloat);
         markerView.setY(markerTop + markerYfloat);
 

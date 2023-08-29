@@ -1,7 +1,7 @@
 - boton EDIT de Create Activity view no hace nada, pero si se quita ya no funciona
 el boton EDIT del Room List view. Deberiamos incluir la opcion de modificar x & y
 del Room en alguna parte, poniendo un disclaimer de que se borran todos los elementos
-^^^^^^ POR AHORA FUNCIONAR COMO UN CLEAR DE ELEMS DIBUJADOS
+^^^^^^ POR AHORA FUNCIONAR COMO UN CLEAR DE ELEMS DIBUJADOS PARA DEBUG
 
 
 - si se ponen dimensiones para el Room mayores que 20 x 20 se sale de la pantalla
