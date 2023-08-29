@@ -7,6 +7,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.PathShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -325,6 +334,8 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         drawElement(elem);
     }
 
+
+
     private class MarkerView extends AppCompatImageView {
         public MarkerView(Context context, Element element) {
             super(context);
@@ -344,12 +355,10 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
 
     private void drawElement(Element element) {
 
-
             MarkerView markerView = new MarkerView(CreateActivity.this, element);
-            ImageView roomView = findViewById(R.id.roomView);
-            int roomViewWidth = 100; //roomView.getWidth() /2;
-            int roomViewHeight = 100; //roomView.getHeight() / 2;
-            RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(roomViewWidth, roomViewHeight);
+            int markerViewWidth = 100;
+            int markerViewHeight = 100;
+            RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
             markerView.setLayoutParams(markerLayoutParams);
             RelativeLayout markerContainer = findViewById(R.id.markerContainer);
 
@@ -357,15 +366,22 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             int markerXpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerXfloat, getResources().getDisplayMetrics());
             float markerYfloat = yCoordinate * 40;
             int markerYpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerYfloat, getResources().getDisplayMetrics());
-            // markerView.setX(markerXpixels); // Set the X coordinate to element X input
-            // markerView.setY(markerYpixels); // Set the Y coordinate to element Y input
-            Log.d(TAG, "X input: " + markerView.getX());
-            Log.d(TAG, "Y input: " + markerView.getY());
-            markerContainer.addView(markerView);
+
+
+
+        int markerLeft = markerLayoutParams.leftMargin; //represents the X-coordinate
+        int markerTop = markerLayoutParams.topMargin;  //represents the Y-coordinate
+        markerView.setX(markerLeft + markerXfloat);
+        markerView.setY(markerTop + markerYfloat);
+
+        Log.d(TAG, "X : " + markerLayoutParams.leftMargin);
+        Log.d(TAG, "Y : " +  markerLayoutParams.bottomMargin);
+        markerContainer.addView(markerView);
 
 
 
     }
+
 
     //Manu
     private void refreshRoomElementsView(){
