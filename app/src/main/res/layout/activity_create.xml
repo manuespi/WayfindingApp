@@ -52,7 +52,8 @@
                     android:id="@+id/markerContainer"
                     android:layout_width="400px"
                     android:layout_height="400px"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"/>
 
 
                 <TextView

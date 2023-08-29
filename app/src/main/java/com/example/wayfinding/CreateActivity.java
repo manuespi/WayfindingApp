@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +66,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
     //mio
    // private int nRoom = 0;
     private LinearLayout createLayout;
+    private RelativeLayout layout1;
     private String element, tempName, tempWidth, tempLength;
     private ArrayList<String> orientationList;
     private int orientation, capacity, xCoordinate, yCoordinate;
@@ -320,7 +323,63 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         drawElement(element);
     }
 
+    private class MarkerView extends AppCompatImageView {
+        public MarkerView(Context context) {
+            super(context);
+            setImageResource(R.drawable.door); // Use the custom marker shape XML
+        }
+
+    }
+
     private void drawElement(String element) {
+//        MarkerView markerView = new MarkerView(CreateActivity.this);
+//        //RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+//        //markerContainer.addView(markerView);
+//        layout1.addView(markerView);
+//
+//        markerView.setBackgroundResource(R.drawable.door);
+//        //Convert x and y inputs into pixels
+//        float markerXfloat = xCoordinate * 40;
+//        int markerXpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerXfloat, getResources().getDisplayMetrics());
+//        float markerYfloat = yCoordinate * 40;
+//        int markerYpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerYfloat, getResources().getDisplayMetrics());
+//        markerView.setX(markerXpixels); // Set the X coordinate to element X input
+//        markerView.setY(markerYpixels); // Set the Y coordinate to element Y input
+//
+//        int fixedMarkerSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+//
+//        RelativeLayout.LayoutParams markerParams = new RelativeLayout.LayoutParams(fixedMarkerSize, fixedMarkerSize);
+//        markerView.setLayoutParams(markerParams);
+//
+//       // markerView.setBackgroundColor(Color.RED); // or any other color
+//
+//        Log.d(TAG, "X input: " + markerView.getX());
+//        Log.d(TAG, "Y input: " + markerView.getY());
+//        Log.d(TAG, "MarkerView layout params width: " + markerView.getWidth());
+//        Log.d(TAG, "MarkerView layout params height: " + markerView.getHeight());
+
+
+        //atempt 2
+        MarkerView markerView = new MarkerView(CreateActivity.this);
+        ImageView roomView = findViewById(R.id.roomView);
+        int roomViewWidth = roomView.getWidth() /2;
+        int roomViewHeight = roomView.getHeight() / 2;
+        RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(roomViewWidth, roomViewHeight);
+        markerView.setLayoutParams(markerLayoutParams);
+        RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+
+        float markerXfloat = xCoordinate * 40;
+        int markerXpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerXfloat, getResources().getDisplayMetrics());
+        float markerYfloat = yCoordinate * 40;
+        int markerYpixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, markerYfloat, getResources().getDisplayMetrics());
+       // markerView.setX(markerXpixels); // Set the X coordinate to element X input
+       // markerView.setY(markerYpixels); // Set the Y coordinate to element Y input
+        Log.d(TAG, "X input: " + markerView.getX());
+        Log.d(TAG, "Y input: " + markerView.getY());
+        markerContainer.addView(markerView);
+
+
+
     }
 
     //Manu
@@ -350,12 +409,6 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         roomElementsCounter.setText(roomsText);
     }
 
-    //creo q es inecesario
-    /*private void refreshCurrentRoom(){
-        String currentRoom = "Current room: " + nRoom;
-
-        this.currentRoom.setText(currentRoom);
-    }*/
 
     private void roomConnectionAlert() {
         roomConnectionAlert.create().show();
@@ -364,29 +417,18 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
     @SuppressLint("ResourceType")
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
+        layout1 = findViewById(R.id.layout1);
         editRoom = findViewById(R.id.resize);
 
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
         saveButton = findViewById(R.id.save_button);
-        //newRoomButton = findViewById(R.id.newRoom_button);
         addElementButton = findViewById(R.id.addElement_button);
-     //   newElementButton = findViewById(R.id.newElement_button);
         clearButton = findViewById(R.id.clear_button);
 
-       // currentRoom = findViewById(R.id.currentRoom);
-       // refreshCurrentRoom();
-
-
         doorButton = findViewById(R.id.newDoor);
-        //stairsButton = new Button(this);
-        //elevatorButton = new Button(this);
         openButton = new Button(this);
         closeButton = new Button(this);
-
-        //doorButton.setText("Door");
-        //stairsButton.setText("Stairs");
-       // elevatorButton.setText("Elevator");
         openButton.setText("Open");
         closeButton.setText("Closed");
 
