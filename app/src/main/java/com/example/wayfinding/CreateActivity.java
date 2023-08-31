@@ -626,17 +626,42 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                 boolean parametersOk = true;
 
                 //x & y
-                try
-                {
-                    xCoordinate = parseInt(coordXInput.getText().toString());
-                    yCoordinate = parseInt(coordYInput.getText().toString());
-                    Log.d(TAG, "X: " + xCoordinate + " Y:" + yCoordinate);
-                }
-                catch (NumberFormatException nfe)
-                {
+                try {
+                    xCoordinate = Integer.parseInt(coordXInput.getText().toString());
+                    yCoordinate = Integer.parseInt(coordYInput.getText().toString());
+
+                    //que un elemento solamente se pueda pinta en una pared y no en medio de la habitacion5
+                    boolean LeftOrRightIsaWall = false;
+                    boolean TopOrBottomIsAWall = false;
+                    if(xCoordinate != 0 && xCoordinate !=Integer.parseInt(tempWidth)){
+                        //x is random number, so y is either top wall or bottom wall
+                        if(yCoordinate == 0 || yCoordinate == Integer.parseInt(tempLength)){
+                            TopOrBottomIsAWall = true;
+                        }
+                    }
+
+                    if(yCoordinate != 0 && xCoordinate !=Integer.parseInt(tempLength)){
+                        //y is random number, so x is either left wall or right wall
+                        if(xCoordinate == 0 || xCoordinate == Integer.parseInt(tempWidth)){
+                            LeftOrRightIsaWall = true;
+                        }
+                    }
+
+                    if (!TopOrBottomIsAWall && !LeftOrRightIsaWall) {
+                        Toast.makeText(CreateActivity.this, "The element should be on a wall!", Toast.LENGTH_SHORT).show();
+                        parametersOk = false;
+                    }
+                    else {
+
+                        parametersOk = true;
+                        Log.d(TAG, "X: " + xCoordinate + " Y: " + yCoordinate);
+                    }
+                } catch (NumberFormatException nfe) {
                     Toast.makeText(CreateActivity.this, "X & Y should be numbers", Toast.LENGTH_SHORT).show();
                     parametersOk = false;
                 }
+
+
 
                 if(createLayout.findViewById(R.id.capacityInput).getVisibility() != View.INVISIBLE) {
                     try

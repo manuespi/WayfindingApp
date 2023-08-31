@@ -16,3 +16,4 @@ del Room en alguna parte, poniendo un disclaimer de que se borran todos los elem
     . no se guardan, si le das a save y vuelves a entrar en el Room desaparece
     . hay q asignarlos a un elemento Room para que se queden, añadiendo un
     elemento market a cada Room o cada elemento o algo así
+    . podriamos poner un (0,0) en la esquina izq superior para indicar origen
