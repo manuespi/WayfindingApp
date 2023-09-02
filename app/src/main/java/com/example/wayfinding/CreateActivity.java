@@ -59,6 +59,8 @@ import viewComponents.ElementListAdapter;
 import com.google.gson.Gson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.w3c.dom.Text;
+
 
 public class CreateActivity extends AppCompatActivity implements ElementListAdapter.OnItemClickListener {
     //manu
@@ -180,6 +182,11 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     markerContainerParams.width = (int) width;
                     markerContainerParams.height = (int) length;
                     markerContainer.setLayoutParams(markerContainerParams);
+
+                    TextView xGuide = findViewById(R.id.xGuide);
+                    xGuide.setText(tempWidth + ", 0");
+                    TextView yGuide = findViewById(R.id.yGuide);
+                    yGuide.setText("0, " + tempLength);
 
                 });
 
