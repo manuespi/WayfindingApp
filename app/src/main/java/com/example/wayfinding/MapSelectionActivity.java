@@ -36,7 +36,6 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_selection);
-
         setMapFileList();
         setInterface();
     }
@@ -54,7 +53,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
     }
 
     private void setInterface(){
-        //Recycler view config
+
         this.mapListRecyclerView = findViewById(R.id.map_recyclerview);
         this.adapter = new MapFileListAdapter(this, this.jsonFileList);
         this.adapter.setOnItemClickListener(this);
@@ -69,6 +68,7 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
                 openActivityMain();
             }
         });*/
+
         this.newMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +88,6 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
                         String name = nameEditText.getText().toString();
                         // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        //openActivityCreate(name);
                         openActivityEmptyRoomSelection(name);
                     }
                 });
