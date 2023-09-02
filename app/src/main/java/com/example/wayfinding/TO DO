@@ -12,6 +12,8 @@ del Room en alguna parte, poniendo un disclaimer de que se borran todos los elem
 
 - falta connect rooms y pisos
 
+-si el nombre del mapa/room es muy largo no sale bien
+
 - marker stuff
     . no se guardan, si le das a save y vuelves a entrar en el Room desaparece
     . hay q asignarlos a un elemento Room para que se queden, añadiendo un
