@@ -408,7 +408,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="100px"
                 android:layout_marginBottom="20px"
-                android:text="Main menu" />
+                android:text="Cancel" />
 
             <Button
                 android:id="@+id/save_button"
