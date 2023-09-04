@@ -49,10 +49,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import mapComponents.Element;
 import mapComponents.IndoorMap;
 import mapComponents.Room;
+import viewComponents.ConnectListAdapter;
 import viewComponents.ElementListAdapter;
 
 //manu
@@ -62,7 +64,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.w3c.dom.Text;
 
 
-public class CreateActivity extends AppCompatActivity implements ElementListAdapter.OnItemClickListener {
+public class CreateActivity extends AppCompatActivity implements ElementListAdapter.OnItemClickListener, ConnectListAdapter.OnItemClickListener {
     //manu
     private IndoorMap indoorMap;
     private int nRoom;
@@ -80,7 +82,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
     private boolean open, wheelchair;
     private Button mainMenuButton, saveButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, editRoom, nextButton, clearButton;
+            addElementButton, editRoom, nextButton, clearButton, connectButton;
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private Element elem;
@@ -88,9 +90,13 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
     private TextView roomElementsView, roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
             capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader, editingHeader;
     private AlertDialog.Builder roomConnectionAlert;
-    private RecyclerView elementsListRecyclerView;
+    private RecyclerView elementsListRecyclerView, connectRecyclerView;
     private ElementListAdapter adapter;
     private ArrayList<Element> elementList;
+    private ConnectListAdapter cAdapter;
+    private ArrayList<Room> connectRoomList;
+    private ArrayList<Integer> connects;
+    private AlertDialog connectDialog;
 
 
     @Override
@@ -178,10 +184,12 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         capacity = 6;
         open = true;
         wheelchair = false;
+        connects = new ArrayList<Integer>();
     }
 
     private void initializeAttributes(){
         //Manu
+        connects = new ArrayList<Integer>();
         orientationList = new ArrayList<>();
         orientationList.add("North");
         orientationList.add("East");
@@ -248,11 +256,24 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         this.adapter.setOnItemClickListener(this);
         this.elementsListRecyclerView.setAdapter(this.adapter);
         this.elementsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        /*roomElementsView = findViewById(R.id.roomElements);
-        roomElementsView.setText("Room empty");*/
+
+        View connectRecyclerViewLayout = getLayoutInflater().inflate(R.layout.connect_popup, null);
+
+        this.connectRecyclerView = connectRecyclerViewLayout.findViewById(R.id.connect_recyclerview);
+        setRoomList();
+        this.cAdapter = new ConnectListAdapter(this, this.connectRoomList);
+        this.cAdapter.setOnItemClickListener((ConnectListAdapter.OnItemClickListener) this);
+        this.connectRecyclerView.setAdapter(this.cAdapter);
+        this.connectRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         roomElementsCounter = findViewById(R.id.elemCount);
         roomElementsCounter.setText("0 ELEMENTS");
+
         refreshRoomElementsView();
+    }
+
+    private void setRoomList(){//TODO que no salga la misma que se está creando
+        this.connectRoomList = this.indoorMap.getMap();Log.d("setRoomList", Integer.toString(this.connectRoomList.size()));
     }
 
     private void setElementList(){
@@ -307,14 +328,20 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
         }
         else {
-            //indoorMap.addElementToRoom(nRoom, element, orientation, capacity, open, wheelchair);
-            elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate);
+            elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate, connects);
             elementList.add(elem);
         }
         
         drawElement(elem);
     }
 
+    @Override
+    public void connect(int position) {
+        connects.add(connectRoomList.get(position).getId());
+        connects.add(room.getId());
+
+        connectDialog.dismiss();
+    }
 
 
     private class MarkerView extends AppCompatImageView {
@@ -412,6 +439,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         mainMenuButton = findViewById(R.id.mainMenu_button);
         saveButton = findViewById(R.id.save_button);
         addElementButton = findViewById(R.id.addElement_button);
+        connectButton = findViewById(R.id.connectElement_button);
         clearButton = findViewById(R.id.clear_button);
 
         doorButton = findViewById(R.id.newDoor);
@@ -496,6 +524,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
                     addElementButton.setVisibility(View.VISIBLE);
+                    connectButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -535,6 +564,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
                     addElementButton.setVisibility(View.VISIBLE);
+                    connectButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -574,6 +604,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     addElemHeader.setVisibility(View.INVISIBLE);
                     editingHeader.setVisibility(View.VISIBLE);
                     addElementButton.setVisibility(View.VISIBLE);
+                    connectButton.setVisibility(View.VISIBLE);
                 }
 
                 if (coordinatesPrompt.getVisibility() == View.INVISIBLE){
@@ -671,6 +702,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                         editingHeader.setVisibility(View.INVISIBLE);
                         addElemHeader.setVisibility(View.VISIBLE);
                         addElementButton.setVisibility(View.INVISIBLE);
+                        connectButton.setVisibility(View.INVISIBLE);
 
 
                         coordinatesPrompt.setVisibility(View.INVISIBLE);
@@ -692,6 +724,24 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
 
 
                 }
+            }
+        });
+
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.connect_popup, null);
+                View connectItemView = inflater.inflate(R.layout.connect_item, null);
+
+                //Button connect = connectItemView.findViewById(R.id.connectItem_button);
+                ((ViewGroup) popupView).addView(connectItemView);
+
+                connectDialog = new AlertDialog.Builder(CreateActivity.this)
+                        .setView(popupView)
+                        .create();
+
+                connectDialog.show();
             }
         });
 
@@ -743,15 +793,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                         elementList.clear();
                         adapter.notifyDataSetChanged();
                         dialog.dismiss();
-                        /*
 
-                        setElementList();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });*/
                         refreshRoomElementsView();
                     }
                 });

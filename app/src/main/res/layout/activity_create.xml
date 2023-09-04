@@ -355,6 +355,17 @@
                         android:visibility="invisible" />
 
                     <Button
+                        android:id="@+id/connectElement_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="56dp"
+                        android:layout_marginBottom="70dp"
+                        android:text="Connect"
+                        android:visibility="invisible"/>
+
+                    <Button
                         android:id="@+id/addElement_button"
                         android:layout_width="65dp"
                         android:layout_height="wrap_content"

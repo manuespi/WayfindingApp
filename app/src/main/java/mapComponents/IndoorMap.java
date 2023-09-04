@@ -31,8 +31,8 @@ public class IndoorMap implements Serializable {
         else return ret + 1;
     }
 
-    public void addElementToRoom(int id, String type,  int orientation, int capacity, boolean open, boolean wheelchair, int x, int y){
-        this.map.get(id).addElement(type, orientation, capacity, open, wheelchair, x, y);
+    public void addElementToRoom(int id, String type,  int orientation, int capacity, boolean open, boolean wheelchair, int x, int y, ArrayList<Integer> conn){
+        this.map.get(id).addElement(type, orientation, capacity, open, wheelchair, x, y, conn);
     }
 
     public void addRoom(){

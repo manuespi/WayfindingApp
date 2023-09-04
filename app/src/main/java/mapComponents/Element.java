@@ -37,14 +37,14 @@ public class Element implements Serializable {
         this.connects = new ArrayList<Integer>();
     }
 
-    public Element(int id, int orientation, String type, boolean open, int x, int y){
+    public Element(int id, int orientation, String type, boolean open, int x, int y, ArrayList<Integer> conn){
         this.id = id;
         this.orientation = orientation;
         this.type = type;
         this.open = open;
-        this.connects = new ArrayList<Integer>();
         this.x = x;
         this.y = y;
+        this.connects = conn;
     }
 
     public Element(int id, int orientation, String type, boolean open, List<Integer> connects){

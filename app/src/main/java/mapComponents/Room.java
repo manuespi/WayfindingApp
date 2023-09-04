@@ -82,12 +82,12 @@ public class Room extends BaseObservable implements Serializable {
     }
 
 
-    public Element addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair, int x, int y){
+    public Element addElement(String type,  int orientation, int capacity, boolean open, boolean wheelchair, int x, int y, ArrayList<Integer> conn){
         Element ret = new Element();
         switch (type) {
-            case "door": ret = new Door(nElements, orientation, type, open, x, y); room.add(ret); break;
-            case "elevator": ret = new Elevator(nElements, orientation, type, open, wheelchair, capacity, x, y); room.add(ret); break;
-            case "stairs": ret = new Stairs(nElements, orientation, type, open, wheelchair, x, y); room.add(ret); break;
+            case "door": ret = new Door(nElements, orientation, type, open, x, y, conn); room.add(ret); break;
+            case "elevator": ret = new Elevator(nElements, orientation, type, open, wheelchair, capacity, x, y, conn); room.add(ret); break;
+            case "stairs": ret = new Stairs(nElements, orientation, type, open, wheelchair, x, y, conn); room.add(ret); break;
             default: break;
         }
 

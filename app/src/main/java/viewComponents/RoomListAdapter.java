@@ -23,12 +23,6 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         private TextView roomItemView, nElems;
         private Button deleteRoomButton, editRoomButton;
 
-        //Añadir los botones supongo
-
-        /*public MapFileViewHolder(View itemView) {
-            super(itemView);
-        }*/
-
         public RoomViewHolder(View itemView, RoomListAdapter adapter) {
             super(itemView);
             this.roomItemView = itemView.findViewById(R.id.room_name);
