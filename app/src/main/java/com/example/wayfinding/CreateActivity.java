@@ -64,7 +64,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.w3c.dom.Text;
 
 
-public class CreateActivity extends AppCompatActivity implements ElementListAdapter.OnItemClickListener, ConnectListAdapter.OnItemClickListener {
+public class CreateActivity extends AppCompatActivity implements ConnectListAdapter.OnItemClickListener, ElementListAdapter.OnItemClickListener {
     //manu
     private IndoorMap indoorMap;
     private int nRoom;
@@ -185,10 +185,14 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         open = true;
         wheelchair = false;
         connects = new ArrayList<Integer>();
+        connectButton.setText("Connect");
+        connectRecyclerView.setVisibility(View.INVISIBLE);
+        elementsListRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void initializeAttributes(){
         //Manu
+        connectButton = findViewById(R.id.connectElement_button);
         connects = new ArrayList<Integer>();
         orientationList = new ArrayList<>();
         orientationList.add("North");
@@ -219,37 +223,8 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             this.newMap = false;
         }
 
-        /*if(incomingIntent != null && incomingIntent.hasExtra("room")) {
-            this.room = (Room) incomingIntent.getSerializableExtra("room");
-            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
-            this.editingRoom = true;
-            this.newMap = false;
-            Toast.makeText(CreateActivity.this, "Mapa cargado (room)", Toast.LENGTH_SHORT).show();
-
-        }
-        else if(incomingIntent != null && incomingIntent.hasExtra("id")){
-            String name = incomingIntent.getStringExtra("name");
-            int id = incomingIntent.getIntExtra("id", 0);
-            this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
-            this.room = new Room();
-            this.room.setName(name);
-            this.room.setId(id);
-            this.editingRoom = false;
-            Toast.makeText(CreateActivity.this, "Mapa cargado (id) " + id, Toast.LENGTH_SHORT).show();
-
-            if(incomingIntent.hasExtra("new"))
-                this.newMap = true;
-            else this.newMap = false;
-        }
-        else{
-            Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
-            Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
-            this.editingRoom = false;
-            this.newMap = false;
-        }*/
-
-        setDefaultValues();
         setElementList();
+        setRoomList();
 
         this.elementsListRecyclerView = findViewById(R.id.elem_recyclerview);
         this.adapter = new ElementListAdapter(this, this.elementList);
@@ -257,18 +232,18 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         this.elementsListRecyclerView.setAdapter(this.adapter);
         this.elementsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        View connectRecyclerViewLayout = getLayoutInflater().inflate(R.layout.connect_popup, null);
+        connectButton = findViewById(R.id.connectElement_button);
 
-        this.connectRecyclerView = connectRecyclerViewLayout.findViewById(R.id.connect_recyclerview);
-        setRoomList();
+        this.connectRecyclerView = findViewById(R.id.connect_recyclerview);
         this.cAdapter = new ConnectListAdapter(this, this.connectRoomList);
-        this.cAdapter.setOnItemClickListener((ConnectListAdapter.OnItemClickListener) this);
+        this.cAdapter.setOnItemClickListener(this);
         this.connectRecyclerView.setAdapter(this.cAdapter);
         this.connectRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         roomElementsCounter = findViewById(R.id.elemCount);
         roomElementsCounter.setText("0 ELEMENTS");
 
+        setDefaultValues();
         refreshRoomElementsView();
     }
 
@@ -338,9 +313,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
     @Override
     public void connect(int position) {
         connects.add(connectRoomList.get(position).getId());
-        connects.add(room.getId());
-
-        connectDialog.dismiss();
+        connects.add(room.getId());Log.d("Connect", "Pulsado boton " + position);
     }
 
 
@@ -439,7 +412,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         mainMenuButton = findViewById(R.id.mainMenu_button);
         saveButton = findViewById(R.id.save_button);
         addElementButton = findViewById(R.id.addElement_button);
-        connectButton = findViewById(R.id.connectElement_button);
+        //connectButton = findViewById(R.id.connectElement_button);
         clearButton = findViewById(R.id.clear_button);
 
         doorButton = findViewById(R.id.newDoor);
@@ -548,6 +521,10 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     capacityInput.setVisibility(View.INVISIBLE);
                     capacityPrompt.setVisibility(View.INVISIBLE);
                 }
+
+                connectButton.setText("Connect");
+                connectRecyclerView.setVisibility(View.INVISIBLE);
+                elementsListRecyclerView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -589,7 +566,9 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     capacityPrompt.setVisibility(View.INVISIBLE);
                 }
 
-
+                connectButton.setText("Connect");
+                connectRecyclerView.setVisibility(View.INVISIBLE);
+                elementsListRecyclerView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -628,6 +607,10 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
                     capacityInput.setVisibility(View.VISIBLE);
                     capacityPrompt.setVisibility(View.VISIBLE);
                 }
+
+                connectButton.setText("Connect");
+                connectRecyclerView.setVisibility(View.INVISIBLE);
+                elementsListRecyclerView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -730,18 +713,32 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                if(connectRecyclerView.getVisibility() == View.INVISIBLE){
+                    connectRecyclerView.setVisibility(View.VISIBLE);
+                    elementsListRecyclerView.setVisibility(View.INVISIBLE);
+                    connectButton.setText("Cancel");
+                }
+                else{
+                    connectRecyclerView.setVisibility(View.INVISIBLE);
+                    elementsListRecyclerView.setVisibility(View.VISIBLE);
+                    connectButton.setText("Connect");
+                }
+
+                /*LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.connect_popup, null);
                 View connectItemView = inflater.inflate(R.layout.connect_item, null);
 
                 //Button connect = connectItemView.findViewById(R.id.connectItem_button);
                 ((ViewGroup) popupView).addView(connectItemView);
+                connectRecyclerView = popupView.findViewById(R.id.connect_recyclerview);
+                //connectRecyclerView.setAdapter(cAdapter);
+                connectRecyclerView.setLayoutManager(new LinearLayoutManager(CreateActivity.this));//Log.d("ConnectListener", Integer.toString(cAdapter.getItemCount()));
 
                 connectDialog = new AlertDialog.Builder(CreateActivity.this)
                         .setView(popupView)
                         .create();
 
-                connectDialog.show();
+                connectDialog.show();*/
             }
         });
 

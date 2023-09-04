@@ -1,6 +1,7 @@
 package viewComponents;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class ConnectListAdapter extends RecyclerView.Adapter<ConnectListAdapter.
     public ConnectListAdapter(Context context, ArrayList<Room> roomList) {
         this.inflater = LayoutInflater.from(context);
         this.roomList = roomList;
+        Log.d("ConnectListAdapter", Integer.toString(this.roomList.size()));
     }
     @Override
     public ConnectListAdapter.ConnectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +67,7 @@ public class ConnectListAdapter extends RecyclerView.Adapter<ConnectListAdapter.
     @Override
     public void onBindViewHolder(ConnectListAdapter.ConnectViewHolder holder, int position) {
         String roomName = this.roomList.get(position).getName();
-        holder.connectItemView.setText(roomName);
+        holder.connectItemView.setText(this.roomList.get(position).getName());
         holder.connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
