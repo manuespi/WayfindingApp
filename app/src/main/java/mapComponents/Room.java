@@ -51,7 +51,7 @@ public class Room extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public String getName() { return name;    }
+    public String getName() { return name; }
 
     @Bindable
     public void setName(String name) {

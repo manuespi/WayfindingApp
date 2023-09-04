@@ -89,29 +89,19 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 openMapSelectionActivity();
             }
         });
+
+
         this.newRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {//TODO hacer el popup del nombre y cambiar R.id.s
-//                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                View popupView = inflater.inflate(R.layout.room_name_popup, null);
-//
-//                Button saveButton = popupView.findViewById(R.id.roomName_edit_button);
-//                EditText nameEditText = popupView.findViewById(R.id.roomName_edit_text);
-//                EditText xcoord = popupView.findViewById(R.id.newRoom_xcoord);
-//                EditText ycoord = popupView.findViewById(R.id.newRoom_ycoord);
-
+            public void onClick(View view) {
                 RoomNamePopupBinding popupBinding = RoomNamePopupBinding.inflate(getLayoutInflater());
                 View popupView = popupBinding.getRoot();
 
-                //probando
                 Room bindedRoom = new Room(indoorMap.nextId());
                 popupBinding.setRoom(bindedRoom);
 
                 Button saveButton = popupBinding.roomNameSaveButton;
 
-                /*EditText nameEditText = popupBinding.roomNameEditText;
-                EditText xcoord = popupBinding.newRoomXcoord;
-                EditText ycoord = popupBinding.newRoomYcoord;*/
                 AlertDialog dialog = new AlertDialog.Builder(RoomSelectionActivity.this)
                         .setView(popupView)
                         .create();
@@ -119,16 +109,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*String name = nameEditText.getText().toString();
-                        int x = Integer.parseInt(xcoord.getText().toString());
-                        int y = Integer.parseInt(ycoord.getText().toString());
-                        bindedRoom.setName(name);
-                        bindedRoom.setLength(x);
-                        bindedRoom.setWidth(y);*/
-                        // Crear un nuevo mapa utilizando el nombre ingresado
                         dialog.dismiss();
-                        //Log.d("RoomSelectionActivity", "Se crea la habitación " + name + " con x = " + x + " e y = " + y);
-                        //openActivityCreate(name, indoorMap.nextId());
                         openActivityCreate(bindedRoom);
 
                     }

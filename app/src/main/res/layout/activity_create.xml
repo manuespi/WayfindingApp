@@ -72,7 +72,6 @@
                     android:background="@drawable/room"
                     android:gravity="center" />
 
-                <!-- Grid Overlay -->
                 <View
                     android:id="@+id/gridOverlay"
                     android:layout_width="400px"

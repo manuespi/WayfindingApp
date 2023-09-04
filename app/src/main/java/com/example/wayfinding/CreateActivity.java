@@ -106,29 +106,7 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
             room.setLength(tempLength);
             room.setWidth(tempWidth);
         }
-        //inflamos layout y creamos objeto enlazado q nos da acceso a Views definidos en el layout basic_room_inputs
-//        BasicRoomInputsBinding basicRoomInputsBinding = DataBindingUtil.setContentView(this, R.layout.basic_room_inputs);
-//        setContentView(basicRoomInputsBinding.getRoot()); //cleaner
-//
-//        Room room = new Room(1);
-//        if(firstTime){
-//            room.setName("");
-//            room.setLength("15");
-//            room.setWidth("20");
-//        }
-//        else{
-//            room.setName(tempName);
-//            room.setLength(tempLength);
-//            room.setWidth(tempWidth);
-//        }
-//
-//        basicRoomInputsBinding.setRoom(room);
 
- //       nextButton = basicRoomInputsBinding.next; //vs nextButton = findViewById(R.id.next), no parece q haya diferencia
-
-   //     nextButton.setOnClickListener(new View.OnClickListener() {
-   //         @Override
-   //         public void onClick(View v) {
                 ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
                 setContentView(activityCreateBinding.getRoot());
 
@@ -150,29 +128,25 @@ public class CreateActivity extends AppCompatActivity implements ElementListAdap
 
                     String nameStr = room.getName();
                     tempName = nameStr;
-                    room.setName(nameStr);
+                    //room.setName(nameStr);
                     Log.d(TAG, "Room name: " + nameStr);
                     currentRoom = findViewById(R.id.currentRoom);
                     currentRoom.setText(nameStr);
 
-                    // hay que hacer exception handling para cuando las dimensiones se saldrían de la pantalla
-                    //1 opcion es dividir por un numero y hacer escala mas pequeña de las mismas dimensiones
 
                     // Update the layout parametes & name of the room View
                     ViewGroup.LayoutParams roomLayoutParams = roomView.getLayoutParams();
                     roomLayoutParams.width = (int) width;
                     roomLayoutParams.height = (int) length;
                     roomView.setLayoutParams(roomLayoutParams);
-                    //room.setLength(String.valueOf(length));
-                    room.setLength(lengthStr);
-                    //room.setWidth(String.valueOf(width));
-                    room.setWidth(widthStr);
+                   // room.setLength(lengthStr);
+                   // room.setWidth(widthStr);
 
                     // Update the layout parameters of the grid overlay View
                     View gridOverlay = findViewById(R.id.gridOverlay);
                     ViewGroup.LayoutParams gridOverlayLayoutParams = gridOverlay.getLayoutParams();
-                    gridOverlayLayoutParams.width = (int) width; // Set the width
-                    gridOverlayLayoutParams.height = (int) length; // Set the height
+                    gridOverlayLayoutParams.width = (int) width;
+                    gridOverlayLayoutParams.height = (int) length;
                     gridOverlay.setLayoutParams(gridOverlayLayoutParams);
                     gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
 
