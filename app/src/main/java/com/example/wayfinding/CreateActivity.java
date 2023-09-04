@@ -313,7 +313,11 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     @Override
     public void connect(int position) {
         connects.add(connectRoomList.get(position).getId());
-        connects.add(room.getId());Log.d("Connect", "Pulsado boton " + position);
+        connects.add(room.getId());
+
+        connectButton.setText("Connect");
+        connectRecyclerView.setVisibility(View.INVISIBLE);
+        elementsListRecyclerView.setVisibility(View.VISIBLE);
     }
 
 
