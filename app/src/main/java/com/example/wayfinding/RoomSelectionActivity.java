@@ -127,17 +127,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
     }
 
-//    public void openActivityCreate(String name, int id){//TODO modificar createActivity pa recibir todo bn
-//        Intent intent = new Intent(this, CreateActivity.class);
-//        intent.putExtra("name", name); //Hay que comprobar que no se repita o poner (numreps) si se repite al final del nombre.
-//        intent.putExtra("id", id);
-//        intent.putExtra("map", this.indoorMap);
-//        if(this.newMap) intent.putExtra("new", true);
-//
-//        startActivity(intent);
-//        finish();
-//    }
-
     public void openActivityCreate(Room room){
         Intent intent = new Intent(this, CreateActivity.class);
         intent.putExtra("room", room);

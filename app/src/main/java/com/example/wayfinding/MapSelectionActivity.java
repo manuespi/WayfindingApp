@@ -61,13 +61,6 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
         this.mapListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //Button
         this.newMapButton = findViewById(R.id.newMap_button);
-        //this.mainMenuButton = findViewById(R.id.mainMenu_button);
-        /*this.mainMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityMain();
-            }
-        });*/
 
         this.newMapButton.setOnClickListener(new View.OnClickListener() {
             @Override

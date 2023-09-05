@@ -727,22 +727,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     elementsListRecyclerView.setVisibility(View.VISIBLE);
                     connectButton.setText("Connect");
                 }
-
-                /*LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.connect_popup, null);
-                View connectItemView = inflater.inflate(R.layout.connect_item, null);
-
-                //Button connect = connectItemView.findViewById(R.id.connectItem_button);
-                ((ViewGroup) popupView).addView(connectItemView);
-                connectRecyclerView = popupView.findViewById(R.id.connect_recyclerview);
-                //connectRecyclerView.setAdapter(cAdapter);
-                connectRecyclerView.setLayoutManager(new LinearLayoutManager(CreateActivity.this));//Log.d("ConnectListener", Integer.toString(cAdapter.getItemCount()));
-
-                connectDialog = new AlertDialog.Builder(CreateActivity.this)
-                        .setView(popupView)
-                        .create();
-
-                connectDialog.show();*/
             }
         });
 
