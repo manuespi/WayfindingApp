@@ -179,7 +179,6 @@ public class MapSelectionActivity extends AppCompatActivity implements MapFileLi
 
     @Override
     public void playMap(int position) {
-
         openActivityPlay();
     }
 }

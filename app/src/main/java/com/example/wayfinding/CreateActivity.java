@@ -210,7 +210,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     }
 
     private void setRoomList(){
-        this.connectRoomList = this.indoorMap.getMap();Log.d("setRoomList", Integer.toString(this.connectRoomList.size()));
+        this.connectRoomList = this.indoorMap.getMap();
     }
 
     private void setElementList(){
@@ -340,12 +340,8 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
             if(i < nElem - 1) elementsText += "\n";
         }
-        if(room.getnElements() == 1){
-            roomElementsCounter.setText("1 element");
-        }
-        else {
-            roomElementsCounter.setText(room.getnElements() + " elements");
-        }
+
+        roomElementsCounter.setText(room.getnElements() + " elements");
     }
 
 
@@ -437,15 +433,13 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         String[] elements = {"1", "2", "3"};
         roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-            }
+            public void onClick(DialogInterface dialogInterface, int which) {}
         });
 
 //// DOOR BUTTON
         doorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Button clicked");
                 element = "door";
                 editingHeader.setText("DOOR");
 
@@ -729,7 +723,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {Toast.makeText(CreateActivity.this, "DELETE CLEAR", Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {Toast.makeText(CreateActivity.this, "CLEAR ROOM", Toast.LENGTH_SHORT).show();
                         int id = room.getId();
                         String name = room.getName();
                         String w = room.getWidth();
