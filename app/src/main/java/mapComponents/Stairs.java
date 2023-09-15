@@ -1,5 +1,6 @@
-package com.example.wayfinding;
+package mapComponents;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Stairs extends Element{
@@ -19,8 +20,8 @@ public class Stairs extends Element{
         this.wheelchair = wheelchair;
     }
 
-    public Stairs(int id, int orientation, String type, boolean open, boolean wheelchair) {
-        super(id, orientation, type, open);
+    public Stairs(int id, int orientation, String type, boolean open, boolean wheelchair, int x, int y, ArrayList<Integer> conn) {
+        super(id, orientation, type, open, x, y, conn);
         this.wheelchair = wheelchair;
     }
 

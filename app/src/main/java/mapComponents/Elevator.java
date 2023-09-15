@@ -1,5 +1,6 @@
-package com.example.wayfinding;
+package mapComponents;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Elevator extends Element{
@@ -23,8 +24,8 @@ public class Elevator extends Element{
         this.capacity = capacity;
     }
 
-    public Elevator(int id, int orientation, String type, boolean open, boolean wheelchair, int capacity) {
-        super(id, orientation, type, open);
+    public Elevator(int id, int orientation, String type, boolean open, boolean wheelchair, int capacity, int x, int y, ArrayList<Integer> conn) {
+        super(id, orientation, type, open, x, y, conn);
         this.wheelchair = wheelchair;
         this.capacity = capacity;
     }

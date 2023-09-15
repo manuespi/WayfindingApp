@@ -1,0 +1,63 @@
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="room"
+            type="mapComponents.Room" />
+    </data>
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set the room name and dimensions"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
+
+            <EditText
+                android:id="@+id/roomName_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:hint="Room name"
+                android:text="@={room.name}"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/newRoom_xcoord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:hint="X"
+                android:text="@={room.width}"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/newRoom_ycoord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:hint="Y"
+                android:text="@={room.length}"
+                android:inputType="text"/>
+
+            <Button
+                android:id="@+id/roomName_save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="Save"/>
+        </LinearLayout>
+</layout>
