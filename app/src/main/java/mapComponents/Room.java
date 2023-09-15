@@ -18,9 +18,12 @@ public class Room extends BaseObservable implements Serializable {
     private String width; //x
     private String length; //y
     private String name;
+    private List<Marker> markers;
+
 
     public Room(){
         this.room = new ArrayList<Element>();
+        this.markers = new ArrayList<Marker>();
         this.nElements = 0;
     }
 
@@ -124,7 +127,38 @@ public class Room extends BaseObservable implements Serializable {
         return found;
     }
 
-    //Manu
+    public class Marker implements Serializable {
+        private int x, y;
+        private String type;
+
+        public Marker(int x, int y, String elementType) {
+            this.x = x;
+            this.y = y;
+            this.type = elementType;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public String getElementType() {
+            return type;
+        }
+    }
+
+    public void addMarker(int x, int y, String elementType) {
+        Marker marker = new Marker(x, y, elementType);
+        markers.add(marker);
+    }
+
+    public List<Marker> getMarkers() {
+        return markers;
+    }
+
     public Element getElement(int pos){
         return this.room.get(pos);
     }
