@@ -7,15 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.PathShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -42,26 +33,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.wayfinding.databinding.ActivityCreateBinding;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import mapComponents.Element;
 import mapComponents.IndoorMap;
 import mapComponents.Room;
+
 import viewComponents.ConnectListAdapter;
 import viewComponents.ElementListAdapter;
 
-//manu
-import com.google.gson.Gson;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.w3c.dom.Text;
 
 
 public class CreateActivity extends AppCompatActivity implements ConnectListAdapter.OnItemClickListener, ElementListAdapter.OnItemClickListener {
@@ -296,6 +283,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         connectButton.setText("Connect");
         connectRecyclerView.setVisibility(View.INVISIBLE);
         elementsListRecyclerView.setVisibility(View.VISIBLE);
+        roomElementsCounter.setText(room.getnElements() + " elements");
     }
 
 
@@ -693,6 +681,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     connectRecyclerView.setVisibility(View.VISIBLE);
                     elementsListRecyclerView.setVisibility(View.INVISIBLE);
                     connectButton.setText("Cancel");
+                    roomElementsCounter.setText("Connecting with...");
                 }
                 else{
                     connectRecyclerView.setVisibility(View.INVISIBLE);
