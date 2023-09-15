@@ -85,7 +85,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         this.mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //openActivityMain();
                 openMapSelectionActivity();
             }
         });
@@ -192,12 +191,6 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
     public void saveMap(){
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
-
-        /*if(newMap) {
-            Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
-            if (file.exists())
-                file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
-        }*/
 
         try {
             String json = objectMapper.writeValueAsString(this.indoorMap);

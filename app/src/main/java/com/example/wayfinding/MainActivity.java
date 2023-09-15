@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //openActivityCreate();
                 openMapSelectionActivity();
             }
         });
@@ -60,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivityExit(){
-       /* Intent intent = new Intent(this, Exit.class);
-        startActivity(intent);*/
         System.exit(0);
     }
 }

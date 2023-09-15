@@ -390,13 +390,9 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
         layout1 = findViewById(R.id.layout1);
-        //editRoom = findViewById(R.id.resize);
-
-
         mainMenuButton = findViewById(R.id.mainMenu_button);
         saveButton = findViewById(R.id.save_button);
         addElementButton = findViewById(R.id.addElement_button);
-        //connectButton = findViewById(R.id.connectElement_button);
         clearButton = findViewById(R.id.clear_button);
 
         doorButton = findViewById(R.id.newDoor);
@@ -421,7 +417,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
 ////Element Orientation Spinner
         orientationSpinner = new Spinner(this);
-        orientationSpinner = findViewById(R.id.spinner); //id 4
+        orientationSpinner = findViewById(R.id.spinner);
         spinnerPrompt = new TextView(this);
         spinnerPrompt = findViewById(R.id.spinnerPrompt);
 
@@ -441,7 +437,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
 //Wheelchair CheckBox
         wheelchairCheckBox = new CheckBox(this);
-        wheelchairCheckBox = findViewById(R.id.wcCheckBox); //id 5
+        wheelchairCheckBox = findViewById(R.id.wcCheckBox);
         wheelchairPrompt = new TextView(this);
         wheelchairPrompt = findViewById(R.id.wheelchairPrompt);
 
@@ -454,7 +450,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
 //// Elevator Capacity
         capacityInput = new EditText(this);
-        capacityInput = findViewById(R.id.capacityInput); //6
+        capacityInput = findViewById(R.id.capacityInput);
         capacityPrompt = new TextView(this);
         capacityPrompt = findViewById(R.id.capacityPrompt);
 
@@ -464,7 +460,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                //map.get(nRoom).get(which).setConnects(connects);
                 Log.d("Alert", "Item " + which + "selected.");
             }
         });
@@ -492,16 +487,16 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     coordYInput.setVisibility(View.VISIBLE);
                 }
 
-                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){
                     orientationSpinner.setVisibility(View.VISIBLE);
                     spinnerPrompt.setVisibility(View.VISIBLE);
                 }
-                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
+                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
                     wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
-                if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
+                if (capacityInput.getVisibility() == View.VISIBLE){
                     capacityInput.setVisibility(View.INVISIBLE);
                     capacityPrompt.setVisibility(View.INVISIBLE);
                 }
@@ -536,16 +531,16 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     coordYInput.setVisibility(View.VISIBLE);
                 }
 
-                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){
                     orientationSpinner.setVisibility(View.VISIBLE);
                     spinnerPrompt.setVisibility(View.VISIBLE);
                 }
-                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){ //id 5
+                if (wheelchairCheckBox.getVisibility() == View.INVISIBLE){
                     wheelchairCheckBox.setVisibility(View.VISIBLE);
                     wheelchairPrompt.setVisibility(View.VISIBLE);
                 }
 
-                if (capacityInput.getVisibility() == View.VISIBLE){ //id 6
+                if (capacityInput.getVisibility() == View.VISIBLE){
                     capacityInput.setVisibility(View.INVISIBLE);
                     capacityPrompt.setVisibility(View.INVISIBLE);
                 }
@@ -578,16 +573,16 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     coordYInput.setVisibility(View.VISIBLE);
                 }
 
-                if (orientationSpinner.getVisibility() == View.INVISIBLE){ //id 4
+                if (orientationSpinner.getVisibility() == View.INVISIBLE){
                     orientationSpinner.setVisibility(View.VISIBLE);
                     spinnerPrompt.setVisibility(View.VISIBLE);
                 }
-                if (wheelchairCheckBox.getVisibility() == View.VISIBLE){ //id 5
+                if (wheelchairCheckBox.getVisibility() == View.VISIBLE){
                     wheelchairCheckBox.setVisibility(View.INVISIBLE);
                     wheelchairPrompt.setVisibility(View.INVISIBLE);
                 }
 
-                if (capacityInput.getVisibility() == View.INVISIBLE){ //id 6
+                if (capacityInput.getVisibility() == View.INVISIBLE){
                     capacityInput.setVisibility(View.VISIBLE);
                     capacityPrompt.setVisibility(View.VISIBLE);
                 }
@@ -609,7 +604,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     xCoordinate = Integer.parseInt(coordXInput.getText().toString());
                     yCoordinate = Integer.parseInt(coordYInput.getText().toString());
 
-                    //que un elemento solamente se pueda pinta en una pared y no en medio de la habitacion5
+                    //making sure an element can only be placed on a wall & not in the middle of the room
                     boolean LeftOrRightIsaWall = false;
                     boolean TopOrBottomIsAWall = false;
                     if(xCoordinate != 0 && xCoordinate !=Integer.parseInt(tempWidth)){
@@ -659,12 +654,9 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     addElementToRoom();
                     refreshRoomElementsView();
                     setDefaultValues();
-                    //setDefaultLayout();
-                    //setElementList();
                     adapter.notifyItemInserted(elementList.size()-1);
 
                     //para cuando se añada un elemento se restaure el panel de editing y esté vacío
-                    //en un futuro podriamos meter esto en setDefaultLayout() o en un metodo aparte
                     if (editingHeader.getVisibility() == View.VISIBLE){
                         editingHeader.setVisibility(View.INVISIBLE);
                         addElemHeader.setVisibility(View.VISIBLE);
