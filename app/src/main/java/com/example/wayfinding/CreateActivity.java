@@ -273,7 +273,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate, connects);
             elementList.add(elem);
         }
-        drawElement(elem);
+        drawElement(elem, room.getMarkers());
     }
 
     @Override
@@ -305,39 +305,70 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
     }
 
-    private void drawElement(Element element) {
+    private void drawElement(Element element, List<Room.Marker> markers) {
+            Marker markerView = new Marker(CreateActivity.this, element);
 
-        Marker markerView = new Marker(CreateActivity.this, element);
-
-        int markerViewWidth = 100;
-        int markerViewHeight = 100;
-        RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
-        markerView.setLayoutParams(markerLayoutParams);
-        RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+            int markerViewWidth = 100;
+            int markerViewHeight = 100;
+            RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
+            markerView.setLayoutParams(markerLayoutParams);
+            RelativeLayout markerContainer = findViewById(R.id.markerContainer);
 
 
-        int markerLeft = markerLayoutParams.leftMargin; //represents the X-coordinate
-        int markerTop = markerLayoutParams.topMargin;  //represents the Y-coordinate
+            int markerLeft = markerLayoutParams.leftMargin; //represents the X-coordinate
+            int markerTop = markerLayoutParams.topMargin;  //represents the Y-coordinate
 
-        if(element.orientationString() == "south" && (yCoordinate == Integer.parseInt(tempLength))){
-            yCoordinate = yCoordinate - 2;
+            if (element.orientationString() == "south" && (yCoordinate == Integer.parseInt(tempLength))) {
+                yCoordinate = yCoordinate - 2;
+            } else if (element.orientationString() == "east" && (xCoordinate == Integer.parseInt(tempWidth))) {
+                xCoordinate = xCoordinate - 2;
+            }
+
+
+            float markerXfloat = xCoordinate * 40;
+            float markerYfloat = yCoordinate * 40;
+
+            markerView.setX(markerLeft + markerXfloat);
+            markerView.setY(markerTop + markerYfloat);
+
+            Log.d(TAG, "X : " + markerLayoutParams.leftMargin);
+            Log.d(TAG, "Y : " + markerLayoutParams.bottomMargin);
+            markerContainer.addView(markerView);
+            indoorMap.getRoom(nRoom).addMarker(markerXfloat, markerYfloat, element.getType());
+
+
+    }
+
+    public void drawMarkers(Room room){
+        for (Marker marker : room.getMarkers()){
+            Marker markerView = new Marker(CreateActivity.this, element);
+
+            int markerViewWidth = 100;
+            int markerViewHeight = 100;
+            RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
+            markerView.setLayoutParams(markerLayoutParams);
+            RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+
+
+            int markerLeft = markerLayoutParams.leftMargin; //represents the X-coordinate
+            int markerTop = markerLayoutParams.topMargin;  //represents the Y-coordinate
+
+            if (element.orientationString() == "south" && (yCoordinate == Integer.parseInt(tempLength))) {
+                yCoordinate = yCoordinate - 2;
+            } else if (element.orientationString() == "east" && (xCoordinate == Integer.parseInt(tempWidth))) {
+                xCoordinate = xCoordinate - 2;
+            }
+
+
+            float markerXfloat = marker.getX() * 40;
+            float markerYfloat = marker.getY() * 40;
+
+            markerView.setX(markerLeft + markerXfloat);
+            markerView.setY(markerTop + markerYfloat);
+
+            Log.d(TAG, "X : " + markerLayoutParams.leftMargin);
+            Log.d(TAG, "Y : " + markerLayoutParams.bottomMargin);
         }
-        else if(element.orientationString() == "east" && (xCoordinate == Integer.parseInt(tempWidth))){
-            xCoordinate = xCoordinate - 2;
-        }
-
-
-        float markerXfloat = xCoordinate * 40;
-        float markerYfloat = yCoordinate * 40;
-
-        markerView.setX(markerLeft + markerXfloat);
-        markerView.setY(markerTop + markerYfloat);
-
-        Log.d(TAG, "X : " + markerLayoutParams.leftMargin);
-        Log.d(TAG, "Y : " +  markerLayoutParams.bottomMargin);
-        markerContainer.addView(markerView);
-
-
 
     }
 
@@ -390,6 +421,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         closeButton = new Button(this);
         openButton.setText("Open");
         closeButton.setText("Closed");
+        drawMarkers( indoorMap.getRoom(nRoom));
 
 ////Element coordinates
 
