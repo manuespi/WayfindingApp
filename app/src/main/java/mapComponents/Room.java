@@ -29,14 +29,12 @@ public class Room extends BaseObservable implements Serializable {
 
     public Room(int id){
         this.room = new ArrayList<Element>();
-        this.markers = new ArrayList<Marker>();
         this.nElements = 0;
         this.id = id;
     }
 
     public Room(int id, String name){
         this.room = new ArrayList<Element>();
-        this.markers = new ArrayList<Marker>();
         this.nElements = 0;
         this.id = id;
         this.name = name;
@@ -44,14 +42,12 @@ public class Room extends BaseObservable implements Serializable {
 
     Room(int id, boolean up, boolean down){
         this.room = new ArrayList<Element>();
-        this.markers = new ArrayList<Marker>();
         this.nElements = 0;
         this.id = id;
     }
 
     Room(int id, int nElements, List<Element> room){
         this.room = new ArrayList<Element>();
-        this.markers = new ArrayList<Marker>();
         this.id = id;
         this.nElements = nElements;
         this.room = room;
@@ -132,20 +128,20 @@ public class Room extends BaseObservable implements Serializable {
     }
 
     public class Marker implements Serializable {
-        private float x, y;
+        private int x, y;
         private String type;
 
-        public Marker(float x, float y, String elementType) {
+        public Marker(int x, int y, String elementType) {
             this.x = x;
             this.y = y;
             this.type = elementType;
         }
 
-        public float getX() {
+        public int getX() {
             return x;
         }
 
-        public float getY() {
+        public int getY() {
             return y;
         }
 
@@ -154,7 +150,7 @@ public class Room extends BaseObservable implements Serializable {
         }
     }
 
-    public void addMarker(float x, float y, String elementType) {
+    public void addMarker(int x, int y, String elementType) {
         Marker marker = new Marker(x, y, elementType);
         markers.add(marker);
     }
