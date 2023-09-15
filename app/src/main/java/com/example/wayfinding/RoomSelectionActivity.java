@@ -64,7 +64,7 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
                 throw new RuntimeException(e);
             }
         }
-        else if(incomingIntent != null && incomingIntent.hasExtra("new")) {Log.d("RSA", "Pilla el extra new");
+        else if(incomingIntent != null && incomingIntent.hasExtra("new")) {
             this.roomList = new ArrayList<Room>();
             this.indoorMap = new IndoorMap(incomingIntent.getStringExtra("name"));
         }
@@ -178,12 +178,10 @@ public class RoomSelectionActivity  extends AppCompatActivity implements RoomLis
         });
 
         dialog.show();
-        Log.d("RoomSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
     }
 
     @Override
     public void editRoom(int position) {
-        Log.d("RoomSelectionActivity", "Se ha pulsado el botón edit del elemento nº: " + position);
         this.editRoom = true;
         openActivityCreate(roomList.get(position));
     }

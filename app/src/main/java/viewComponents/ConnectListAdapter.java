@@ -55,7 +55,6 @@ public class ConnectListAdapter extends RecyclerView.Adapter<ConnectListAdapter.
     public ConnectListAdapter(Context context, ArrayList<Room> roomList) {
         this.inflater = LayoutInflater.from(context);
         this.roomList = roomList;
-        Log.d("ConnectListAdapter", Integer.toString(this.roomList.size()));
     }
     @Override
     public ConnectListAdapter.ConnectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

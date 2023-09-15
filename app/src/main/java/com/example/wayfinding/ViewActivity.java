@@ -22,7 +22,6 @@ public class ViewActivity extends AppCompatActivity {
         if(incomingIntent != null && incomingIntent.hasExtra("map")) {
             String mapString = incomingIntent.getStringExtra("map");
 
-            Log.d("Showing map", mapString);
             incomingData.setText(mapString);
         }
         else incomingData.setText("Not available yet");

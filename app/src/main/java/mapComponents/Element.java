@@ -60,7 +60,6 @@ public class Element implements Serializable {
 
         ret = type + ": " + String.valueOf(this.id) + "\n";
         ret += "Orientation: " + this.orientationString() + "\n";
-        //ret += getConnectsString() + "\n";
 
         return ret;
     }

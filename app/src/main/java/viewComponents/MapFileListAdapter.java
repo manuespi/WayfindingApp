@@ -23,12 +23,6 @@ public class MapFileListAdapter extends RecyclerView.Adapter<MapFileListAdapter.
         private TextView mapItemView;
         private Button deleteMapButton, editMapButton, playMapButton;
 
-        //Añadir los botones supongo
-
-        /*public MapFileViewHolder(View itemView) {
-            super(itemView);
-        }*/
-
         public MapFileViewHolder(View itemView, MapFileListAdapter adapter) {
             super(itemView);
             this.mapItemView = itemView.findViewById(R.id.mapFile_name);

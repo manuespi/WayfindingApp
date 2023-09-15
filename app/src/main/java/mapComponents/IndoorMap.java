@@ -36,7 +36,7 @@ public class IndoorMap implements Serializable {
     }
 
     public void addRoom(){
-        this.map.add(nRoom, new Room(nRoom, Integer.toString(nRoom))); //TODO meterle el nombre cuando proceda
+        this.map.add(nRoom, new Room(nRoom, Integer.toString(nRoom)));
         nRoom++;
     }
 

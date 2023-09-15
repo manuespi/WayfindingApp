@@ -178,14 +178,9 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             this.room = (Room) incomingIntent.getSerializableExtra("room");
             this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
             this.editingRoom =  incomingIntent.getBooleanExtra("new", false);
-            if(this.editingRoom)
-            Toast.makeText(CreateActivity.this, "Editando Room", Toast.LENGTH_SHORT).show();
-            else Toast.makeText(CreateActivity.this, "Nueva Room", Toast.LENGTH_SHORT).show();
 
         }
         else{
-            Log.e("CreateActivity", "Algo ha ido mal al inicializar atributos.");
-            Toast.makeText(CreateActivity.this, "Algo ha ido mal al inicializar atributos.", Toast.LENGTH_SHORT).show();
             this.editingRoom = false;
             this.newMap = false;
         }
@@ -214,7 +209,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         refreshRoomElementsView();
     }
 
-    private void setRoomList(){//TODO que no salga la misma que se está creando
+    private void setRoomList(){
         this.connectRoomList = this.indoorMap.getMap();Log.d("setRoomList", Integer.toString(this.connectRoomList.size()));
     }
 
@@ -233,7 +228,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         this.indoorMap.setName(name);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Log.d("CreateActivity", this.indoorMap.getName() + "receiving map");
         try {
             this.indoorMap = objectMapper.readValue(map, IndoorMap.class);
             nRoom = this.indoorMap.getMap().size() - 1;
@@ -256,8 +250,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
     private void openRoomSelectionActivity(){
         Intent intent = new Intent(CreateActivity.this, RoomSelectionActivity.class);
-        if(indoorMap == null) Log.d("null", "IM is null: ");
-        else Log.d("no null", "IM is not null: "+indoorMap.getnRoom());
         intent.putExtra("IMmap", indoorMap);
         startActivity(intent);
         finish();
@@ -341,12 +333,10 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
 
     private void refreshRoomElementsView(){
-        //int nElem = indoorMap.getRoom(nRoom).getnElements();
-        Log.d("refreshRoomElementsView", room.toString());
         int nElem = this.room.getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            elementsText += this.room.getElement(i).getType() + ": " + this.room.getElement(i).orientationString();Log.d("refresh", "Entra");
+            elementsText += this.room.getElement(i).getType() + ": " + this.room.getElement(i).orientationString();
 
             if(i < nElem - 1) elementsText += "\n";
         }
@@ -448,7 +438,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         roomConnectionAlert.setItems(elements, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                Log.d("Alert", "Item " + which + "selected.");
             }
         });
 
@@ -658,7 +647,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                     setDefaultValues();
                     adapter.notifyItemInserted(elementList.size()-1);
 
-                    //para cuando se añada un elemento se restaure el panel de editing y esté vacío
                     if (editingHeader.getVisibility() == View.VISIBLE){
                         editingHeader.setVisibility(View.INVISIBLE);
                         addElemHeader.setVisibility(View.VISIBLE);
@@ -827,6 +815,5 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         });
 
         dialog.show();
-        Log.d("RoomSelectionActivity", "Se ha pulsado el botón delete del elemento nº: " + position);
     }
 }

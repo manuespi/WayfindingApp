@@ -86,15 +86,5 @@
 
         </RelativeLayout>
 
-        <!--<Button
-            android:id="@+id/deleteElem_button"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            app:icon="@android:drawable/ic_menu_delete" />-->
-
-
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

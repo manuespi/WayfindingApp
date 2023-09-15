@@ -26,12 +26,6 @@ public class ElementListAdapter extends RecyclerView.Adapter<ElementListAdapter.
         private TextView elementItemView, wallType;
         private Button deleteElementButton;
 
-        //Añadir los botones supongo
-
-        /*public MapFileViewHolder(View itemView) {
-            super(itemView);
-        }*/
-
         public ElementViewHolder(View itemView, ElementListAdapter adapter) {
             super(itemView);
             this.elementItemView = itemView.findViewById(R.id.elem_type);
