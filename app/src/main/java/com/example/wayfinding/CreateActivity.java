@@ -618,6 +618,20 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                         parametersOk = true;
                         Log.d(TAG, "X: " + xCoordinate + " Y: " + yCoordinate);
                     }
+                    //check if the orientation spinner has the correct direction
+
+                    if((xCoordinate == 0 && orientation == 3) || //west
+                            (xCoordinate == Integer.parseInt(tempWidth) && orientation == 1) || //east
+                            (yCoordinate == 0 && orientation == 0) || //north
+                            (yCoordinate == Integer.parseInt(tempLength) && orientation == 2)){ //south
+                        parametersOk = true;
+                    }
+                    else{
+                        Toast.makeText(CreateActivity.this, "Wrong orientation introduced!", Toast.LENGTH_SHORT).show();
+                        parametersOk = false;
+                    }
+
+
                 } catch (NumberFormatException nfe) {
                     Toast.makeText(CreateActivity.this, "X & Y should be numbers", Toast.LENGTH_SHORT).show();
                     parametersOk = false;
