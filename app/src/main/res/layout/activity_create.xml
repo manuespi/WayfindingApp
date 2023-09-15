@@ -102,15 +102,6 @@
 
             </RelativeLayout>
 
-
-            <Button
-                android:id="@+id/resize"
-                android:layout_width="67dp"
-                android:layout_height="wrap_content"
-                android:text="EDIT"
-                android:visibility="invisible"/>
-
-
         </RelativeLayout>
 
         <RelativeLayout

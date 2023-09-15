@@ -65,29 +65,23 @@ import org.w3c.dom.Text;
 
 
 public class CreateActivity extends AppCompatActivity implements ConnectListAdapter.OnItemClickListener, ElementListAdapter.OnItemClickListener {
-    //manu
     private IndoorMap indoorMap;
-    private int nRoom;
     private Room room;
     private Gson gson;
-    private boolean editingRoom, newMap;
-
-    //mio
-   // private int nRoom = 0;
     private LinearLayout createLayout;
     private RelativeLayout layout1;
     private String element, tempName, tempWidth, tempLength;
     private ArrayList<String> orientationList;
-    private int orientation, capacity, xCoordinate, yCoordinate;
-    private boolean open, wheelchair;
+    private int orientation, capacity, xCoordinate, yCoordinate, nRoom;
+    private boolean open, wheelchair, editingRoom, newMap;
     private Button mainMenuButton, saveButton, doorButton, stairsButton,
             elevatorButton, openButton, closeButton,
-            addElementButton, editRoom, nextButton, clearButton, connectButton;
+            addElementButton, clearButton, connectButton;
     private Spinner orientationSpinner;
     private CheckBox wheelchairCheckBox;
     private Element elem;
     private EditText capacityInput, coordXInput, coordYInput;
-    private TextView roomElementsView, roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
+    private TextView roomElementsCounter, currentRoom, spinnerPrompt, wheelchairPrompt,
             capacityPrompt, coordinatesPrompt, coordXPrompt, coordYPrompt, addElemHeader, editingHeader;
     private AlertDialog.Builder roomConnectionAlert;
     private RecyclerView elementsListRecyclerView, connectRecyclerView;
@@ -96,87 +90,75 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     private ConnectListAdapter cAdapter;
     private ArrayList<Room> connectRoomList;
     private ArrayList<Integer> connects;
-    private AlertDialog connectDialog;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setOriginalContentView(true);
+        setOriginalContentView();
     }
 
-    private void setOriginalContentView(Boolean firstTime) {
+    private void setOriginalContentView() {
 
-        if (!firstTime){
-            room.setName(tempName);
-            room.setLength(tempLength);
-            room.setWidth(tempWidth);
-        }
+        ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
+        setContentView(activityCreateBinding.getRoot());
 
-                ActivityCreateBinding activityCreateBinding = DataBindingUtil.setContentView(CreateActivity.this, R.layout.activity_create);
-                setContentView(activityCreateBinding.getRoot());
+        ImageView roomView = findViewById(R.id.roomView);
+        roomView.post(() -> {
+            String widthStr = room.getWidth();
+            tempWidth = widthStr;
+            float width = Float.parseFloat(widthStr) * 40;
+            int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+            Log.d(TAG, "Width string: " + widthStr);
+            Log.d(TAG, "Parsed width: " + pixelsW);
 
-                ImageView roomView = findViewById(R.id.roomView);
-                roomView.post(() -> {
-                    String widthStr = room.getWidth();
-                    tempWidth = widthStr;
-                    Log.d(TAG, "Width string: " + widthStr);
-                    float width = Float.parseFloat(widthStr) * 40; //el 40 por ejemplo
-                    int pixelsW = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
-                    Log.d(TAG, "Parsed width: " + pixelsW);
+            String lengthStr = room.getLength();
+            tempLength = lengthStr;
+            float length = Float.parseFloat(lengthStr) * 40;
+            int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
+            Log.d(TAG, "Length string: " + lengthStr);
+            Log.d(TAG, "Parsed width: " + pixelsL);
 
-                    String lengthStr = room.getLength();
-                    tempLength = lengthStr;
-                    Log.d(TAG, "Length string: " + lengthStr);
-                    float length = Float.parseFloat(lengthStr) * 40;
-                    int pixelsL = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, length, getResources().getDisplayMetrics());
-                    Log.d(TAG, "Parsed width: " + pixelsL);
+            String nameStr = room.getName();
+            tempName = nameStr;
+            Log.d(TAG, "Room name: " + nameStr);
+            currentRoom = findViewById(R.id.currentRoom);
+            currentRoom.setText(nameStr);
 
-                    String nameStr = room.getName();
-                    tempName = nameStr;
-                    //room.setName(nameStr);
-                    Log.d(TAG, "Room name: " + nameStr);
-                    currentRoom = findViewById(R.id.currentRoom);
-                    currentRoom.setText(nameStr);
+            // Update the layout parametes & name of the room View
+            ViewGroup.LayoutParams roomLayoutParams = roomView.getLayoutParams();
+            roomLayoutParams.width = (int) width;
+            roomLayoutParams.height = (int) length;
+            roomView.setLayoutParams(roomLayoutParams);
 
+            // Update the layout parameters of the grid overlay View
+            View gridOverlay = findViewById(R.id.gridOverlay);
+            ViewGroup.LayoutParams gridOverlayLayoutParams = gridOverlay.getLayoutParams();
+            gridOverlayLayoutParams.width = (int) width;
+            gridOverlayLayoutParams.height = (int) length;
+            gridOverlay.setLayoutParams(gridOverlayLayoutParams);
+            gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
 
-                    // Update the layout parametes & name of the room View
-                    ViewGroup.LayoutParams roomLayoutParams = roomView.getLayoutParams();
-                    roomLayoutParams.width = (int) width;
-                    roomLayoutParams.height = (int) length;
-                    roomView.setLayoutParams(roomLayoutParams);
-                   // room.setLength(lengthStr);
-                   // room.setWidth(widthStr);
+            //Update layout for the marker Container
+            RelativeLayout markerContainer = findViewById(R.id.markerContainer);
+            ViewGroup.LayoutParams markerContainerParams = markerContainer.getLayoutParams();
+            markerContainerParams.width = (int) width;
+            markerContainerParams.height = (int) length;
+            markerContainer.setLayoutParams(markerContainerParams);
 
-                    // Update the layout parameters of the grid overlay View
-                    View gridOverlay = findViewById(R.id.gridOverlay);
-                    ViewGroup.LayoutParams gridOverlayLayoutParams = gridOverlay.getLayoutParams();
-                    gridOverlayLayoutParams.width = (int) width;
-                    gridOverlayLayoutParams.height = (int) length;
-                    gridOverlay.setLayoutParams(gridOverlayLayoutParams);
-                    gridOverlay.setBackground(new GridDrawable(getResources().getColor(R.color.teal_700)));
+            //Display length and width of room on each side
+            TextView xGuide = findViewById(R.id.xGuide);
+            xGuide.setText(tempWidth + ", 0");
+            TextView yGuide = findViewById(R.id.yGuide);
+            yGuide.setText("0, " + tempLength);
 
-                    //Update layout for the marker Container
-                    RelativeLayout markerContainer = findViewById(R.id.markerContainer);
-                    ViewGroup.LayoutParams markerContainerParams = markerContainer.getLayoutParams();
-                    markerContainerParams.width = (int) width;
-                    markerContainerParams.height = (int) length;
-                    markerContainer.setLayoutParams(markerContainerParams);
+        });
 
-                    TextView xGuide = findViewById(R.id.xGuide);
-                    xGuide.setText(tempWidth + ", 0");
-                    TextView yGuide = findViewById(R.id.yGuide);
-                    yGuide.setText("0, " + tempLength);
+        initializeAttributes();
+        setInterface();
+    }
 
-                });
-
-                initializeAttributes();
-                setInterface();
-                // setDefaultLayout();
-            }
-      //  });
-
-   // }
 
 
     private void setDefaultValues(){
@@ -191,7 +173,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     }
 
     private void initializeAttributes(){
-        //Manu
         connectButton = findViewById(R.id.connectElement_button);
         connects = new ArrayList<Integer>();
         orientationList = new ArrayList<>();
@@ -210,7 +191,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             this.room = (Room) incomingIntent.getSerializableExtra("room");
             this.indoorMap = (IndoorMap) incomingIntent.getSerializableExtra("map");
             this.editingRoom =  incomingIntent.getBooleanExtra("new", false);
-            //this.newMap = false;
             if(this.editingRoom)
             Toast.makeText(CreateActivity.this, "Editando Room", Toast.LENGTH_SHORT).show();
             else Toast.makeText(CreateActivity.this, "Nueva Room", Toast.LENGTH_SHORT).show();
@@ -281,7 +261,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         finish();
     }
 
-    //Manu
     private void openMapSelectionActivity(){
         Intent intent = new Intent(this, MapSelectionActivity.class);
         startActivity(intent);
@@ -297,7 +276,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
         finish();
     }
 
-    //Manu
+
     private void addElementToRoom(){
         if(element == "empty"){
             Toast.makeText(CreateActivity.this, "No element selected", Toast.LENGTH_SHORT).show();
@@ -306,7 +285,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             elem = this.room.addElement(element, orientation, capacity, open, wheelchair, xCoordinate, yCoordinate, connects);
             elementList.add(elem);
         }
-        
         drawElement(elem);
     }
 
@@ -374,20 +352,22 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     }
 
 
-    //Manu
     private void refreshRoomElementsView(){
         //int nElem = indoorMap.getRoom(nRoom).getnElements();
         Log.d("refreshRoomElementsView", room.toString());
         int nElem = this.room.getnElements();
         String elementsText = "";
         for(int i = 0; i < nElem; i++){
-            //elementsText += indoorMap.getRoom(nRoom).getElement(i).getType() + ": " + indoorMap.getRoom(nRoom).getElement(i).orientationString();
             elementsText += this.room.getElement(i).getType() + ": " + this.room.getElement(i).orientationString();Log.d("refresh", "Entra");
 
             if(i < nElem - 1) elementsText += "\n";
         }
-        //roomElementsView.setText(elementsText);
-        roomElementsCounter.setText(room.getnElements() + " elements");
+        if(room.getnElements() == 1){
+            roomElementsCounter.setText("1 element");
+        }
+        else {
+            roomElementsCounter.setText(room.getnElements() + " elements");
+        }
     }
 
 
@@ -410,7 +390,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     private void setInterface(){
         createLayout = findViewById(R.id.createLayout);
         layout1 = findViewById(R.id.layout1);
-        editRoom = findViewById(R.id.resize);
+        //editRoom = findViewById(R.id.resize);
 
 
         mainMenuButton = findViewById(R.id.mainMenu_button);
@@ -802,23 +782,12 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             }
         });
 
-        editRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setOriginalContentView(false);
-            }
-        });
+
     }
 
     public void saveMap(){
         File file = new File(this.getFilesDir(), this.indoorMap.getName() + ".json");
         ObjectMapper objectMapper = new ObjectMapper();
-
-        /*if(newMap) {
-            Log.d("SaveMap", "NEW MAP");//Para comprobar que el nuevo mapa es nombre único TODO mejorar
-            if (file.exists())
-                file = new File(this.getFilesDir(), this.indoorMap.getName() + "_copy.json");
-        }*/
 
         try {
             String json = objectMapper.writeValueAsString(this.indoorMap);
@@ -851,7 +820,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeChanged(position, elementList.size());
                 dialog.dismiss();
-                //room.setnElements(room.getnElements() -1);
                 refreshRoomElementsView();
             }
         });
