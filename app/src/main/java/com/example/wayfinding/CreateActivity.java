@@ -41,7 +41,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import mapComponents.Element;
 import mapComponents.IndoorMap;
@@ -288,8 +287,8 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
     }
 
 
-    private class Marker extends AppCompatImageView {
-        public Marker(Context context, Element element) {
+    private class MarkerView extends AppCompatImageView {
+        public MarkerView(Context context, Element element) {
             super(context);
             if (element.getType() == "door"){
                 setImageResource(R.drawable.door);
@@ -307,8 +306,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
 
     private void drawElement(Element element) {
 
-        Marker markerView = new Marker(CreateActivity.this, element);
-
+        MarkerView markerView = new MarkerView(CreateActivity.this, element);
         int markerViewWidth = 100;
         int markerViewHeight = 100;
         RelativeLayout.LayoutParams markerLayoutParams = new RelativeLayout.LayoutParams(markerViewWidth, markerViewHeight);
@@ -588,7 +586,7 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
             @Override
             public void onClick(View view) {
                 boolean parametersOk = true;
-                boolean correctOrientation = true;
+
                 //x & y
                 try {
                     xCoordinate = Integer.parseInt(coordXInput.getText().toString());
@@ -620,21 +618,6 @@ public class CreateActivity extends AppCompatActivity implements ConnectListAdap
                         parametersOk = true;
                         Log.d(TAG, "X: " + xCoordinate + " Y: " + yCoordinate);
                     }
-
-                    //check if the orientation spinner has the correct direction
-
-                    if((xCoordinate == 0 && orientation == 3) || //west
-                       (xCoordinate == Integer.parseInt(tempWidth) && orientation == 1) || //east
-                       (yCoordinate == 0 && orientation == 0) || //north
-                    (yCoordinate == Integer.parseInt(tempLength) && orientation == 2)){ //south
-                        parametersOk = true;
-                    }
-                    else{
-                        Toast.makeText(CreateActivity.this, "Wrong orientation introduced!", Toast.LENGTH_SHORT).show();
-                        parametersOk = false;
-                    }
-
-
                 } catch (NumberFormatException nfe) {
                     Toast.makeText(CreateActivity.this, "X & Y should be numbers", Toast.LENGTH_SHORT).show();
                     parametersOk = false;
